@@ -1,0 +1,21 @@
+{
+  "name": "@gym-saas/database",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "scripts": {
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate",
+    "studio": "prisma studio",
+    "seed": "ts-node prisma/seed.ts",
+    "lint": "eslint \"src/**/*.{ts,tsx}\""
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "eslint": "^9.39.1"
+  }
+}
