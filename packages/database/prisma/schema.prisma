@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Schema de Prisma para Gym SaaS
+// Documentación: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -11,4 +8,537 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// ============================================
+// GIMNASIOS (tenants multi-inquilino)
+// ============================================
+model Gimnasio {
+  id                 String   @id @default(uuid())
+  nombre             String
+  slug               String   @unique
+  fechaCreacion      DateTime @default(now()) @map("fecha_creacion")
+  fechaActualizacion DateTime @updatedAt @map("fecha_actualizacion")
+
+  // Relaciones
+  usuarios              Usuario[]
+  planes                Plan[]
+  membresias            Membresia[]
+  pagos                 Pago[]
+  asistencias           Asistencia[]
+  entrenadoresClientes  EntrenadorCliente[]
+  rutinas               Rutina[]
+  configuracion         ConfiguracionGimnasio? // ← AGREGAR ESTA LÍNEA
+  categoriasProductos   CategoriaProducto[]
+  productos             Producto[]
+  ventasProductos       VentaProducto[]
+  movimientosInventario MovimientoInventario[]
+  // 🆕 NUEVAS RELACIONES
+  staff                 Staff[]
+  testimonios           Testimonio[]
+  imagenesGaleria       ImagenGaleria[]
+
+  @@map("gimnasios")
+}
+
+// ============================================
+// USUARIOS (admin, recepcionista, entrenador, cliente)
+// ============================================
+model Usuario {
+  id                 String        @id @default(uuid())
+  gimnasioId         String        @map("gimnasio_id")
+  email              String
+  contrasenaHash     String        @map("contrasena_hash")
+  nombre             String
+  apellido           String
+  telefono           String?
+  rol                RolUsuario
+  estado             EstadoUsuario @default(activo)
+  fechaCreacion      DateTime      @default(now()) @map("fecha_creacion")
+  fechaActualizacion DateTime      @updatedAt @map("fecha_actualizacion")
+
+  // Relaciones
+  gimnasio                Gimnasio               @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  perfilCliente           PerfilCliente?
+  membresias              Membresia[]
+  pagos                   Pago[]
+  asistencias             Asistencia[]
+  clientesComoEntrenador  EntrenadorCliente[]    @relation("RelacionEntrenador")
+  entrenadoresComoCliente EntrenadorCliente[]    @relation("RelacionCliente")
+  rutinasComoEntrenador   Rutina[]               @relation("RutinasEntrenador")
+  rutinasComoCliente      Rutina[]               @relation("RutinasCliente")
+  ventaProductos          VentaProducto[]
+  movimientoInventarios   MovimientoInventario[]
+  staff                   Staff[]
+
+  @@unique([gimnasioId, email])
+  @@index([gimnasioId])
+  @@index([email])
+  @@index([rol])
+  @@map("usuarios")
+}
+
+enum RolUsuario {
+  admin
+  recepcionista
+  entrenador
+  cliente
+}
+
+enum EstadoUsuario {
+  activo
+  inactivo
+}
+
+// ============================================
+// PERFIL DE CLIENTE (datos adicionales)
+// ============================================
+model PerfilCliente {
+  id                 String    @id @default(uuid())
+  usuarioId          String    @unique @map("usuario_id")
+  fechaNacimiento    DateTime? @map("fecha_nacimiento")
+  genero             String?
+  notas              String?   @db.Text
+  fechaCreacion      DateTime  @default(now()) @map("fecha_creacion")
+  fechaActualizacion DateTime  @updatedAt @map("fecha_actualizacion")
+
+  // Relaciones
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@map("perfiles_cliente")
+}
+
+// ============================================
+// PLANES DE MEMBRESÍA
+// ============================================
+model Plan {
+  id                 String   @id @default(uuid())
+  gimnasioId         String   @map("gimnasio_id")
+  nombre             String
+  descripcion        String?  @db.Text
+  duracionDias       Int      @map("duracion_dias")
+  precio             Decimal  @db.Decimal(10, 2)
+  fechaCreacion      DateTime @default(now()) @map("fecha_creacion")
+  fechaActualizacion DateTime @updatedAt @map("fecha_actualizacion")
+
+  // Relaciones
+  gimnasio   Gimnasio    @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  membresias Membresia[]
+
+  @@index([gimnasioId])
+  @@map("planes")
+}
+
+// ============================================
+// MEMBRESÍAS (inscripciones de clientes)
+// ============================================
+model Membresia {
+  id                 String          @id @default(uuid())
+  gimnasioId         String          @map("gimnasio_id")
+  clienteId          String          @map("cliente_id")
+  planId             String          @map("plan_id")
+  fechaInicio        DateTime        @map("fecha_inicio")
+  fechaFin           DateTime        @map("fecha_fin")
+  estado             EstadoMembresia @default(activa)
+  fechaCreacion      DateTime        @default(now()) @map("fecha_creacion")
+  fechaActualizacion DateTime        @updatedAt @map("fecha_actualizacion")
+
+  // Relaciones
+  gimnasio Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  cliente  Usuario  @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  plan     Plan     @relation(fields: [planId], references: [id], onDelete: Restrict)
+  pagos    Pago[]
+
+  @@index([gimnasioId])
+  @@index([clienteId])
+  @@index([estado])
+  @@map("membresias")
+}
+
+enum EstadoMembresia {
+  activa
+  expirada
+  cancelada
+}
+
+// ============================================
+// PAGOS
+// ============================================
+model Pago {
+  id              String     @id @default(uuid())
+  gimnasioId      String     @map("gimnasio_id")
+  membresiaId     String?    @map("membresia_id")
+  clienteId       String     @map("cliente_id")
+  tipo            TipoPago   @default(membresia)
+  monto           Decimal    @db.Decimal(10, 2)
+  metodoPago      MetodoPago @map("metodo_pago")
+  estado          EstadoPago @default(completado) // ← CAMBIAR A EstadoPago
+  fechaPago       DateTime   @map("fecha_pago")
+  nota            String?    @db.Text
+  motivoReembolso String?    @map("motivo_reembolso") @db.Text // ← AGREGAR
+  fechaReembolso  DateTime?  @map("fecha_reembolso") // ← AGREGAR
+  fechaCreacion   DateTime   @default(now()) @map("fecha_creacion")
+
+  // Relaciones
+  gimnasio  Gimnasio   @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  membresia Membresia? @relation(fields: [membresiaId], references: [id], onDelete: Cascade)
+  cliente   Usuario    @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+
+  @@index([gimnasioId])
+  @@index([clienteId])
+  @@index([fechaPago])
+  @@index([tipo])
+  @@index([estado]) // ← AGREGAR
+  @@map("pagos")
+}
+
+enum TipoPago {
+  membresia
+  producto
+}
+
+enum MetodoPago {
+  efectivo
+  tarjeta
+  transferencia
+}
+
+enum EstadoPago {
+  completado
+  pendiente
+  reembolsado
+  rechazado
+}
+
+// ============================================
+// ASISTENCIAS (check-ins)
+// ============================================
+model Asistencia {
+  id            String   @id @default(uuid())
+  gimnasioId    String   @map("gimnasio_id")
+  clienteId     String   @map("cliente_id")
+  marcaTiempo   DateTime @default(now()) @map("marca_tiempo")
+  fechaCreacion DateTime @default(now()) @map("fecha_creacion")
+
+  // Relaciones
+  gimnasio Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  cliente  Usuario  @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+
+  @@index([gimnasioId])
+  @@index([clienteId])
+  @@index([marcaTiempo])
+  @@map("asistencias")
+}
+
+model ConfiguracionGimnasio {
+  id         String   @id @default(uuid())
+  gimnasioId String   @unique
+  gimnasio   Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+
+  // Información básica
+  nombreNegocio   String?
+  logoUrl         String?
+  colorPrimario   String  @default("#10b981") // Verde
+  colorSecundario String  @default("#3b82f6") // Azul
+
+  // Horarios
+  horarioApertura String? // "06:00"
+  horarioCierre   String? // "22:00"
+  diasLaborales   String[] @default(["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"])
+
+  // Contacto
+  telefono  String?
+  email     String?
+  direccion String?
+  sitioweb  String?
+
+  // Redes sociales
+  facebook  String?
+  instagram String?
+  twitter   String?
+  whatsapp  String? // ← NUEVO
+  youtube   String? // ← NUEVO
+  tiktok    String?
+
+  // 🆕 PARA LA WEB PÚBLICA
+  // Imágenes
+  imagenHero       String? // Imagen principal del home (hero)
+  imagenesCarrusel String[] @default([]) // Carrusel del home (máx 4)
+
+  // Textos
+  descripcionCorta String? @db.Text // Para hero y meta description (SEO)
+  descripcionLarga String? @db.Text // Para página "Nosotros"
+  misionVision     String? @db.Text // Misión y visión del gym
+
+  // Ubicación (para Google Maps)
+  mapaLatitud  String? // Ej: "-12.046373"
+  mapaLongitud String? // Ej: "-77.042755"
+
+  // Políticas
+  politicaCancelacion String? @db.Text
+  terminosCondiciones String? @db.Text
+
+  // Notificaciones
+  notificarVencimiento7Dias Boolean @default(true)
+  notificarVencimiento3Dias Boolean @default(true)
+  notificarVencimiento1Dia  Boolean @default(true)
+  notificarBienvenida       Boolean @default(true)
+  notificarRenovacion       Boolean @default(true)
+
+  fechaCreacion      DateTime @default(now())
+  fechaActualizacion DateTime @updatedAt
+
+  @@map("configuraciones_gimnasio")
+}
+
+// ============================================
+// RELACIÓN ENTRENADOR-CLIENTE
+// ============================================
+model EntrenadorCliente {
+  id            String   @id @default(uuid())
+  gimnasioId    String   @map("gimnasio_id")
+  entrenadorId  String   @map("entrenador_id")
+  clienteId     String   @map("cliente_id")
+  fechaCreacion DateTime @default(now()) @map("fecha_creacion")
+
+  // Relaciones
+  gimnasio   Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  entrenador Usuario  @relation("RelacionEntrenador", fields: [entrenadorId], references: [id], onDelete: Cascade)
+  cliente    Usuario  @relation("RelacionCliente", fields: [clienteId], references: [id], onDelete: Cascade)
+
+  @@unique([entrenadorId, clienteId])
+  @@index([gimnasioId])
+  @@index([entrenadorId])
+  @@index([clienteId])
+  @@map("entrenadores_clientes")
+}
+
+// ============================================
+// RUTINAS DE ENTRENAMIENTO
+// ============================================
+model Rutina {
+  id                 String   @id @default(uuid())
+  gimnasioId         String   @map("gimnasio_id")
+  entrenadorId       String   @map("entrenador_id")
+  clienteId          String   @map("cliente_id")
+  titulo             String
+  descripcion        String?  @db.Text
+  fechaCreacion      DateTime @default(now()) @map("fecha_creacion")
+  fechaActualizacion DateTime @updatedAt @map("fecha_actualizacion")
+
+  // Relaciones
+  gimnasio   Gimnasio    @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  entrenador Usuario     @relation("RutinasEntrenador", fields: [entrenadorId], references: [id], onDelete: Cascade)
+  cliente    Usuario     @relation("RutinasCliente", fields: [clienteId], references: [id], onDelete: Cascade)
+  ejercicios Ejercicio[]
+
+  @@index([gimnasioId])
+  @@index([entrenadorId])
+  @@index([clienteId])
+  @@map("rutinas")
+}
+
+// ============================================
+// EJERCICIOS DE RUTINA
+// ============================================
+model Ejercicio {
+  id               String   @id @default(uuid())
+  rutinaId         String   @map("rutina_id")
+  nombre           String
+  repeticiones     Int?
+  series           Int?
+  segundosDescanso Int?     @map("segundos_descanso")
+  ordenIndice      Int      @map("orden_indice")
+  fechaCreacion    DateTime @default(now()) @map("fecha_creacion")
+
+  // Relaciones
+  rutina Rutina @relation(fields: [rutinaId], references: [id], onDelete: Cascade)
+
+  @@index([rutinaId])
+  @@map("ejercicios")
+}
+
+// ============================================
+// CATEGORÍAS DE PRODUCTOS
+// ============================================
+model CategoriaProducto {
+  id                 String   @id @default(uuid())
+  gimnasioId         String   @map("gimnasio_id")
+  nombre             String
+  descripcion        String?
+  fechaCreacion      DateTime @default(now()) @map("fecha_creacion")
+  fechaActualizacion DateTime @updatedAt @map("fecha_actualizacion")
+
+  // Relaciones
+  gimnasio  Gimnasio   @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  productos Producto[]
+
+  @@index([gimnasioId])
+  @@map("categorias_productos")
+}
+
+// ============================================
+// PRODUCTOS
+// ============================================
+model Producto {
+  id                 String   @id @default(uuid())
+  gimnasioId         String   @map("gimnasio_id")
+  categoriaId        String?  @map("categoria_id")
+  nombre             String
+  descripcion        String?
+  precio             Decimal  @db.Decimal(10, 2)
+  stock              Int      @default(0)
+  stockMinimo        Int      @default(5) @map("stock_minimo")
+  imagenUrl          String?  @map("imagen_url")
+  estado             String   @default("activo") // activo, inactivo
+  fechaCreacion      DateTime @default(now()) @map("fecha_creacion")
+  fechaActualizacion DateTime @updatedAt @map("fecha_actualizacion")
+
+  // Relaciones
+  gimnasio    Gimnasio               @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  categoria   CategoriaProducto?     @relation(fields: [categoriaId], references: [id], onDelete: SetNull)
+  ventas      VentaProducto[]
+  movimientos MovimientoInventario[]
+
+  @@index([gimnasioId])
+  @@index([categoriaId])
+  @@index([estado])
+  @@map("productos")
+}
+
+// ============================================
+// VENTAS DE PRODUCTOS
+// ============================================
+model VentaProducto {
+  id             String     @id @default(uuid())
+  gimnasioId     String     @map("gimnasio_id")
+  productoId     String     @map("producto_id")
+  clienteId      String?    @map("cliente_id")
+  cantidad       Int
+  precioUnitario Decimal    @map("precio_unitario") @db.Decimal(10, 2)
+  total          Decimal    @db.Decimal(10, 2)
+  metodoPago     MetodoPago @map("metodo_pago")
+  nota           String?
+  fechaVenta     DateTime   @default(now()) @map("fecha_venta")
+  fechaCreacion  DateTime   @default(now()) @map("fecha_creacion")
+
+  // Relaciones
+  gimnasio Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  producto Producto @relation(fields: [productoId], references: [id], onDelete: Restrict)
+  cliente  Usuario? @relation(fields: [clienteId], references: [id], onDelete: SetNull)
+
+  @@index([gimnasioId])
+  @@index([productoId])
+  @@index([clienteId])
+  @@index([fechaVenta])
+  @@map("ventas_productos")
+}
+
+// ============================================
+// MOVIMIENTOS DE INVENTARIO
+// ============================================
+model MovimientoInventario {
+  id            String   @id @default(uuid())
+  gimnasioId    String   @map("gimnasio_id")
+  productoId    String   @map("producto_id")
+  tipo          String // entrada, salida, ajuste
+  cantidad      Int
+  stockAnterior Int      @map("stock_anterior")
+  stockNuevo    Int      @map("stock_nuevo")
+  motivo        String?
+  referencia    String? // ID de venta si es salida por venta
+  creadoPorId   String   @map("creado_por_id")
+  fechaCreacion DateTime @default(now()) @map("fecha_creacion")
+
+  // Relaciones
+  gimnasio  Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  producto  Producto @relation(fields: [productoId], references: [id], onDelete: Cascade)
+  creadoPor Usuario  @relation(fields: [creadoPorId], references: [id], onDelete: Restrict)
+
+  @@index([gimnasioId])
+  @@index([productoId])
+  @@index([tipo])
+  @@index([fechaCreacion])
+  @@map("movimientos_inventario")
+}
+
+// ============================================
+// STAFF DEL GIMNASIO (para página web)
+// ============================================
+model Staff {
+  id          String  @id @default(uuid())
+  gimnasioId  String  @map("gimnasio_id")
+  
+  // 🆕 VINCULACIÓN OPCIONAL CON USUARIO
+  usuarioId   String? @map("usuario_id") // Si tiene valor, usa datos del usuario
+  
+  // Campos propios (se usan si NO está vinculado a usuario)
+  nombre      String?
+  apellido    String?
+  
+  // Campos exclusivos del staff
+  cargo       String // Ej: "Entrenador Personal", "Nutricionista"
+  descripcion String? @db.Text
+  imagenUrl   String? @map("imagen_url")
+  orden       Int     @default(0)
+  activo      Boolean @default(true)
+
+  // Redes sociales del staff
+  instagram String?
+  facebook  String?
+
+  fechaCreacion      DateTime @default(now()) @map("fecha_creacion")
+  fechaActualizacion DateTime @updatedAt @map("fecha_actualizacion")
+
+  // Relaciones
+  gimnasio Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  usuario  Usuario? @relation(fields: [usuarioId], references: [id], onDelete: SetNull) // 🆕
+
+  @@index([gimnasioId])
+  @@index([usuarioId]) // 🆕
+  @@index([activo])
+  @@map("staff")
+}
+
+// ============================================
+// TESTIMONIOS DE CLIENTES (para página web)
+// ============================================
+model Testimonio {
+  id            String   @id @default(uuid())
+  gimnasioId    String   @map("gimnasio_id")
+  nombreCliente String   @map("nombre_cliente")
+  contenido     String   @db.Text
+  calificacion  Int      @default(5) // 1-5 estrellas
+  imagenUrl     String?  @map("imagen_url")
+  orden         Int      @default(0)
+  activo        Boolean  @default(true)
+  fechaCreacion DateTime @default(now()) @map("fecha_creacion")
+
+  // Relaciones
+  gimnasio Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+
+  @@index([gimnasioId])
+  @@index([activo])
+  @@map("testimonios")
+}
+
+// ============================================
+// IMÁGENES DE GALERÍA (para página web)
+// ============================================
+model ImagenGaleria {
+  id            String   @id @default(uuid())
+  gimnasioId    String   @map("gimnasio_id")
+  titulo        String?
+  descripcion   String?
+  url           String
+  orden         Int      @default(0)
+  activo        Boolean  @default(true)
+  fechaCreacion DateTime @default(now()) @map("fecha_creacion")
+
+  // Relaciones
+  gimnasio Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+
+  @@index([gimnasioId])
+  @@index([activo])
+  @@map("imagenes_galeria")
 }
