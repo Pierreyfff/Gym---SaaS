@@ -1,18 +1,86 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:16-alpine
     container_name: gym-saas-db
-    restart: always
+    restart: unless-stopped
     ports:
-      - '5432:5432'
+      - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: gym_saas
-    volumes: 
+      POSTGRES_USER: ${POSTGRES_USER:-gymsaas}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gymsaas_secret_2024}
+      POSTGRES_DB: ${POSTGRES_DB:-gym_saas}
+    volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./docker/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gymsaas -d gym_saas"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - gym-saas-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+      args:
+        PNPM_VERSION: "9.15.0"
+    container_name: gym-saas-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.docker
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/packages/backend/node_modules
+      - /app/packages/database/node_modules
+      - /app/packages/shared/node_modules
+      - /app/packages/api-client/node_modules
+      - /app/packages/web/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - gym-saas-network
+    command: pnpm --filter @gym-saas/backend dev
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web.Dockerfile
+      args:
+        PNPM_VERSION: "9.15.0"
+    container_name: gym-saas-web
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    env_file:
+      - .env.docker
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/packages/backend/node_modules
+      - /app/packages/database/node_modules
+      - /app/packages/shared/node_modules
+      - /app/packages/api-client/node_modules
+      - /app/packages/web/node_modules
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - gym-saas-network
+    command: pnpm --filter web dev --host 0.0.0.0
 
 volumes:
-  postgres_data: 
+  postgres_data:
+    name: gym-saas-postgres-data
+    driver: local
+
+networks:
+  gym-saas-network:
+    name: gym-saas-network
+    driver: bridge

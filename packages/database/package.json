@@ -3,22 +3,19 @@
   "version": "1.0.0",
   "main": "./src/index.ts",
   "scripts": {
-    "migrate": "prisma migrate dev",
     "generate": "prisma generate",
+    "migrate": "prisma migrate dev",
     "studio": "prisma studio",
     "seed": "ts-node prisma/seed.ts",
     "lint": "eslint \"src/**/*.{ts,tsx}\""
   },
-  "devDependencies": {
-    "@types/bcryptjs": "^3.0.0",
-    "@types/node": "^25.0.2",
-    "bcryptjs": "^3.0.3",
-    "eslint": "^9.39.1",
-    "prisma": "5.22.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
-  },
   "dependencies": {
     "@prisma/client": "5.22.0"
+  },
+  "devDependencies": {
+    "prisma": "5.22.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "@types/node": "^25.0.2"
   }
 }

@@ -12,6 +12,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { apiClient } from '@/lib/api/client';
+import { formatCurrency } from '@/lib/format';
 // import { useAuthStore } from '@/lib/stores/auth-store';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -88,31 +89,25 @@ export function ClientePerfilPage() {
     }
   };
 
+  const getEstadoBadge = (estado: string) => {
+    const badges: Record<string, string> = {
+      activa: 'bg-green-100 text-green-800',
+      expirada: 'bg-gray-100 text-gray-800',
+      cancelada: 'bg-red-100 text-red-800',
+      completado: 'bg-green-100 text-green-800',
+      pendiente: 'bg-yellow-100 text-yellow-800',
+      reembolsado: 'bg-red-100 text-red-800',
+      rechazado: 'bg-gray-100 text-gray-800',
+    };
+    return badges[estado] || 'bg-gray-100 text-gray-800';
+  };
+
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString('es-ES', {
       day: '2-digit',
       month: 'short',
       year: 'numeric',
     });
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
-  };
-
-  const getEstadoBadge = (estado: string) => {
-    const badges = {
-      activa: 'bg-green-100 text-green-800',
-      expirada: 'bg-red-100 text-red-800',
-      cancelada: 'bg-gray-100 text-gray-800',
-      completado: 'bg-green-100 text-green-800',
-      pendiente: 'bg-yellow-100 text-yellow-800',
-      reembolsado: 'bg-red-100 text-red-800',
-    };
-    return badges[estado as keyof typeof badges] || 'bg-gray-100 text-gray-800';
   };
 
   if (loading) {
@@ -221,7 +216,7 @@ export function ClientePerfilPage() {
               <DollarSign className="w-8 h-8" />
             </div>
             <p className="text-sm opacity-90 mb-1">Total Pagado</p>
-            <p className="text-2xl font-bold">{formatPrice(perfil.resumen.totalPagado)}</p>
+            <p className="text-2xl font-bold">{formatCurrency(perfil.resumen.totalPagado)}</p>
           </div>
 
           {/* Total Asistencias */}
@@ -326,7 +321,7 @@ export function ClientePerfilPage() {
                             </div>
                             <div>
                               <p className="text-gray-600">Precio</p>
-                              <p className="font-semibold text-gray-900">{formatPrice(membresia.plan.precio)}</p>
+                              <p className="font-semibold text-gray-900">{formatCurrency(membresia.plan.precio)}</p>
                             </div>
                             {membresia.estado === 'activa' && (
                               <div>
@@ -357,7 +352,7 @@ export function ClientePerfilPage() {
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <h3 className="font-bold text-blue-600 text-lg">{formatPrice(pago.monto)}</h3>
+                            <h3 className="font-bold text-blue-600 text-lg">{formatCurrency(pago.monto)}</h3>
                             <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getEstadoBadge(pago.estado)}`}>
                               {pago.estado}
                             </span>
@@ -438,11 +433,11 @@ export function ClientePerfilPage() {
                             </div>
                             <div>
                               <p className="text-gray-600">Precio Unit.</p>
-                              <p className="font-semibold text-gray-900">{formatPrice(venta.precioUnitario)}</p>
+                              <p className="font-semibold text-gray-900">{formatCurrency(venta.precioUnitario)}</p>
                             </div>
                             <div>
                               <p className="text-gray-600">Total</p>
-                              <p className="font-semibold text-blue-600">{formatPrice(venta.total)}</p>
+                              <p className="font-semibold text-blue-600">{formatCurrency(venta.total)}</p>
                             </div>
                           </div>
                           <p className="text-xs text-gray-600 mt-2">{formatDate(venta.fechaVenta)}</p>

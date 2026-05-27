@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save, Calendar, User, CreditCard } from 'lucide-react';
 import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
+import { formatCurrency } from '@/lib/format';
 import { useToast } from '@/hooks/use-toast';
 
 interface MembresiaFormData {
@@ -189,13 +190,6 @@ export function MembresiaFormPage() {
     });
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
-  };
-
   if (loadingData) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -278,7 +272,7 @@ export function MembresiaFormPage() {
                   <option value="">Seleccionar plan...</option>
                   {planes.map((plan) => (
                     <option key={plan.id} value={plan.id}>
-                      {plan.nombre} - {formatPrice(plan.precio)} ({plan.duracionDias} días)
+                      {plan.nombre} - {formatCurrency(plan.precio)} ({plan.duracionDias} días)
                     </option>
                   ))}
                 </select>
@@ -350,7 +344,7 @@ export function MembresiaFormPage() {
 
                     <div className="pt-3 border-t border-orange-200">
                       <p className="text-xs text-orange-700 font-medium mb-1">PRECIO</p>
-                      <p className="text-2xl font-bold text-orange-600">{formatPrice(selectedPlan.precio)}</p>
+                      <p className="text-2xl font-bold text-orange-600">{formatCurrency(selectedPlan.precio)}</p>
                     </div>
                   </div>
                 </div>

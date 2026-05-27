@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicLayout } from '@/components/layouts/public-layout';
 import { apiClient } from '@/lib/api/client';
+import { formatCurrency } from '@/lib/format';
 import {
   Star,
   ArrowRight,
@@ -55,13 +56,6 @@ export function HomePage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
   };
 
   const renderStars = (calificacion: number) => {
@@ -244,7 +238,7 @@ export function HomePage() {
                       className="text-5xl font-bold"
                       style={{ color: colorPrimario }}
                     >
-                      {formatPrice(Number(plan.precio))}
+                      {formatCurrency(Number(plan.precio))}
                     </span>
                     <span className="text-gray-600 ml-2">
                       / {plan.duracionDias} días
@@ -413,3 +407,4 @@ export function HomePage() {
     </PublicLayout>
   );
 }
+

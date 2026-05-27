@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { formatCurrency } from '@/lib/format';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { apiClient } from '@/lib/api/client';
@@ -99,28 +100,14 @@ export function DashboardPage() {
     navigate('/login');
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    }).format(price);
-  };
+  const COLORS = ['#10b981', '#f59e0b', '#ef4444'];
 
   const membresiasPieData = stats
     ? [
-        { name: 'Activas', value: stats.membresiasActivas, color: '#10b981' },
-        {
-          name: 'Expiradas',
-          value: stats.membresiasExpiradas,
-          color: '#ef4444',
-        },
-        {
-          name: 'Canceladas',
-          value: stats.membresiasCanceladas,
-          color: '#6b7280',
-        },
-      ]
+        { name: 'Activas', value: stats.membresiasActivas, color: COLORS[0] },
+        { name: 'Expiradas', value: stats.membresiasExpiradas, color: COLORS[1] },
+        { name: 'Canceladas', value: stats.membresiasCanceladas, color: COLORS[2] },
+      ].filter((d) => d.value > 0)
     : [];
 
   return (
@@ -232,20 +219,20 @@ export function DashboardPage() {
                 {/* Monto principal */}
                 <p className="text-3xl font-bold">
                   {filtroIngresos === 'total'
-                    ? formatPrice(stats?.totalIngresos ?? 0)
+                    ? formatCurrency(stats?.totalIngresos ?? 0)
                     : filtroIngresos === 'membresias'
-                      ? formatPrice(stats?.ingresosMembresias ?? 0)
-                      : formatPrice(stats?.ingresosVentas ?? 0)}
+                      ? formatCurrency(stats?.ingresosMembresias ?? 0)
+                      : formatCurrency(stats?.ingresosVentas ?? 0)}
                 </p>
 
                 {/* Este mes */}
                 <p className="text-xs opacity-75 mt-2">
                   Este mes:{' '}
                   {filtroIngresos === 'total'
-                    ? formatPrice(stats?.ingresosMesActual ?? 0)
+                    ? formatCurrency(stats?.ingresosMesActual ?? 0)
                     : filtroIngresos === 'membresias'
-                      ? formatPrice(stats?.ingresosMembresiaMesActual ?? 0)
-                      : formatPrice(stats?.ingresosVentasMesActual ?? 0)}
+                      ? formatCurrency(stats?.ingresosMembresiaMesActual ?? 0)
+                      : formatCurrency(stats?.ingresosVentasMesActual ?? 0)}
                 </p>
 
                 {/* Desglose cuando está en "Total" */}
@@ -254,13 +241,13 @@ export function DashboardPage() {
                     <div className="flex justify-between text-xs opacity-90">
                       <span>Membresías:</span>
                       <span className="font-semibold">
-                        {formatPrice(stats?.ingresosMembresias ?? 0)}
+                        {formatCurrency(stats?.ingresosMembresias ?? 0)}
                       </span>
                     </div>
                     <div className="flex justify-between text-xs opacity-90 mt-1">
                       <span>Ventas:</span>
                       <span className="font-semibold">
-                        {formatPrice(stats?.ingresosVentas ?? 0)}
+                        {formatCurrency(stats?.ingresosVentas ?? 0)}
                       </span>
                     </div>
                   </div>
@@ -483,7 +470,7 @@ export function DashboardPage() {
                     <YAxis tick={{ fontSize: 12 }} />
                     <Tooltip
                       formatter={(value) =>
-                        typeof value === 'number' ? formatPrice(value) : value
+                        typeof value === 'number' ? formatCurrency(value) : value
                       }
                       contentStyle={{ fontSize: 12 }}
                     />

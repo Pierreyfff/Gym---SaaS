@@ -1,18 +1,12 @@
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { PublicLayout } from '@/components/layouts/public-layout';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
-import { User, ShoppingBag, CreditCard, MapPin, LogOut } from 'lucide-react';
+import { User, ShoppingBag, CreditCard, MapPin } from 'lucide-react';
 
 export function ClienteDashboardPage() {
   const navigate = useNavigate();
-  const { user, clearAuth } = useAuthStore();
-
-  const handleLogout = () => {
-    clearAuth();
-    navigate('/login');
-  };
+  const { user } = useAuthStore();
 
   return (
     <PublicLayout>

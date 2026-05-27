@@ -43,6 +43,9 @@ import { TiendaPage } from '@/pages/public/tienda-page';
 import { RegistroPage } from '@/pages/auth/registro-page';
 import { CheckoutPage } from '@/pages/public/checkout-page';
 import { ClienteDashboardPage } from '@/pages/clientes/cliente-dashboard-page';
+import { ClientePerfilClientePage } from '@/pages/clientes/cliente-perfil-cliente-page';
+import { ClienteComprasPage } from '@/pages/clientes/cliente-compras-page';
+import { ClienteMembresiaPage } from '@/pages/clientes/cliente-membresia-page';
 import { RecepcionistaDashboardPage } from '@/pages/recepcionista/recepcionista-dashboard-page';
 import { EntrenadorDashboardPage } from '@/pages/entrenador/entrenador-dashboard-page';
 
@@ -101,6 +104,30 @@ function App() {
               element={
                 <ProtectedRoute requiredRoles={['cliente']}>
                   <ClienteDashboardPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cliente/perfil"
+              element={
+                <ProtectedRoute requiredRoles={['cliente']}>
+                  <ClientePerfilClientePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cliente/compras"
+              element={
+                <ProtectedRoute requiredRoles={['cliente']}>
+                  <ClienteComprasPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cliente/membresia"
+              element={
+                <ProtectedRoute requiredRoles={['cliente']}>
+                  <ClienteMembresiaPage />
                 </ProtectedRoute>
               }
             />

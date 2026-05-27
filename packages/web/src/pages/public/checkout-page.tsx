@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PublicLayout } from '@/components/layouts/public-layout';
 import { useAuthStore } from '@/lib/stores/auth-store';
+import { useCartStore } from '@/lib/stores/cart-store';
 import { useToast } from '@/hooks/use-toast';
 import { apiClient } from '@/lib/api/client';
+import { formatCurrency } from '@/lib/format';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,25 +13,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ShoppingCart, MapPin, CreditCard, CheckCircle, ArrowLeft, ArrowRight } from 'lucide-react';
 
-interface ItemCarrito {
-  producto: {
-    id: string;
-    nombre: string;
-    precio: number;
-    imagenUrl?: string;
-  };
-  cantidad: number;
-}
-
 type PasoCheckout = 1 | 2 | 3 | 4;
 
 export function CheckoutPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuthStore();
+  const { items, clearCart } = useCartStore();
   
   const [paso, setPaso] = useState<PasoCheckout>(1);
-  const [carrito, setCarrito] = useState<ItemCarrito[]>([]);
   const [procesando, setProcesando] = useState(false);
   
   // Datos de envio
@@ -58,39 +50,18 @@ export function CheckoutPage() {
       return;
     }
 
-    loadCarritoFromStorage();
-  }, [isAuthenticated, navigate, toast]);
-
-  const loadCarritoFromStorage = () => {
-    const stored = localStorage.getItem('carrito');
-    if (stored) {
-      const carritoData = JSON.parse(stored);
-      if (carritoData.length === 0) {
-        toast({
-          variant: 'destructive',
-          title: 'Carrito vacio',
-          description: 'No hay productos en el carrito',
-        });
-        navigate('/tienda');
-        return;
-      }
-      setCarrito(carritoData);
-    } else {
+    if (items.length === 0) {
+      toast({
+        variant: 'destructive',
+        title: 'Carrito vacio',
+        description: 'No hay productos en el carrito',
+      });
       navigate('/tienda');
+      return;
     }
-  };
+  }, [isAuthenticated, navigate, toast, items.length]);
 
-  const totalCarrito = carrito.reduce(
-    (sum, item) => sum + Number(item.producto.precio) * item.cantidad,
-    0,
-  );
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
-  };
+  const totalCarrito = useCartStore((s) => s.totalPrice);
 
   const handleSiguientePaso = () => {
     if (paso === 1) {
@@ -126,7 +97,7 @@ export function CheckoutPage() {
 
     try {
       await apiClient.ventasProductos.create({
-        items: carrito.map(item => ({
+        items: items.map(item => ({
           productoId: item.producto.id,
           cantidad: item.cantidad,
         })),
@@ -139,9 +110,7 @@ export function CheckoutPage() {
         nota: datosEnvio.notas || undefined,
       });
 
-      // Limpiar carrito
-      localStorage.removeItem('carrito');
-      setCarrito([]);
+      clearCart();
       
       setPaso(4);
       
@@ -174,7 +143,7 @@ export function CheckoutPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {carrito.map((item) => (
+                {items.map((item) => (
                   <div key={item.producto.id} className="flex gap-4 bg-gray-50 rounded-lg p-4">
                     <img
                       src={item.producto.imagenUrl || 'https://via.placeholder.com/100'}
@@ -190,8 +159,8 @@ export function CheckoutPage() {
                         Cantidad: {item.cantidad}
                       </p>
                       <p className="text-sm font-bold text-purple-600 mt-1">
-                        {formatPrice(Number(item.producto.precio))} x {item.cantidad} ={' '}
-                        {formatPrice(Number(item.producto.precio) * item.cantidad)}
+                        {formatCurrency(Number(item.producto.precio))} x {item.cantidad} ={' '}
+                        {formatCurrency(Number(item.producto.precio) * item.cantidad)}
                       </p>
                     </div>
                   </div>
@@ -439,14 +408,14 @@ export function CheckoutPage() {
   }
 
   // Pantalla de carrito vacio
-  if (carrito.length === 0) {
+  if (items.length === 0) {
     return (
       <PublicLayout>
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
           <div className="text-center">
             <ShoppingCart className="w-20 h-20 text-gray-300 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Carrito vacio</h2>
-            <p className="text-gray-600 mb-6">No hay productos en tu carrito</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Tu carrito esta vacio</h2>
+            <p className="text-gray-600 mb-6">Agrega productos desde la tienda</p>
             <Button onClick={() => navigate('/tienda')}>
               Ir a la Tienda
             </Button>
@@ -511,7 +480,7 @@ export function CheckoutPage() {
                 <div className="flex justify-between items-center mb-6">
                   <span className="text-2xl font-bold text-gray-900">Total:</span>
                   <span className="text-3xl font-bold text-purple-600">
-                    {formatPrice(totalCarrito)}
+                    {formatCurrency(totalCarrito)}
                   </span>
                 </div>
 

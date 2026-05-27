@@ -5,6 +5,7 @@ import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { ConfirmationModal } from '@/components/shared/confirmation-modal';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/format';
 import { useDebounce } from '@/hooks/use-debounce';
 import { Skeleton } from '@/components/shared/skeleton-loader';
 
@@ -105,13 +106,6 @@ export function PlanesPage() {
   const filteredPlanes = planes.filter((plan) =>
     plan.nombre.toLowerCase().includes(debouncedSearch.toLowerCase()),
   );
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
-  };
 
   const formatDuration = (days: number) => {
     if (days === 30) return '1 mes';
@@ -218,7 +212,7 @@ export function PlanesPage() {
                   <div className="flex justify-between items-center py-2 border-b">
                     <span className="text-sm text-gray-600">Precio:</span>
                     <span className="text-2xl font-bold text-purple-600">
-                      {formatPrice(plan.precio)}
+                      {formatCurrency(plan.precio)}
                     </span>
                   </div>
                   <div className="flex justify-between items-center py-2">

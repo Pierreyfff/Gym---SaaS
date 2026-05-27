@@ -13,6 +13,7 @@ import {
 import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/format';
 import { downloadFile } from '@/lib/utils/download-file';
 import { ReembolsarPagoPanel } from './reembolsar-pago-panel';
 import { useDebounce } from '@/hooks/use-debounce';
@@ -112,6 +113,18 @@ export function PagosPage() {
     loadPagos();
   };
 
+  const totalIngresos = pagos
+    .filter((p) => p.estado === 'completado')
+    .reduce((sum, p) => sum + p.monto, 0);
+
+  const estadoStats = {
+    todos: pagos.length,
+    completado: pagos.filter((p) => p.estado === 'completado').length,
+    pendiente: pagos.filter((p) => p.estado === 'pendiente').length,
+    reembolsado: pagos.filter((p) => p.estado === 'reembolsado').length,
+    rechazado: pagos.filter((p) => p.estado === 'rechazado').length,
+  };
+
   const filteredPagos = pagos.filter((pago) => {
     const matchSearch = `${pago.membresia.cliente.nombre} ${pago.membresia.cliente.apellido} ${pago.membresia.plan.nombre}`
       .toLowerCase()
@@ -158,25 +171,6 @@ export function PagosPage() {
     });
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
-  };
-
-  const estadoStats = {
-    todos: pagos.length,
-    completado: pagos.filter((p) => p.estado === 'completado').length,
-    pendiente: pagos.filter((p) => p.estado === 'pendiente').length,
-    reembolsado: pagos.filter((p) => p.estado === 'reembolsado').length,
-    rechazado: pagos.filter((p) => p.estado === 'rechazado').length,
-  };
-
-  const totalIngresos = pagos
-    .filter((p) => p.estado === 'completado')
-    .reduce((sum, p) => sum + p.monto, 0);
-
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow">
@@ -206,7 +200,7 @@ export function PagosPage() {
               <TrendingUp className="w-6 h-6" />
               <p className="text-sm font-medium opacity-90">Ingresos Totales</p>
             </div>
-            <p className="text-3xl font-bold">{formatPrice(totalIngresos)}</p>
+            <p className="text-3xl font-bold">{formatCurrency(totalIngresos)}</p>
           </div>
 
           <button
@@ -396,7 +390,7 @@ export function PagosPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">{pago.membresia.plan.nombre}</td>
                     <td className="px-6 py-4 whitespace-nowrap font-bold text-blue-600">
-                      {formatPrice(pago.monto)}
+                      {formatCurrency(pago.monto)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {getMetodoPagoLabel(pago.metodoPago)}

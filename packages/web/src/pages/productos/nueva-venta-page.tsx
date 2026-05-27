@@ -4,6 +4,7 @@ import { ArrowLeft, Plus, Trash2, ShoppingCart } from 'lucide-react';
 import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/format';
 
 interface Producto {
   id: string;
@@ -37,6 +38,8 @@ export function NuevaVentaPage() {
   const [items, setItems] = useState<ItemVenta[]>([{ productoId: '', cantidad: 1 }]);
   const [clienteId, setClienteId] = useState('');
   const [metodoPago, setMetodoPago] = useState<'efectivo' | 'tarjeta' | 'transferencia'>('efectivo');
+  const [tipoEntrega, setTipoEntrega] = useState<'retiro' | 'domicilio'>('retiro');
+  const [telefono, setTelefono] = useState('');
   const [nota, setNota] = useState('');
 
   useEffect(() => {
@@ -123,9 +126,11 @@ export function NuevaVentaPage() {
 
       await apiClient.ventasProductos.create({
         items: validItems,
-        clienteId:  clienteId || undefined,
+        clienteId: clienteId || undefined,
         metodoPago,
-        nota:  nota || undefined,
+        tipoEntrega,
+        telefono,
+        nota: nota || undefined,
       });
 
       toast({
@@ -146,13 +151,6 @@ export function NuevaVentaPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl. NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
   };
 
   return (
@@ -213,7 +211,7 @@ export function NuevaVentaPage() {
                           <option value="">Seleccionar producto</option>
                           {productos.map((p) => (
                             <option key={p.id} value={p.id}>
-                              {p.nombre} - {formatPrice(p.precio)} (Stock: {p.stock})
+                              {p.nombre} - {formatCurrency(p.precio)} (Stock: {p.stock})
                             </option>
                           ))}
                         </select>
@@ -247,7 +245,7 @@ export function NuevaVentaPage() {
                       {producto && (
                         <div className="text-right">
                           <p className="text-xs text-gray-500">Subtotal</p>
-                          <p className="text-lg font-bold text-purple-600">{formatPrice(subtotal)}</p>
+                          <p className="text-lg font-bold text-purple-600">{formatCurrency(subtotal)}</p>
                         </div>
                       )}
                     </div>
@@ -279,6 +277,48 @@ export function NuevaVentaPage() {
                 ))}
               </select>
             </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Tipo de Entrega
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { value: 'retiro', label: 'Retiro en local' },
+                  { value: 'domicilio', label: 'Delivery' },
+                ].map((tipo) => (
+                  <button
+                    key={tipo.value}
+                    type="button"
+                    onClick={() => setTipoEntrega(tipo.value as 'retiro' | 'domicilio')}
+                    className={`p-4 border-2 rounded-lg transition text-center ${
+                      tipoEntrega === tipo.value
+                        ? 'border-purple-500 bg-purple-50'
+                        : 'border-gray-300 hover:border-gray-400'
+                    }`}
+                  >
+                    <span className="text-sm font-semibold text-gray-700">{tipo.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {tipoEntrega === 'domicilio' && (
+              <div>
+                <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 mb-1">
+                  Teléfono de Contacto
+                </label>
+                <input
+                  id="telefono"
+                  type="tel"
+                  value={telefono}
+                  onChange={(e) => setTelefono(e.target.value)}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  placeholder="999 999 999"
+                />
+              </div>
+            )}
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -325,7 +365,7 @@ export function NuevaVentaPage() {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex justify-between items-center mb-6 pb-6 border-b">
               <span className="text-lg font-semibold text-gray-900">Total a pagar:</span>
-              <span className="text-3xl font-bold text-purple-600">{formatPrice(calculateTotal())}</span>
+              <span className="text-3xl font-bold text-purple-600">{formatCurrency(calculateTotal())}</span>
             </div>
 
             <div className="flex justify-end gap-4">

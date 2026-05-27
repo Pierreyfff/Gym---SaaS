@@ -4,6 +4,7 @@ import { ArrowLeft, Check, CreditCard, DollarSign, Calendar, RefreshCw } from 'l
 import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/format';
 
 interface Membresia {
   id: string;
@@ -143,13 +144,6 @@ export function RenovarMembresiaPage() {
   };
 
   const selectedPlan = planes.find((p) => p.id === selectedPlanId);
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
-  };
 
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString('es-ES', {
@@ -306,7 +300,7 @@ export function RenovarMembresiaPage() {
                       )}
                       <div className="flex items-baseline gap-2">
                         <span className="text-2xl font-bold text-green-600">
-                          {formatPrice(plan.precio)}
+                          {formatCurrency(plan.precio)}
                         </span>
                         <span className="text-sm text-gray-500">/ {plan.duracionDias} días</span>
                       </div>
@@ -347,7 +341,7 @@ export function RenovarMembresiaPage() {
                   <div className="flex justify-between items-center pt-2 border-t">
                     <span className="font-semibold text-gray-900">Total a pagar:</span>
                     <span className="text-2xl font-bold text-green-600">
-                      {selectedPlan && formatPrice(selectedPlan.precio)}
+                      {selectedPlan && formatCurrency(selectedPlan.precio)}
                     </span>
                   </div>
                 </div>
@@ -446,7 +440,7 @@ export function RenovarMembresiaPage() {
                   <div className="flex justify-between pt-3 border-t">
                     <span className="font-semibold text-gray-900">Total pagado:</span>
                     <span className="text-xl font-bold text-green-600">
-                      {selectedPlan && formatPrice(selectedPlan.precio)}
+                      {selectedPlan && formatCurrency(selectedPlan.precio)}
                     </span>
                   </div>
                 </div>

@@ -18,6 +18,7 @@ import { useAuthStore } from '@/lib/stores/auth-store';
 import { ConfirmationModal } from '@/components/shared/confirmation-modal';
 import { CambiarPlanPanel } from './cambiar-plan-panel';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/format';
 import { useDebounce } from '@/hooks/use-debounce';
 import { TableSkeleton } from '@/components/shared/skeleton-loader';
 
@@ -246,13 +247,6 @@ export function MembresiasPage() {
     });
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
-  };
-
   const estadoStats = {
     todas: membresias.length,
     activa: membresias.filter((m) => m.estado === 'activa').length,
@@ -420,7 +414,7 @@ export function MembresiasPage() {
                           {membresia.plan.nombre}
                         </div>
                         <div className="text-sm text-gray-500">
-                          {formatPrice(membresia.plan.precio)}
+                          {formatCurrency(membresia.plan.precio)}
                         </div>
                       </div>
                     </td>

@@ -4,6 +4,7 @@ import { ArrowLeft, Plus, ShoppingCart, DollarSign, TrendingUp, Package } from '
 import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/format';
 import { TableSkeleton, Skeleton } from '@/components/shared/skeleton-loader';
 
 interface Venta {
@@ -54,13 +55,6 @@ export function VentasProductosPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
   };
 
   const formatDate = (date: Date) => {
@@ -141,7 +135,7 @@ export function VentasProductosPage() {
                 <DollarSign className="w-6 h-6" />
                 <p className="text-sm font-medium opacity-90">Ingresos Totales</p>
               </div>
-              <p className="text-3xl font-bold">{formatPrice(totalIngresos)}</p>
+              <p className="text-3xl font-bold">{formatCurrency(totalIngresos)}</p>
             </div>
 
             <div className="bg-white rounded-lg shadow p-6">
@@ -161,7 +155,7 @@ export function VentasProductosPage() {
                   <TrendingUp className="w-5 h-5 text-green-600" />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-green-600">{formatPrice(ingresosHoy)}</p>
+              <p className="text-2xl font-bold text-green-600">{formatCurrency(ingresosHoy)}</p>
               <p className="text-xs text-gray-500 mt-1">{ventasHoy.length} ventas</p>
             </div>
 
@@ -172,7 +166,7 @@ export function VentasProductosPage() {
                   <Package className="w-5 h-5 text-blue-600" />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-blue-600">{formatPrice(ingresosSemana)}</p>
+              <p className="text-2xl font-bold text-blue-600">{formatCurrency(ingresosSemana)}</p>
               <p className="text-xs text-gray-500 mt-1">{ventasSemana.length} ventas</p>
             </div>
           </div>
@@ -244,10 +238,10 @@ export function VentasProductosPage() {
                       <div className="text-sm text-gray-900">{venta.cantidad}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-600">{formatPrice(venta.precioUnitario)}</div>
+                      <div className="text-sm text-gray-600">{formatCurrency(venta.precioUnitario)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-bold text-purple-600">{formatPrice(venta.total)}</div>
+                      <div className="text-sm font-bold text-purple-600">{formatCurrency(venta.total)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="text-sm font-medium text-gray-900">

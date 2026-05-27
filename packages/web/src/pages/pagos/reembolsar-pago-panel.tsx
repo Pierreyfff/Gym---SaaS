@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, AlertTriangle, DollarSign, RefreshCw } from 'lucide-react';
 import { apiClient } from '@/lib/api/client';
+import { formatCurrency } from '@/lib/format';
 import { useToast } from '@/hooks/use-toast';
 
 interface ReembolsarPagoPanelProps {
@@ -54,7 +55,7 @@ export function ReembolsarPagoPanel({
 
       toast({
         title: 'Pago reembolsado',
-        description: `Se ha reembolsado ${formatPrice(monto)} a ${clienteNombre}`,
+        description: `Se ha reembolsado ${formatCurrency(monto)} a ${clienteNombre}`,
       });
 
       onSuccess();
@@ -69,14 +70,6 @@ export function ReembolsarPagoPanel({
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    }).format(price);
   };
 
   return (
@@ -123,7 +116,7 @@ export function ReembolsarPagoPanel({
               <DollarSign className="w-6 h-6 text-red-600" />
               <span className="font-semibold text-gray-900 text-lg">Monto a reembolsar</span>
             </div>
-            <p className="text-4xl font-bold text-red-600 mb-3">{formatPrice(monto)}</p>
+            <p className="text-4xl font-bold text-red-600 mb-3">{formatCurrency(monto)}</p>
             <div className="pt-3 border-t border-red-200">
               <p className="text-sm text-gray-700">
                 <span className="font-medium">Cliente:</span> {clienteNombre}

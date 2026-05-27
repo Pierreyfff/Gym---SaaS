@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PublicLayout } from '@/components/layouts/public-layout';
 import { apiClient } from '@/lib/api/client';
+import { formatCurrency } from '@/lib/format';
 import { CheckCircle, Star, Zap } from 'lucide-react';
 import type { PublicPlan, PublicConfiguracion } from '@gym-saas/api-client';
 
@@ -28,13 +29,6 @@ export function PlanesPublicosPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
   };
 
   if (loading) {
@@ -124,7 +118,7 @@ export function PlanesPublicosPage() {
                             className="text-5xl font-bold"
                             style={{ color: colorPrimario }}
                           >
-                            {formatPrice(Number(plan.precio))}
+                            {formatCurrency(Number(plan.precio))}
                           </span>
                           <span className="text-gray-600 text-lg ml-2">
                             / {plan.duracionDias} días

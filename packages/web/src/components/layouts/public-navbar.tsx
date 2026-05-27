@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Dumbbell, LogIn, User, LogOut, LayoutDashboard, ShoppingBag, CreditCard, ChevronDown } from 'lucide-react';
+import { Menu, X, Dumbbell, LogIn, User, LogOut, LayoutDashboard, ShoppingBag, CreditCard, ChevronDown, ShoppingCart, Moon, Sun } from 'lucide-react';
 import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
+import { useThemeStore } from '@/lib/stores/theme-store';
+import { useCartStore } from '@/lib/stores/cart-store';
 import type { PublicConfiguracion } from '@gym-saas/api-client';
 
 export function PublicNavbar() {
@@ -12,8 +14,11 @@ export function PublicNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const { isAuthenticated, user, clearAuth } = useAuthStore();
+  const { theme, toggleTheme } = useThemeStore();
+  const totalItems = useCartStore((s) => s.totalItems);
+  const setCartOpen = useCartStore((s) => s.setCartOpen);
 
   useEffect(() => {
     loadConfig();
@@ -56,7 +61,7 @@ export function PublicNavbar() {
 
   const getDashboardUrl = () => {
     if (!user) return '/login';
-    
+
     switch (user.rol) {
       case 'cliente':
         return '/cliente/dashboard';
@@ -90,18 +95,18 @@ export function PublicNavbar() {
   // Loading state
   if (!config) {
     return (
-      <nav className="bg-white shadow-md sticky top-0 z-50">
+      <nav className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <div className="w-48 h-8 bg-gray-200 animate-pulse rounded" />
+            <div className="w-48 h-8 bg-gray-200 dark:bg-gray-700 animate-pulse rounded" />
             <div className="hidden lg:flex items-center gap-8">
               {Array.from({ length: 6 }).map((_, i) => (
                 <div
                   key={i}
-                  className="w-16 h-4 bg-gray-200 animate-pulse rounded"
+                  className="w-16 h-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded"
                 />
               ))}
-              <div className="w-32 h-10 bg-gray-200 animate-pulse rounded-lg" />
+              <div className="w-32 h-10 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-lg" />
             </div>
           </div>
         </div>
@@ -113,8 +118,8 @@ export function PublicNavbar() {
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white shadow-lg'
-          : 'bg-white/95 backdrop-blur-sm shadow-md'
+          ? 'bg-white dark:bg-gray-900 shadow-lg'
+          : 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-md'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -141,8 +146,8 @@ export function PublicNavbar() {
               </div>
             )}
             <span
-              className="text-2xl font-bold transition-colors"
-              style={{ color: scrolled ? colorPrimario : '#1f2937' }}
+              className="text-2xl font-bold text-gray-900 dark:text-white transition-colors"
+              style={scrolled ? { color: colorPrimario } : undefined}
             >
               {nombreGym}
             </span>
@@ -156,8 +161,8 @@ export function PublicNavbar() {
                 to={link.to}
                 className={`text-sm font-semibold transition-all relative ${
                   isActive(link.to)
-                    ? 'text-gray-900'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'text-gray-900 dark:text-white'
+                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
                 {link.label}
@@ -170,12 +175,42 @@ export function PublicNavbar() {
               </Link>
             ))}
 
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5" style={{ color: colorPrimario }} />
+              ) : (
+                <Moon className="w-5 h-5" style={{ color: colorPrimario }} />
+              )}
+            </button>
+
+            {/* Cart Icon */}
+            <Link
+              to="/tienda"
+              onClick={() => {
+                if (location.pathname === '/tienda') {
+                  setCartOpen(true);
+                }
+              }}
+              className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <ShoppingCart className="w-5 h-5" style={{ color: colorPrimario }} />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {totalItems > 99 ? '99+' : totalItems}
+                </span>
+              )}
+            </Link>
+
             {/* User Menu o Login Button */}
             {isAuthenticated && user ? (
               <div className="relative" id="user-menu">
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:bg-gray-100"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   <div
                     className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
@@ -183,19 +218,19 @@ export function PublicNavbar() {
                   >
                     {user.nombre.charAt(0).toUpperCase()}
                   </div>
-                  <span className="text-sm text-gray-700">{user.nombre}</span>
-                  <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
+                  <span className="text-sm text-gray-700 dark:text-gray-300">{user.nombre}</span>
+                  <ChevronDown className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {/* Dropdown Menu */}
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 py-2 animate-fade-in">
-                    <div className="px-4 py-3 border-b border-gray-200">
-                      <p className="text-sm font-semibold text-gray-900">
+                  <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-2 animate-fade-in">
+                    <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">
                         {user.nombre} {user.apellido}
                       </p>
-                      <p className="text-xs text-gray-500">{user.email}</p>
-                      <p className="text-xs text-gray-400 mt-1 capitalize">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 capitalize">
                         Rol: {user.rol}
                       </p>
                     </div>
@@ -204,7 +239,7 @@ export function PublicNavbar() {
                       <Link
                         to={getDashboardUrl()}
                         onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
                       >
                         <LayoutDashboard className="w-4 h-4" style={{ color: colorPrimario }} />
                         Dashboard
@@ -215,7 +250,7 @@ export function PublicNavbar() {
                           <Link
                             to="/cliente/compras"
                             onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+                            className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
                           >
                             <ShoppingBag className="w-4 h-4" style={{ color: colorPrimario }} />
                             Mis Compras
@@ -223,7 +258,7 @@ export function PublicNavbar() {
                           <Link
                             to="/cliente/membresia"
                             onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+                            className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
                           >
                             <CreditCard className="w-4 h-4" style={{ color: colorPrimario }} />
                             Mi Membresía
@@ -234,17 +269,17 @@ export function PublicNavbar() {
                       <Link
                         to="/cliente/perfil"
                         onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
                       >
                         <User className="w-4 h-4" style={{ color: colorPrimario }} />
                         Mi Perfil
                       </Link>
                     </div>
 
-                    <div className="border-t border-gray-200 pt-2">
+                    <div className="border-t border-gray-200 dark:border-gray-700 pt-2">
                       <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition w-full"
+                        className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition w-full"
                       >
                         <LogOut className="w-4 h-4" />
                         Cerrar Sesión
@@ -268,7 +303,7 @@ export function PublicNavbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-lg transition-colors hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-lg transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
             style={{ color: colorPrimario }}
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -277,7 +312,7 @@ export function PublicNavbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden border-t border-gray-200 py-4 animate-fade-in">
+          <div className="lg:hidden border-t border-gray-200 dark:border-gray-700 py-4 animate-fade-in">
             <div className="flex flex-col gap-4">
               {links.map((link) => (
                 <Link
@@ -286,8 +321,8 @@ export function PublicNavbar() {
                   onClick={() => setIsOpen(false)}
                   className={`text-sm font-semibold transition-colors px-2 py-1 ${
                     isActive(link.to)
-                      ? 'text-gray-900'
-                      : 'text-gray-600 hover:text-gray-900'
+                      ? 'text-gray-900 dark:text-white'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                   }`}
                   style={isActive(link.to) ? { color: colorPrimario } : {}}
                 >
@@ -297,18 +332,31 @@ export function PublicNavbar() {
 
               {isAuthenticated && user ? (
                 <>
-                  <div className="border-t border-gray-200 pt-4 mt-2">
-                    <p className="text-xs text-gray-500 px-2 mb-2">Cuenta</p>
-                    <p className="font-semibold text-gray-900 px-2 mb-1">
+                  <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-2">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 px-2 mb-2">Cuenta</p>
+                    <p className="font-semibold text-gray-900 dark:text-white px-2 mb-1">
                       {user.nombre} {user.apellido}
                     </p>
-                    <p className="text-xs text-gray-500 px-2 mb-3">{user.email}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 px-2 mb-3">{user.email}</p>
                   </div>
+
+                  {/* Dark Mode Toggle - Mobile Authenticated */}
+                  <button
+                    onClick={toggleTheme}
+                    className="flex items-center gap-3 px-2 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
+                  >
+                    {theme === 'dark' ? (
+                      <Sun className="w-4 h-4" style={{ color: colorPrimario }} />
+                    ) : (
+                      <Moon className="w-4 h-4" style={{ color: colorPrimario }} />
+                    )}
+                    {theme === 'dark' ? 'Modo Claro' : 'Modo Oscuro'}
+                  </button>
 
                   <Link
                     to={getDashboardUrl()}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 px-2 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 rounded-lg transition"
+                    className="flex items-center gap-3 px-2 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
                   >
                     <LayoutDashboard className="w-4 h-4" style={{ color: colorPrimario }} />
                     Dashboard
@@ -319,7 +367,7 @@ export function PublicNavbar() {
                       <Link
                         to="/cliente/compras"
                         onClick={() => setIsOpen(false)}
-                        className="flex items-center gap-3 px-2 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 rounded-lg transition"
+                        className="flex items-center gap-3 px-2 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
                       >
                         <ShoppingBag className="w-4 h-4" style={{ color: colorPrimario }} />
                         Mis Compras
@@ -327,7 +375,7 @@ export function PublicNavbar() {
                       <Link
                         to="/cliente/membresia"
                         onClick={() => setIsOpen(false)}
-                        className="flex items-center gap-3 px-2 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 rounded-lg transition"
+                        className="flex items-center gap-3 px-2 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
                       >
                         <CreditCard className="w-4 h-4" style={{ color: colorPrimario }} />
                         Mi Membresía
@@ -337,22 +385,37 @@ export function PublicNavbar() {
 
                   <button
                     onClick={handleLogout}
-                    className="flex items-center gap-3 px-2 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 rounded-lg transition"
+                    className="flex items-center gap-3 px-2 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition"
                   >
                     <LogOut className="w-4 h-4" />
                     Cerrar Sesión
                   </button>
                 </>
               ) : (
-                <Link
-                  to="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-all"
-                  style={{ backgroundColor: colorPrimario }}
-                >
-                  <LogIn className="w-4 h-4" />
-                  Iniciar Sesión
-                </Link>
+                <>
+                  {/* Dark Mode Toggle - Mobile Unauthenticated */}
+                  <button
+                    onClick={toggleTheme}
+                    className="flex items-center gap-3 px-2 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
+                  >
+                    {theme === 'dark' ? (
+                      <Sun className="w-4 h-4" style={{ color: colorPrimario }} />
+                    ) : (
+                      <Moon className="w-4 h-4" style={{ color: colorPrimario }} />
+                    )}
+                    {theme === 'dark' ? 'Modo Claro' : 'Modo Oscuro'}
+                  </button>
+
+                  <Link
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-white transition-all"
+                    style={{ backgroundColor: colorPrimario }}
+                  >
+                    <LogIn className="w-4 h-4" />
+                    Iniciar Sesión
+                  </Link>
+                </>
               )}
             </div>
           </div>

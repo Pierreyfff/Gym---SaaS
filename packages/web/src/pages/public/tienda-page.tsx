@@ -3,7 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { PublicLayout } from '@/components/layouts/public-layout';
 import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
+import { useCartStore, type ProductoItem } from '@/lib/stores/cart-store';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/format';
+import { Button } from '@/components/ui/button';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import {
   ShoppingCart,
   Plus,
@@ -13,43 +23,43 @@ import {
   Heart,
   Filter,
   Search,
+  Trash2,
+  HeartOff,
 } from 'lucide-react';
 import type { PublicConfiguracion, PublicProducto } from '@gym-saas/api-client';
 
 type Producto = PublicProducto;
 
-interface ItemCarrito {
-  producto: Producto;
-  cantidad: number;
-}
-
 export function TiendaPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const {
+    items,
+    wishlist,
+    isCartOpen,
+    isWishlistOpen,
+    totalItems,
+    totalPrice,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    toggleWishlist,
+    isInWishlist,
+    setCartOpen,
+    setWishlistOpen,
+  } = useCartStore();
 
   const [productos, setProductos] = useState<Producto[]>([]);
   const [config, setConfig] = useState<PublicConfiguracion | null>(null);
   const [loading, setLoading] = useState(true);
-  const [carrito, setCarrito] = useState<ItemCarrito[]>([]);
-  const [wishlist, setWishlist] = useState<string[]>([]);
-  const [showCarrito, setShowCarrito] = useState(false);
   const [categoriaFilter, setCategoriaFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     loadData();
-    loadCarritoFromStorage();
-    loadWishlistFromStorage();
   }, []);
-
-  useEffect(() => {
-    saveCarritoToStorage();
-  }, [carrito]);
-
-  useEffect(() => {
-    saveWishlistToStorage();
-  }, [wishlist]);
 
   const loadData = async () => {
     try {
@@ -58,7 +68,6 @@ export function TiendaPage() {
         apiClient.public.getProductos(),
         apiClient.public.getConfiguracion(),
       ]);
-
       setProductos(productosData.productos);
       setConfig(configData);
     } catch (error) {
@@ -68,131 +77,48 @@ export function TiendaPage() {
     }
   };
 
-  const loadCarritoFromStorage = () => {
-    const stored = localStorage.getItem('carrito');
-    if (stored) {
-      setCarrito(JSON.parse(stored));
-    }
-  };
+  const toProductoItem = (p: Producto): ProductoItem => ({
+    id: p.id,
+    nombre: p.nombre,
+    precio: Number(p.precio),
+    imagenUrl: p.imagenUrl,
+    stock: p.stock,
+    categoriaNombre: p.categoria?.nombre,
+  });
 
-  const saveCarritoToStorage = () => {
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-  };
-
-  const loadWishlistFromStorage = () => {
-    const stored = localStorage.getItem('wishlist');
-    if (stored) {
-      setWishlist(JSON.parse(stored));
-    }
-  };
-
-  const saveWishlistToStorage = () => {
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-  };
-
-  const toggleWishlist = (productoId: string) => {
-    if (wishlist.includes(productoId)) {
-      setWishlist(wishlist.filter((id) => id !== productoId));
-    } else {
-      setWishlist([...wishlist, productoId]);
-    }
-  };
-
-  const agregarAlCarrito = (producto: Producto) => {
-    const existente = carrito.find((item) => item.producto.id === producto.id);
-
-    if (existente) {
-      if (existente.cantidad < producto.stock) {
-        setCarrito(
-          carrito.map((item) =>
-            item.producto.id === producto.id
-              ? { ...item, cantidad: item.cantidad + 1 }
-              : item,
-          ),
-        );
-
-        toast({
-          title: 'Producto actualizado',
-          description: `${producto.nombre} (${existente.cantidad + 1})`,
-        });
-      } else {
-        toast({
-          variant: 'destructive',
-          title: 'Stock maximo',
-          description: 'No hay mas unidades disponibles',
-        });
-      }
-    } else {
-      setCarrito([...carrito, { producto, cantidad: 1 }]);
-
+  const handleAddToCart = (producto: Producto) => {
+    const existing = items.find((i) => i.producto.id === producto.id);
+    if (existing && existing.cantidad >= producto.stock) {
       toast({
-        title: 'Agregado al carrito',
-        description: producto.nombre,
+        variant: 'destructive',
+        title: 'Stock maximo',
+        description: 'No hay mas unidades disponibles',
       });
+      return;
     }
-  };
-
-  const aumentarCantidad = (productoId: string) => {
-    setCarrito(
-      carrito.map((item) => {
-        if (
-          item.producto.id === productoId &&
-          item.cantidad < item.producto.stock
-        ) {
-          return { ...item, cantidad: item.cantidad + 1 };
-        }
-        return item;
-      }),
-    );
-  };
-
-  const disminuirCantidad = (productoId: string) => {
-    setCarrito(
-      carrito
-        .map((item) => {
-          if (item.producto.id === productoId) {
-            return { ...item, cantidad: item.cantidad - 1 };
-          }
-          return item;
-        })
-        .filter((item) => item.cantidad > 0),
-    );
-  };
-
-  const eliminarDelCarrito = (productoId: string) => {
-    setCarrito(carrito.filter((item) => item.producto.id !== productoId));
-
+    addToCart(toProductoItem(producto));
     toast({
-      title: 'Producto eliminado',
-      description: 'Se elimino del carrito',
+      title: 'Agregado al carrito',
+      description: producto.nombre,
     });
   };
 
-  const vaciarCarrito = () => {
-    setCarrito([]);
-
-    toast({
-      title: 'Carrito vaciado',
-      description: 'Se eliminaron todos los productos',
-    });
-  };
-
-  const totalCarrito = carrito.reduce(
-    (sum, item) => sum + Number(item.producto.precio) * item.cantidad,
-    0,
-  );
-
-  const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
+  const handleAumentarCantidad = (productoId: string) => {
+    const item = items.find((i) => i.producto.id === productoId);
+    const prod = productos.find((p) => p.id === productoId);
+    if (item && prod && item.cantidad >= prod.stock) {
+      toast({
+        variant: 'destructive',
+        title: 'Stock maximo',
+        description: 'No hay mas unidades disponibles',
+      });
+      return;
+    }
+    updateQuantity(productoId, (item?.cantidad ?? 0) + 1);
   };
 
   const handleCheckout = () => {
-    if (carrito.length === 0) {
+    if (items.length === 0) {
       toast({
         variant: 'destructive',
         title: 'Carrito vacio',
@@ -200,17 +126,12 @@ export function TiendaPage() {
       });
       return;
     }
-
     if (!isAuthenticated) {
-      // Cerrar modal del carrito
-      setShowCarrito(false);
-
+      setCartOpen(false);
       toast({
         title: 'Inicia sesion para continuar',
         description: 'Seras redirigido al login',
       });
-
-      // Esperar un momento antes de redirigir para que se vea el toast
       setTimeout(() => {
         navigate('/login?returnUrl=/checkout');
       }, 800);
@@ -219,7 +140,6 @@ export function TiendaPage() {
     }
   };
 
-  // Filtrado
   const categorias = Array.from(
     new Set(productos.map((p) => p.categoria?.nombre).filter(Boolean)),
   );
@@ -248,9 +168,10 @@ export function TiendaPage() {
   const colorPrimario = config?.colorPrimario || '#9333ea';
   const colorSecundario = config?.colorSecundario || '#ec4899';
 
+  const wishlistProductos = productos.filter((p) => wishlist.includes(p.id));
+
   return (
     <PublicLayout>
-      {/* Hero */}
       <section
         className="py-24 text-white relative overflow-hidden"
         style={{
@@ -275,13 +196,10 @@ export function TiendaPage() {
         </div>
       </section>
 
-      {/* Productos */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header con filtros y carrito */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
             <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-              {/* Busqueda */}
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
@@ -296,7 +214,6 @@ export function TiendaPage() {
                 />
               </div>
 
-              {/* Filtro por categoria */}
               {categorias.length > 0 && (
                 <div className="relative">
                   <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -321,59 +238,257 @@ export function TiendaPage() {
               )}
             </div>
 
-            {/* Botones */}
             <div className="flex gap-3">
-              <button
-                onClick={() => {
-                  if (wishlist.length === 0) {
-                    toast({
-                      title: 'Lista vacia',
-                      description: 'No tienes productos favoritos',
-                    });
-                  } else {
-                    toast({
-                      title: 'Favoritos',
-                      description: `Tienes ${wishlist.length} productos favoritos`,
-                    });
-                  }
-                }}
-                className="relative px-6 py-2.5 border-2 rounded-lg font-semibold transition hover:scale-105"
-                style={{
-                  borderColor: colorPrimario,
-                  color: colorPrimario,
-                }}
+              {/* Wishlist Sheet */}
+              <Sheet
+                open={isWishlistOpen}
+                onOpenChange={setWishlistOpen}
               >
-                <Heart className="w-5 h-5 inline mr-2" />
-                Favoritos
-                {wishlist.length > 0 && (
-                  <span
-                    className="absolute -top-2 -right-2 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center"
-                    style={{ backgroundColor: colorSecundario }}
+                <SheetTrigger asChild>
+                  <button
+                    className="relative px-6 py-2.5 border-2 rounded-lg font-semibold transition hover:scale-105"
+                    style={{
+                      borderColor: colorPrimario,
+                      color: colorPrimario,
+                    }}
                   >
-                    {wishlist.length}
-                  </span>
-                )}
-              </button>
+                    <Heart className="w-5 h-5 inline mr-2" />
+                    Favoritos
+                    {wishlist.length > 0 && (
+                      <span
+                        className="absolute -top-2 -right-2 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center"
+                        style={{ backgroundColor: colorSecundario }}
+                      >
+                        {wishlist.length}
+                      </span>
+                    )}
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-full max-w-md p-0">
+                  <SheetHeader
+                    className="text-white p-6"
+                    style={{
+                      background: `linear-gradient(135deg, ${colorPrimario}, ${colorSecundario})`,
+                    }}
+                  >
+                    <SheetTitle className="text-2xl font-bold text-white">
+                      Tus Favoritos
+                    </SheetTitle>
+                  </SheetHeader>
+                  <div className="flex-1 overflow-y-auto p-6">
+                    {wishlistProductos.length === 0 ? (
+                      <div className="text-center py-12">
+                        <HeartOff className="w-20 h-20 text-gray-300 mx-auto mb-4" />
+                        <p className="text-gray-600 text-lg">
+                          No tienes favoritos
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {wishlistProductos.map((producto) => (
+                          <div
+                            key={producto.id}
+                            className="flex gap-4 bg-gray-50 rounded-xl p-4 hover:shadow-md transition"
+                          >
+                            <img
+                              src={
+                                producto.imagenUrl ||
+                                'https://via.placeholder.com/100'
+                              }
+                              alt={producto.nombre}
+                              className="w-24 h-24 object-cover rounded-lg"
+                              onError={(e) => {
+                                e.currentTarget.src =
+                                  'https://via.placeholder.com/100';
+                              }}
+                            />
+                            <div className="flex-1">
+                              <h4 className="font-bold text-gray-900 line-clamp-1">
+                                {producto.nombre}
+                              </h4>
+                              <p
+                                className="text-sm font-bold mt-1"
+                                style={{ color: colorPrimario }}
+                              >
+                                {formatCurrency(Number(producto.precio))}
+                              </p>
+                              <div className="flex gap-2 mt-3">
+                                <Button
+                                  size="sm"
+                                  onClick={() => {
+                                    handleAddToCart(producto);
+                                    setWishlistOpen(false);
+                                  }}
+                                  style={{
+                                    background: `linear-gradient(135deg, ${colorPrimario}, ${colorSecundario})`,
+                                  }}
+                                  className="text-white flex-1"
+                                >
+                                  <ShoppingCart className="w-4 h-4 mr-1" />
+                                  Agregar
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => toggleWishlist(producto.id)}
+                                  className="text-red-500 border-red-200"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </SheetContent>
+              </Sheet>
 
-              <button
-                onClick={() => setShowCarrito(true)}
-                className="relative text-white px-6 py-2.5 rounded-lg font-semibold transition hover:scale-105 flex items-center gap-2 shadow-lg"
-                style={{
-                  background: `linear-gradient(135deg, ${colorPrimario}, ${colorSecundario})`,
-                }}
+              {/* Cart Sheet */}
+              <Sheet
+                open={isCartOpen}
+                onOpenChange={setCartOpen}
               >
-                <ShoppingCart className="w-5 h-5" />
-                Carrito
-                {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
+                <SheetTrigger asChild>
+                  <button
+                    className="relative text-white px-6 py-2.5 rounded-lg font-semibold transition hover:scale-105 flex items-center gap-2 shadow-lg"
+                    style={{
+                      background: `linear-gradient(135deg, ${colorPrimario}, ${colorSecundario})`,
+                    }}
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    Carrito
+                    {totalItems > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                        {totalItems}
+                      </span>
+                    )}
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-full max-w-md p-0">
+                  <SheetHeader
+                    className="text-white p-6"
+                    style={{
+                      background: `linear-gradient(135deg, ${colorPrimario}, ${colorSecundario})`,
+                    }}
+                  >
+                    <SheetTitle className="text-2xl font-bold text-white">
+                      Tu Carrito
+                    </SheetTitle>
+                  </SheetHeader>
+
+                  <div className="flex-1 overflow-y-auto p-6">
+                    {items.length === 0 ? (
+                      <div className="text-center py-12">
+                        <ShoppingCart className="w-20 h-20 text-gray-300 mx-auto mb-4" />
+                        <p className="text-gray-600 text-lg">
+                          Tu carrito esta vacio
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {items.map((item) => (
+                          <div
+                            key={item.producto.id}
+                            className="flex gap-4 bg-gray-50 rounded-xl p-4 hover:shadow-md transition"
+                          >
+                            <img
+                              src={
+                                item.producto.imagenUrl ||
+                                'https://via.placeholder.com/100'
+                              }
+                              alt={item.producto.nombre}
+                              className="w-24 h-24 object-cover rounded-lg"
+                              onError={(e) => {
+                                e.currentTarget.src =
+                                  'https://via.placeholder.com/100';
+                              }}
+                            />
+                            <div className="flex-1">
+                              <h4 className="font-bold text-gray-900 line-clamp-1">
+                                {item.producto.nombre}
+                              </h4>
+                              <p
+                                className="text-sm font-bold mt-1"
+                                style={{ color: colorPrimario }}
+                              >
+                                {formatCurrency(Number(item.producto.precio))}
+                              </p>
+                              <div className="flex items-center gap-3 mt-3">
+                                <button
+                                  onClick={() =>
+                                    updateQuantity(
+                                      item.producto.id,
+                                      item.cantidad - 1,
+                                    )
+                                  }
+                                  className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center justify-center transition"
+                                >
+                                  <Minus className="w-4 h-4" />
+                                </button>
+                                <span className="font-bold text-lg">
+                                  {item.cantidad}
+                                </span>
+                                <button
+                                  onClick={() =>
+                                    handleAumentarCantidad(item.producto.id)
+                                  }
+                                  className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center justify-center transition"
+                                >
+                                  <Plus className="w-4 h-4" />
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    removeFromCart(item.producto.id)
+                                  }
+                                  className="ml-auto text-red-600 hover:text-red-800 transition"
+                                >
+                                  <X className="w-5 h-5" />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {items.length > 0 && (
+                    <div className="border-t-2 p-6 bg-gray-50">
+                      <div className="flex justify-between items-center mb-6">
+                        <span className="text-xl font-bold text-gray-900">
+                          Total:
+                        </span>
+                        <span
+                          className="text-3xl font-bold"
+                          style={{ color: colorPrimario }}
+                        >
+                          {formatCurrency(totalPrice)}
+                        </span>
+                      </div>
+                      <button
+                        onClick={handleCheckout}
+                        className="w-full text-white py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-lg mb-3"
+                        style={{
+                          background: `linear-gradient(135deg, ${colorPrimario}, ${colorSecundario})`,
+                        }}
+                      >
+                        Proceder al Pago
+                      </button>
+                      <button
+                        onClick={clearCart}
+                        className="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 rounded-xl font-semibold transition"
+                      >
+                        Vaciar Carrito
+                      </button>
+                    </div>
+                  )}
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
 
-          {/* Grid de productos */}
           {productosFiltrados.length === 0 ? (
             <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
               <Package className="w-20 h-20 text-gray-300 mx-auto mb-4" />
@@ -396,7 +511,6 @@ export function TiendaPage() {
                   className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
-                  {/* Imagen */}
                   <div className="relative aspect-square bg-gray-200 overflow-hidden">
                     <img
                       src={
@@ -410,30 +524,24 @@ export function TiendaPage() {
                           'https://via.placeholder.com/400?text=Sin+Imagen';
                       }}
                     />
-
-                    {/* Boton wishlist */}
                     <button
                       onClick={() => toggleWishlist(producto.id)}
                       className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
                     >
                       <Heart
                         className={`w-5 h-5 ${
-                          wishlist.includes(producto.id)
+                          isInWishlist(producto.id)
                             ? 'fill-red-500 text-red-500'
                             : 'text-gray-400'
                         }`}
                       />
                     </button>
-
-                    {/* Badge stock bajo */}
                     {producto.stock <= 5 && (
                       <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                         Ultimas unidades
                       </div>
                     )}
                   </div>
-
-                  {/* Info */}
                   <div className="p-5">
                     {producto.categoria && (
                       <span
@@ -460,7 +568,7 @@ export function TiendaPage() {
                           className="text-3xl font-bold"
                           style={{ color: colorPrimario }}
                         >
-                          {formatPrice(Number(producto.precio))}
+                          {formatCurrency(Number(producto.precio))}
                         </span>
                         <p className="text-xs text-gray-500 mt-1">
                           Stock: {producto.stock} unidades
@@ -468,7 +576,7 @@ export function TiendaPage() {
                       </div>
                     </div>
                     <button
-                      onClick={() => agregarAlCarrito(producto)}
+                      onClick={() => handleAddToCart(producto)}
                       className="mt-4 w-full text-white py-3 rounded-lg font-bold transition-all hover:scale-105 shadow-md"
                       style={{
                         background: `linear-gradient(135deg, ${colorPrimario}, ${colorSecundario})`,
@@ -484,149 +592,14 @@ export function TiendaPage() {
         </div>
       </section>
 
-      {/* Modal Carrito */}
-      {showCarrito && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-end animate-fade-in">
-          <div className="bg-white w-full max-w-md h-full shadow-2xl flex flex-col animate-slide-in-right">
-            {/* Header */}
-            <div
-              className="text-white p-6 flex justify-between items-center"
-              style={{
-                background: `linear-gradient(135deg, ${colorPrimario}, ${colorSecundario})`,
-              }}
-            >
-              <h3 className="text-2xl font-bold">Tu Carrito</h3>
-              <button
-                onClick={() => setShowCarrito(false)}
-                className="text-white hover:text-gray-200 transition"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Items */}
-            <div className="flex-1 overflow-y-auto p-6">
-              {carrito.length === 0 ? (
-                <div className="text-center py-12">
-                  <ShoppingCart className="w-20 h-20 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-600 text-lg">Tu carrito esta vacio</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {carrito.map((item) => (
-                    <div
-                      key={item.producto.id}
-                      className="flex gap-4 bg-gray-50 rounded-xl p-4 hover:shadow-md transition"
-                    >
-                      <img
-                        src={
-                          item.producto.imagenUrl ||
-                          'https://via.placeholder.com/100'
-                        }
-                        alt={item.producto.nombre}
-                        className="w-24 h-24 object-cover rounded-lg"
-                        onError={(e) => {
-                          e.currentTarget.src =
-                            'https://via.placeholder.com/100';
-                        }}
-                      />
-                      <div className="flex-1">
-                        <h4 className="font-bold text-gray-900 line-clamp-1">
-                          {item.producto.nombre}
-                        </h4>
-                        <p
-                          className="text-sm font-bold mt-1"
-                          style={{ color: colorPrimario }}
-                        >
-                          {formatPrice(Number(item.producto.precio))}
-                        </p>
-                        <div className="flex items-center gap-3 mt-3">
-                          <button
-                            onClick={() => disminuirCantidad(item.producto.id)}
-                            className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center justify-center transition"
-                          >
-                            <Minus className="w-4 h-4" />
-                          </button>
-                          <span className="font-bold text-lg">
-                            {item.cantidad}
-                          </span>
-                          <button
-                            onClick={() => aumentarCantidad(item.producto.id)}
-                            className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center justify-center transition"
-                          >
-                            <Plus className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => eliminarDelCarrito(item.producto.id)}
-                            className="ml-auto text-red-600 hover:text-red-800 transition"
-                          >
-                            <X className="w-5 h-5" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Footer */}
-            {carrito.length > 0 && (
-              <div className="border-t-2 p-6 bg-gray-50">
-                <div className="flex justify-between items-center mb-6">
-                  <span className="text-xl font-bold text-gray-900">
-                    Total:
-                  </span>
-                  <span
-                    className="text-3xl font-bold"
-                    style={{ color: colorPrimario }}
-                  >
-                    {formatPrice(totalCarrito)}
-                  </span>
-                </div>
-                <button
-                  onClick={handleCheckout}
-                  className="w-full text-white py-4 rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-lg mb-3"
-                  style={{
-                    background: `linear-gradient(135deg, ${colorPrimario}, ${colorSecundario})`,
-                  }}
-                >
-                  Proceder al Pago
-                </button>
-                <button
-                  onClick={vaciarCarrito}
-                  className="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 rounded-xl font-semibold transition"
-                >
-                  Vaciar Carrito
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
       <style>{`
         @keyframes fade-in-up {
           from { opacity: 0; transform: translateY(30px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes slide-in-right {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
-        }
         .animate-fade-in-up {
           animation: fade-in-up 0.6s ease-out;
           animation-fill-mode: both;
-        }
-        .animate-fade-in {
-          animation: fade-in 0.3s ease-out;
-        }
-        .animate-slide-in-right {
-          animation: slide-in-right 0.3s ease-out;
         }
       `}</style>
     </PublicLayout>

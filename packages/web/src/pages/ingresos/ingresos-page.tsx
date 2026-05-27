@@ -13,6 +13,7 @@ import {
 import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/format';
 import {
   LineChart,
   Line,
@@ -95,14 +96,6 @@ export function IngresosPage() {
 
   const handleFiltrar = () => {
     loadData();
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    }).format(price);
   };
 
   const formatDate = (dateString: string) => {
@@ -265,7 +258,7 @@ export function IngresosPage() {
                   <TrendingUp className="w-8 h-8 opacity-80" />
                 </div>
                 <p className="text-3xl font-bold">
-                  {formatPrice(resumen?.totalIngresos ?? 0)}
+                  {formatCurrency(resumen?.totalIngresos ?? 0)}
                 </p>
                 <p className="text-xs opacity-75 mt-2">
                   {resumen?.cantidadTransacciones ?? 0} transacciones
@@ -280,7 +273,7 @@ export function IngresosPage() {
                   <CreditCard className="w-8 h-8 text-orange-600" />
                 </div>
                 <p className="text-3xl font-bold text-gray-900">
-                  {formatPrice(resumen?.totalMembresias ?? 0)}
+                  {formatCurrency(resumen?.totalMembresias ?? 0)}
                 </p>
               </div>
 
@@ -292,7 +285,7 @@ export function IngresosPage() {
                   <ShoppingCart className="w-8 h-8 text-blue-600" />
                 </div>
                 <p className="text-3xl font-bold text-gray-900">
-                  {formatPrice(resumen?.totalProductos ?? 0)}
+                  {formatCurrency(resumen?.totalProductos ?? 0)}
                 </p>
               </div>
 
@@ -304,7 +297,7 @@ export function IngresosPage() {
                   <DollarSign className="w-8 h-8 text-purple-600" />
                 </div>
                 <p className="text-3xl font-bold text-gray-900">
-                  {formatPrice(resumen?.promedioTransaccion ?? 0)}
+                  {formatCurrency(resumen?.promedioTransaccion ?? 0)}
                 </p>
                 <p className="text-xs text-gray-500 mt-2">por transacción</p>
               </div>
@@ -328,7 +321,7 @@ export function IngresosPage() {
                     <YAxis tick={{ fontSize: 12 }} />
                     <Tooltip
                       labelFormatter={(label) => formatDateShort(label)}
-                      formatter={(value: any) => formatPrice(value)}
+                      formatter={(value: any) => formatCurrency(value)}
                     />
                     <Legend />
                     <Line
@@ -373,7 +366,7 @@ export function IngresosPage() {
                         cy="50%"
                         labelLine={false}
                         label={(entry) =>
-                          `${entry.name}: ${formatPrice(entry.value)}`
+                          `${entry.name}: ${formatCurrency(entry.value)}`
                         }
                         outerRadius={100}
                         dataKey="value"
@@ -385,7 +378,7 @@ export function IngresosPage() {
                           />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(value: any) => formatPrice(value)} />
+                      <Tooltip formatter={(value: any) => formatCurrency(value)} />
                     </PieChart>
                   </ResponsiveContainer>
                 ) : (
@@ -407,9 +400,9 @@ export function IngresosPage() {
                       <XAxis dataKey="nombre" tick={{ fontSize: 12 }} />
                       <YAxis tick={{ fontSize: 12 }} />
                       <Tooltip
-                        formatter={(value: any, name?: string) => {
+                        formatter={(value: any, name: any) => {
                           if (name === 'ingresosTotales') {
-                            return formatPrice(value);
+                            return formatCurrency(value);
                           }
                           return value;
                         }}
@@ -518,7 +511,7 @@ export function IngresosPage() {
                             {ingreso.metodoPago}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 text-right">
-                            {formatPrice(ingreso.monto)}
+                            {formatCurrency(ingreso.monto)}
                           </td>
                         </tr>
                       ))

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { X, AlertCircle, CheckCircle, DollarSign, Calendar, RefreshCw } from 'lucide-react';
 import { apiClient } from '@/lib/api/client';
+import { formatCurrency } from '@/lib/format';
 import { useToast } from '@/hooks/use-toast';
 
 interface Plan {
@@ -125,14 +126,6 @@ export function CambiarPlanPanel({
     }
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    }).format(price);
-  };
-
   return (
     <>
       {/* Overlay */}
@@ -154,7 +147,7 @@ export function CambiarPlanPanel({
           <div>
             <h2 className="text-xl font-bold text-gray-900">Cambiar Plan de Membresía</h2>
             <p className="text-sm text-gray-600 mt-1">
-              Plan actual: <span className="font-semibold">{planActual.nombre}</span> - {formatPrice(planActual.precio)}
+              Plan actual: <span className="font-semibold">{planActual.nombre}</span> - {formatCurrency(planActual.precio)}
             </p>
           </div>
           <button
@@ -190,7 +183,7 @@ export function CambiarPlanPanel({
                 <option value="">Seleccionar plan</option>
                 {planes.map((plan) => (
                   <option key={plan.id} value={plan.id}>
-                    {plan.nombre} - {formatPrice(plan.precio)} ({plan.duracionDias} días)
+                    {plan.nombre} - {formatCurrency(plan.precio)} ({plan.duracionDias} días)
                   </option>
                 ))}
               </select>
@@ -231,7 +224,7 @@ export function CambiarPlanPanel({
                         : 'Cambio de Plan'}
                   </h4>
                   <p className="text-sm text-gray-700 mb-3">
-                    {planActual.nombre} ({formatPrice(planActual.precio)}) → {planSeleccionado.nombre} ({formatPrice(planSeleccionado.precio)})
+                    {planActual.nombre} ({formatCurrency(planActual.precio)}) → {planSeleccionado.nombre} ({formatCurrency(planSeleccionado.precio)})
                   </p>
                   <p className="font-bold text-gray-900 text-lg">
                     Diferencia:{' '}
@@ -245,7 +238,7 @@ export function CambiarPlanPanel({
                       }
                     >
                       {diferenciaPrecio > 0 ? '+' : ''}
-                      {formatPrice(diferenciaPrecio)}
+                      {formatCurrency(diferenciaPrecio)}
                     </span>
                   </p>
                   {diferenciaPrecio > 0 && (
@@ -313,7 +306,7 @@ export function CambiarPlanPanel({
                       </span>
                     </div>
                     <p className="text-sm text-gray-600">
-                      Se creará un pago por {formatPrice(diferenciaPrecio)}
+                      Se creará un pago por {formatCurrency(diferenciaPrecio)}
                     </p>
                   </label>
                 </div>

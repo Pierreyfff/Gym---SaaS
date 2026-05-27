@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
+import { formatCurrency } from '@/lib/format';
 import { useToast } from '@/hooks/use-toast';
 
 interface Cliente {
@@ -275,14 +276,6 @@ export function WizardInscripcionPage() {
   const selectedCliente = clientes.find((c) => c.id === selectedClienteId);
   const selectedPlan = planes.find((p) => p.id === selectedPlanId);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-    }).format(price);
-  };
-
   const formatCardNumber = (value: string) => {
     const cleaned = value.replace(/\s/g, '');
     const match = cleaned.match(/.{1,4}/g);
@@ -500,7 +493,7 @@ export function WizardInscripcionPage() {
                           )}
                           <div className="flex items-baseline gap-2 mb-3">
                             <span className="text-3xl font-bold text-purple-600">
-                              {formatPrice(plan.precio)}
+                              {formatCurrency(plan.precio)}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -893,7 +886,7 @@ export function WizardInscripcionPage() {
                       <div className="flex justify-between items-center pt-3">
                         <span className="font-bold text-gray-900 text-lg">Total pagado:</span>
                         <span className="text-2xl font-bold text-green-600">
-                          {selectedPlan && formatPrice(selectedPlan.precio)}
+                          {selectedPlan && formatCurrency(selectedPlan.precio)}
                         </span>
                       </div>
                     </div>
@@ -1019,7 +1012,7 @@ export function WizardInscripcionPage() {
                         <p className="font-bold text-gray-900">{selectedPlan.nombre}</p>
                         <p className="text-sm text-gray-600">{selectedPlan.duracionDias} días</p>
                         <p className="text-lg font-bold text-blue-600 mt-2">
-                          {formatPrice(selectedPlan.precio)}
+                          {formatCurrency(selectedPlan.precio)}
                         </p>
                       </div>
                     ) : (
@@ -1044,7 +1037,7 @@ export function WizardInscripcionPage() {
                     <div className="pt-4">
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-gray-700">Subtotal:</span>
-                        <span className="font-semibold">{formatPrice(selectedPlan.precio)}</span>
+                        <span className="font-semibold">{formatCurrency(selectedPlan.precio)}</span>
                       </div>
                       <div className="flex justify-between items-center mb-2">
                         <span className="text-gray-700">Descuento:</span>
@@ -1053,7 +1046,7 @@ export function WizardInscripcionPage() {
                       <div className="flex justify-between items-center pt-3 border-t-2">
                         <span className="text-lg font-bold text-gray-900">Total:</span>
                         <span className="text-2xl font-bold text-blue-600">
-                          {formatPrice(selectedPlan.precio)}
+                          {formatCurrency(selectedPlan.precio)}
                         </span>
                       </div>
                     </div>

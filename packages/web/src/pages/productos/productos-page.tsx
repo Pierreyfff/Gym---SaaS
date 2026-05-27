@@ -13,6 +13,7 @@ import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { ConfirmationModal } from '@/components/shared/confirmation-modal';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency } from '@/lib/format';
 import { useDebounce } from '@/hooks/use-debounce';
 import { TableSkeleton } from '@/components/shared/skeleton-loader';
 
@@ -137,18 +138,8 @@ export function ProductosPage() {
     }
   };
 
-  const filteredProductos = productos.filter((producto) =>
-    `${producto.nombre} ${producto.categoria?.nombre || ''}`
-      .toLowerCase()
-      .includes(debouncedSearch.toLowerCase()),
-  );
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
-  };
+  const productosSinStock = productos.filter((p) => p.stock === 0);
+  const productosStockBajo = productos.filter((p) => p.stock > 0 && p.stock <= p.stockMinimo);
 
   const getStockBadgeColor = (stock: number, stockMinimo: number) => {
     if (stock === 0) return 'bg-red-100 text-red-800';
@@ -156,8 +147,11 @@ export function ProductosPage() {
     return 'bg-green-100 text-green-800';
   };
 
-  const productosStockBajo = productos.filter((p) => p.stock <= p.stockMinimo && p.stock > 0);
-  const productosSinStock = productos.filter((p) => p.stock === 0);
+  const filteredProductos = productos.filter((producto) =>
+    `${producto.nombre} ${producto.categoria?.nombre || ''}`
+      .toLowerCase()
+      .includes(debouncedSearch.toLowerCase()),
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -304,7 +298,7 @@ export function ProductosPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-bold text-purple-600">
-                        {formatPrice(producto.precio)}
+                        {formatCurrency(producto.precio)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
