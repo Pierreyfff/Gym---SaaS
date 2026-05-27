@@ -46,7 +46,7 @@ services:
         condition: service_healthy
     networks:
       - gym-saas-network
-    command: pnpm --filter @gym-saas/backend dev
+    command: sh -c "cd /app/packages/backend && npx ts-node -r tsconfig-paths/register src/main.ts"
 
   web:
     build:

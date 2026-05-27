@@ -133,38 +133,6 @@ docker compose down
 # Eliminar volúmenes (borra BD, respaldar primero)
 docker compose down -v
 ```
-
-### ¿Qué hacer si la imagen se borra o el contenedor se detiene?
-
-- **Solo detenido** (`docker compose down` o reinicio de Docker):
-  ```bash
-  docker compose up -d
-  ```
-  No necesita `--build`. Las imágenes ya existen localmente.
-
-- **Imagen borrada** (docker image prune, limpieza manual, otro equipo):
-  ```bash
-  docker compose up -d --build
-  ```
-  `--build` fuerza la reconstrucción de imágenes desde Dockerfile.
-
-- **Desde cero en otro equipo**:
-  ```bash
-  git clone <repo>
-  cd Gym-SaaS
-  docker compose up -d --build
-  ```
-
-### Resumen: ¿build o solo up?
-
-| Escenario                          | Comando                          |
-|------------------------------------|----------------------------------|
-| Contenedor detenido                | `docker compose up -d`           |
-| Imagen existe, código cambiado     | `docker compose up -d --build`   |
-| Imagen borrada                     | `docker compose up -d --build`   |
-| Primera vez en el equipo           | `docker compose up -d --build`   |
-| Solo reiniciar contenedor          | `docker compose restart <svc>`   |
-
 ## Desarrollo
 
 ```bash

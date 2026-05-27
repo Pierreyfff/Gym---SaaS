@@ -4,22 +4,28 @@ import * as bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🏋️ Creando gimnasio por defecto...');
+  const GIMNASIO_ID = '32f3950a-94af-4b9e-86f9-20b8dab1ef74';
 
-  const gimnasio = await prisma.gimnasio.create({
-    data: {
-      id: '32f3950a-94af-4b9e-86f9-20b8dab1ef74',
+  console.log('🏋️ Verificando gimnasio por defecto...');
+
+  const gimnasio = await prisma.gimnasio.upsert({
+    where: { id: GIMNASIO_ID },
+    update: {},
+    create: {
+      id: GIMNASIO_ID,
       nombre: 'GymSaaS Demo',
       slug: 'gymsaas-demo',
     },
   });
 
-  console.log(`✅ Gimnasio creado: ${gimnasio.nombre} (${gimnasio.id})`);
+  console.log(`✅ Gimnasio asegurado: ${gimnasio.nombre} (${gimnasio.id})`);
 
   const hashedPassword = await bcrypt.hash('admin123', 10);
 
-  const admin = await prisma.usuario.create({
-    data: {
+  await prisma.usuario.upsert({
+    where: { gimnasioId_email: { gimnasioId: gimnasio.id, email: 'admin@gymdemo.com' } },
+    update: {},
+    create: {
       gimnasioId: gimnasio.id,
       email: 'admin@gymdemo.com',
       contrasenaHash: hashedPassword,
@@ -31,11 +37,12 @@ async function main() {
     },
   });
 
-  console.log(`✅ Admin creado: ${admin.email}`);
-  console.log('   Credenciales: admin@gymdemo.com / admin123');
+  console.log(`✅ Admin asegurado: admin@gymdemo.com / admin123`);
 
-  const config = await prisma.configuracionGimnasio.create({
-    data: {
+  await prisma.configuracionGimnasio.upsert({
+    where: { gimnasioId: gimnasio.id },
+    update: {},
+    create: {
       gimnasioId: gimnasio.id,
       nombreNegocio: 'GymSaaS Demo',
       colorPrimario: '#10b981',
@@ -50,7 +57,7 @@ async function main() {
     },
   });
 
-  console.log(`✅ Configuración de gimnasio creada`);
+  console.log(`✅ Configuración de gimnasio asegurada`);
 }
 
 main()
