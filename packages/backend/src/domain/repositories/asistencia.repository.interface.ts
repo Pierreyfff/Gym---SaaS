@@ -18,7 +18,7 @@ export interface AsistenciaConRelaciones {
 
 export interface IAsistenciaRepository {
   findAllByGimnasio(gimnasioId: string): Promise<AsistenciaConRelaciones[]>;
-  findById(id: string): Promise<AsistenciaConRelaciones | null>;
+  findById(id: string, gimnasioId?: string): Promise<AsistenciaConRelaciones | null>;
   findTodayByCliente(
     gimnasioId: string,
     clienteId: string,
@@ -29,7 +29,7 @@ export interface IAsistenciaRepository {
     fechaFin: Date,
   ): Promise<AsistenciaConRelaciones[]>;
   create(data: CreateAsistenciaData): Promise<AsistenciaConRelaciones>;
-  delete(id: string): Promise<void>;
+  delete(id: string, gimnasioId?: string): Promise<void>;
 }
 
 export const ASISTENCIA_REPOSITORY = Symbol('IAsistenciaRepository');

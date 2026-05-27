@@ -11,8 +11,8 @@ export class GetPagoByIdUseCase {
     private readonly pagoRepository: IPagoRepository,
   ) {}
 
-  async execute(id: string) {
-    const pago = await this.pagoRepository.findById(id);
+  async execute(id: string, gimnasioId?: string) {
+    const pago = await this.pagoRepository.findById(id, gimnasioId);
 
     if (!pago) {
       throw new NotFoundException(`Pago con ID ${id} no encontrado`);

@@ -69,8 +69,11 @@ export class PagosController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<PagoResponseDto> {
-    const result = await this.getPagoByIdUseCase.execute(id);
+  async findOne(
+    @Param('id') id: string,
+    @Request() req,
+  ): Promise<PagoResponseDto> {
+    const result = await this.getPagoByIdUseCase.execute(id, req.user.gimnasioId);
     return this.mapToResponseDto(result);
   }
 
@@ -78,8 +81,9 @@ export class PagosController {
   async update(
     @Param('id') id: string,
     @Body() updatePagoDto: UpdatePagoDto,
+    @Request() req,
   ): Promise<PagoResponseDto> {
-    const result = await this.updatePagoUseCase.execute(id, updatePagoDto);
+    const result = await this.updatePagoUseCase.execute(id, updatePagoDto, req.user.gimnasioId);
     return this.mapToResponseDto(result);
   }
 

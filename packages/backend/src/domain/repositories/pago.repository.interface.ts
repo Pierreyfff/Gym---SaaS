@@ -41,9 +41,9 @@ export interface PagoConRelaciones {
 
 export interface IPagoRepository {
   findAllByGimnasio(gimnasioId: string): Promise<PagoConRelaciones[]>;
-  findById(id: string): Promise<PagoConRelaciones | null>;
+  findById(id: string, gimnasioId?: string): Promise<PagoConRelaciones | null>;
   create(data: CreatePagoData): Promise<PagoConRelaciones>;
-  update(id: string, data: UpdatePagoData): Promise<PagoConRelaciones>;
+  update(id: string, data: UpdatePagoData, gimnasioId?: string): Promise<PagoConRelaciones>;
   reembolsar(id: string, data: ReembolsarPagoData): Promise<PagoConRelaciones>;
 }
 

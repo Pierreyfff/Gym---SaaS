@@ -13,8 +13,9 @@ export class VentaProductoClient {
     return response.data;
   }
 
-  async findAll(): Promise<VentaProductoListResponseDto> {
-    const response = await this. axios.get<VentaProductoListResponseDto>('/ventas-productos');
-    return response. data;
+  async findAll(clienteId?: string): Promise<VentaProductoListResponseDto> {
+    const params = clienteId ? { clienteId } : {};
+    const response = await this.axios.get<VentaProductoListResponseDto>('/ventas-productos', { params });
+    return response.data;
   }
 }

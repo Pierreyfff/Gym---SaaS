@@ -27,9 +27,9 @@ export class AsistenciaRepository implements IAsistenciaRepository {
     return asistencias.map((a) => this.mapToAsistenciaConRelaciones(a));
   }
 
-  async findById(id: string): Promise<AsistenciaConRelaciones | null> {
-    const asistencia = await this.prisma.asistencia.findUnique({
-      where: { id },
+  async findById(id: string, gimnasioId?: string): Promise<AsistenciaConRelaciones | null> {
+    const asistencia = await this.prisma.asistencia.findFirst({
+      where: { id, ...(gimnasioId ? { gimnasioId } : {}) },
       include: {
         cliente: true,
       },
@@ -111,9 +111,10 @@ export class AsistenciaRepository implements IAsistenciaRepository {
     return this.mapToAsistenciaConRelaciones(asistencia);
   }
 
-  async delete(id: string): Promise<void> {
-    await this.prisma.asistencia.delete({
-      where: { id },
+  async delete(id: string, gimnasioId?: string): Promise<void> {
+    const where = gimnasioId ? { id, gimnasioId } : { id };
+    await this.prisma.asistencia.deleteMany({
+      where,
     });
   }
 

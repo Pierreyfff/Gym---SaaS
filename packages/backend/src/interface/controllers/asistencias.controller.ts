@@ -9,6 +9,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '@infrastructure/guards/jwt-auth.guard';
+import { Roles } from '@infrastructure/decorators/roles.decorator';
 import { CreateAsistenciaUseCase } from '@application/use-cases/asistencias/create-asistencia.use-case';
 import { GetAsistenciasUseCase } from '@application/use-cases/asistencias/get-asistencias.use-case';
 import { GetAsistenciaByIdUseCase } from '@application/use-cases/asistencias/get-asistencia-by-id.use-case';
@@ -22,6 +23,7 @@ import {
 
 @Controller('asistencias')
 @UseGuards(JwtAuthGuard)
+@Roles('admin', 'recepcionista', 'entrenador')
 export class AsistenciasController {
   constructor(
     private readonly createAsistenciaUseCase: CreateAsistenciaUseCase,
@@ -79,14 +81,20 @@ export class AsistenciasController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<AsistenciaResponseDto> {
-    const result = await this.getAsistenciaByIdUseCase.execute(id);
+  async findOne(
+    @Param('id') id: string,
+    @Request() req,
+  ): Promise<AsistenciaResponseDto> {
+    const result = await this.getAsistenciaByIdUseCase.execute(id, req.user.gimnasioId);
     return this.mapToResponseDto(result);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
-    await this.deleteAsistenciaUseCase.execute(id);
+  async remove(
+    @Param('id') id: string,
+    @Request() req,
+  ): Promise<void> {
+    await this.deleteAsistenciaUseCase.execute(id, req.user.gimnasioId);
   }
 
   private mapToResponseDto(data: any): AsistenciaResponseDto {

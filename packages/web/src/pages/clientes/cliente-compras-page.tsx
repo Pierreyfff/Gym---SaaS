@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { PublicLayout } from '@/components/layouts/public-layout';
 import {
   Card,
@@ -6,10 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { apiClient } from '@/lib/api/client';
 import { formatCurrency } from '@/lib/format';
-import { ShoppingBag, Package, Calendar, CreditCard } from 'lucide-react';
+import { ShoppingBag, Package, Calendar, CreditCard, ArrowLeft, Store } from 'lucide-react';
 import type { VentaProductoResponseDto } from '@gym-saas/shared';
 
 export function ClienteComprasPage() {
@@ -26,7 +29,7 @@ export function ClienteComprasPage() {
   const loadCompras = async () => {
     try {
       setLoading(true);
-      const data = await apiClient.ventasProductos.findAll();
+      const data = await apiClient.ventasProductos.findAll(user!.id);
       setCompras(data.ventas);
     } catch {
       setCompras([]);
@@ -46,17 +49,61 @@ export function ClienteComprasPage() {
   if (loading) {
     return (
       <PublicLayout>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="animate-pulse text-gray-600">Cargando compras...</div>
+        <div className="min-h-screen bg-gray-50 py-12">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gray-200 rounded animate-pulse" />
+                  <div className="h-8 w-48 bg-gray-200 rounded animate-pulse" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="flex items-center justify-between bg-gray-50 rounded-xl p-4">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-gray-200 rounded-lg animate-pulse" />
+                        <div className="space-y-2">
+                          <div className="h-5 w-48 bg-gray-200 rounded animate-pulse" />
+                          <div className="h-4 w-32 bg-gray-200 rounded animate-pulse" />
+                        </div>
+                      </div>
+                      <div className="text-right space-y-2">
+                        <div className="h-6 w-20 bg-gray-200 rounded animate-pulse ml-auto" />
+                        <div className="h-4 w-16 bg-gray-200 rounded animate-pulse ml-auto" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </PublicLayout>
     );
   }
 
+  const metodoPagoLabel: Record<string, string> = {
+    efectivo: 'Efectivo',
+    tarjeta: 'Tarjeta',
+    transferencia: 'Transferencia',
+  };
+
   return (
     <PublicLayout>
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-6">
+              <Link
+                to="/cliente/dashboard"
+                className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-600 transition"
+              >
+              <ArrowLeft className="w-4 h-4" />
+              Volver al panel
+            </Link>
+          </div>
+
           <Card>
             <CardHeader>
               <div className="flex items-center gap-3">
@@ -68,9 +115,18 @@ export function ClienteComprasPage() {
               {compras.length === 0 ? (
                 <div className="text-center py-12">
                   <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-600 text-lg">
+                  <p className="text-gray-600 text-lg mb-2">
                     No tienes compras registradas
                   </p>
+                  <p className="text-gray-400 text-sm mb-6">
+                    Aún no has realizado ninguna compra en la tienda
+                  </p>
+                  <Link to="/tienda">
+                    <Button className="bg-purple-600 hover:bg-purple-700">
+                      <Store className="w-4 h-4 mr-2" />
+                      Ir a la Tienda
+                    </Button>
+                  </Link>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -92,10 +148,9 @@ export function ClienteComprasPage() {
                               <Calendar className="w-3 h-3" />
                               {formatDate(compra.fechaVenta)}
                             </span>
-                            <span className="flex items-center gap-1">
-                              <CreditCard className="w-3 h-3" />
-                              {compra.metodoPago}
-                            </span>
+                            <Badge variant="secondary" className="capitalize">
+                              {metodoPagoLabel[compra.metodoPago] || compra.metodoPago}
+                            </Badge>
                           </div>
                         </div>
                       </div>

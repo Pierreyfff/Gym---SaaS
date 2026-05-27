@@ -9,7 +9,7 @@ export class GetAllVentasUseCase {
     private readonly ventaRepository: IVentaProductoRepository,
   ) {}
 
-  async execute(gimnasioId: string): Promise<VentaProductoListResponseDto> {
-    return this.ventaRepository.findAll(gimnasioId);
+  async execute(gimnasioId: string, clienteId?: string): Promise<VentaProductoListResponseDto> {
+    return this.ventaRepository.findAll(gimnasioId, clienteId);
   }
 }

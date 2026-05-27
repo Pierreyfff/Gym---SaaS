@@ -11,7 +11,7 @@ export class DeleteAsistenciaUseCase {
     private readonly asistenciaRepository: IAsistenciaRepository,
   ) {}
 
-  async execute(id: string) {
-    await this.asistenciaRepository.delete(id);
+  async execute(id: string, gimnasioId: string) {
+    await this.asistenciaRepository.delete(id, gimnasioId);
   }
 }

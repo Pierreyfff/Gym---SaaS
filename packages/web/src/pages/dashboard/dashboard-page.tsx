@@ -18,6 +18,7 @@ import {
   MessageSquare,
   Image as ImageIcon,
   UsersRound,
+  Globe,
 } from 'lucide-react';
 import {
   LineChart,
@@ -117,6 +118,15 @@ export function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-900">Gym SaaS</h1>
           <div className="flex items-center gap-4">
+            <a
+              href="/home"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-purple-600 hover:text-purple-800 font-medium transition"
+            >
+              <Globe className="w-4 h-4" />
+              Ir a Página Web
+            </a>
             <span className="text-sm text-gray-600">
               {user?.nombre} {user?.apellido}{' '}
               <span className="font-medium">({user?.rol})</span>

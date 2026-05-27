@@ -39,9 +39,9 @@ export class MembresiaRepository implements IMembresiaRepository {
     return membresias.map((m) => this.mapToMembresiaConRelaciones(m));
   }
 
-  async findByClienteId(clienteId: string): Promise<MembresiaConRelaciones[]> {
+  async findByClienteId(clienteId: string, gimnasioId?: string): Promise<MembresiaConRelaciones[]> {
     const membresias = await this.prisma.membresia.findMany({
-      where: { clienteId },
+      where: { clienteId, ...(gimnasioId ? { gimnasioId } : {}) },
       include:  {
         cliente: {
           select: {

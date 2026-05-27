@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { PublicLayout } from '@/components/layouts/public-layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { apiClient } from '@/lib/api/client';
 import { useToast } from '@/hooks/use-toast';
-import { User, Pencil, Save, X } from 'lucide-react';
+import { User, Pencil, Save, X, ArrowLeft } from 'lucide-react';
 
 interface PerfilCliente {
   nombre: string;
@@ -108,6 +109,15 @@ export function ClientePerfilClientePage() {
     <PublicLayout>
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-6">
+            <Link
+              to="/cliente/dashboard"
+              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-600 transition"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Volver al panel
+            </Link>
+          </div>
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">

@@ -94,9 +94,12 @@ export class VentaProductoRepository implements IVentaProductoRepository {
     return ventas;
   }
 
-  async findAll(gimnasioId: string): Promise<VentaProductoListResponseDto> {
+  async findAll(gimnasioId: string, clienteId?: string): Promise<VentaProductoListResponseDto> {
     const ventas = await this.prisma.ventaProducto.findMany({
-      where: { gimnasioId },
+      where: {
+        gimnasioId,
+        ...(clienteId ? { clienteId } : {}),
+      },
       include: {
         producto: true,
         cliente: true,

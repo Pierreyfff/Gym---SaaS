@@ -12,9 +12,9 @@ export class UpdatePagoUseCase {
     private readonly pagoRepository:  IPagoRepository,
   ) {}
 
-  async execute(id:  string, dto: UpdatePagoDto) {
+  async execute(id: string, dto: UpdatePagoDto, gimnasioId?: string) {
     return this.pagoRepository.update(id, {
       notas: dto.notas,
-    });
+    }, gimnasioId);
   }
 }

@@ -66,8 +66,9 @@ export class MembresiasController {
   @Get('cliente/:clienteId')
   async findByCliente(
     @Param('clienteId') clienteId: string,
+    @Request() req: any,
   ): Promise<MembresiaListResponseDto> {
-    return this.getMembresiasByClienteUseCase.execute(clienteId);
+    return this.getMembresiasByClienteUseCase.execute(clienteId, req.user.gimnasioId);
   }
 
   @Get(':id')

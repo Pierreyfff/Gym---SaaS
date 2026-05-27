@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { apiClient } from '@/lib/api/client';
 import { formatCurrency } from '@/lib/format';
-import { CreditCard, Calendar, Clock, AlertCircle } from 'lucide-react';
+import { CreditCard, Calendar, Clock, AlertCircle, ArrowLeft } from 'lucide-react';
 import type { MembresiaResponseDto } from '@gym-saas/shared';
 
 export function ClienteMembresiaPage() {
@@ -78,6 +78,15 @@ export function ClienteMembresiaPage() {
     <PublicLayout>
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-6">
+            <Link
+              to="/cliente/dashboard"
+              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-600 transition"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Volver al panel
+            </Link>
+          </div>
           <Card>
             <CardHeader>
               <div className="flex items-center gap-3">

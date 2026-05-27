@@ -32,9 +32,9 @@ export class PagoRepository implements IPagoRepository {
     return pagos.map((p) => this.mapToPagoConRelaciones(p));
   }
 
-  async findById(id: string): Promise<PagoConRelaciones | null> {
-    const pago = await this.prisma.pago.findUnique({
-      where: { id },
+  async findById(id: string, gimnasioId?: string): Promise<PagoConRelaciones | null> {
+    const pago = await this.prisma.pago.findFirst({
+      where: { id, ...(gimnasioId ? { gimnasioId } : {}) },
       include:  {
         membresia: {
           include: {
@@ -76,9 +76,10 @@ export class PagoRepository implements IPagoRepository {
     return this.mapToPagoConRelaciones(pago);
   }
 
-  async update(id: string, data: UpdatePagoData): Promise<PagoConRelaciones> {
-    const pago = await this.prisma.pago. update({
-      where: { id },
+  async update(id: string, data: UpdatePagoData, gimnasioId?: string): Promise<PagoConRelaciones> {
+    const where = gimnasioId ? { id, gimnasioId } : { id };
+    const pago = await this.prisma.pago.update({
+      where,
       data: {
         nota: data.notas,
       },

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { useAuthStore } from './auth-store';
 
 export interface ProductoItem {
   id: string;
@@ -18,6 +19,7 @@ export interface CartItem {
 interface CartState {
   items: CartItem[];
   wishlist: string[];
+  lastUserId: string | null;
   isCartOpen: boolean;
   isWishlistOpen: boolean;
 
@@ -40,6 +42,7 @@ export const useCartStore = create<CartState>()(
     (set, get) => ({
       items: [],
       wishlist: [],
+      lastUserId: null,
       isCartOpen: false,
       isWishlistOpen: false,
       totalItems: 0,
@@ -108,7 +111,7 @@ export const useCartStore = create<CartState>()(
       },
 
       clearCart: () => {
-        set({ items: [], totalItems: 0, totalPrice: 0 });
+        set({ items: [], wishlist: [], totalItems: 0, totalPrice: 0, wishlistCount: 0 });
       },
 
       toggleWishlist: (productoId) => {
@@ -140,3 +143,14 @@ export const useCartStore = create<CartState>()(
     },
   ),
 );
+
+const currentUserId = () => useAuthStore.getState().user?.id ?? null;
+
+let prevUserId = currentUserId();
+useAuthStore.subscribe(() => {
+  const newUserId = currentUserId();
+  if (newUserId !== prevUserId) {
+    prevUserId = newUserId;
+    useCartStore.getState().clearCart();
+  }
+});

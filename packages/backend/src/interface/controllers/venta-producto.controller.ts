@@ -4,6 +4,7 @@ import {
   Post,
   Body,
   Param,
+  Query,
   Request,
   HttpCode,
   HttpStatus,
@@ -31,11 +32,14 @@ export class VentaProductoController {
     @Body() createDto: CreateVentaProductoDto,
     @Request() req: any,
   ): Promise<VentaProductoResponseDto[]> {
-    return this. createVentaUseCase. execute(req.user.gimnasioId, req.user.id, createDto);
+    return this.createVentaUseCase.execute(req.user.gimnasioId, req.user.userId, createDto);
   }
 
   @Get()
-  async findAll(@Request() req: any): Promise<VentaProductoListResponseDto> {
-    return this.getAllVentasUseCase.execute(req.user.gimnasioId);
+  async findAll(
+    @Request() req: any,
+    @Query('clienteId') clienteId?: string,
+  ): Promise<VentaProductoListResponseDto> {
+    return this.getAllVentasUseCase.execute(req.user.gimnasioId, clienteId);
   }
 }

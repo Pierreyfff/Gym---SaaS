@@ -13,44 +13,29 @@ param(
 )
 
 Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "  GymSaaS - Migración desde NeonDB" -ForegroundColor Cyan
+Write-Host "  GymSaaS - Migracion desde NeonDB" -ForegroundColor Cyan
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "⚠️  Este script migrará datos desde NeonDB a tu PostgreSQL local en Docker"
+Write-Host "NOTA: Este script migrara datos desde NeonDB a tu PostgreSQL local en Docker"
 Write-Host ""
 
 $container = docker ps --filter "name=$ContainerName" --format "{{.Names}}" 2>$null
 if (-not $container) {
-    Write-Host "❌ El contenedor '$ContainerName' no está corriendo" -ForegroundColor Red
+    Write-Host "ERROR: El contenedor '$ContainerName' no esta corriendo" -ForegroundColor Red
     Write-Host "   Ejecuta primero: docker compose up -d" -ForegroundColor Yellow
     exit 1
 }
 
-Write-Host "⏳ Conectando a NeonDB para exportar..." -ForegroundColor Yellow
-Write-Host "   (Esto puede tomar unos segundos)" -ForegroundColor Gray
+Write-Host "Conectando a NeonDB para exportar..." -ForegroundColor Yellow
+Write-Host "  (Usando PostgreSQL 17 para compatibilidad)" -ForegroundColor Gray
 
-$dumpFile = "neondb_export_$(Get-Date -Format 'yyyyMMdd_HHmmss').dump"
-
-# Usar pg_dump dentro del contenedor postgres para hacer el dump remoto
-docker exec $ContainerName pg_dump "$NeonDbUrl" --format=custom --no-owner --no-acl -f "/tmp/$dumpFile"
-
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Error al conectar con NeonDB" -ForegroundColor Red
-    Write-Host "   Verifica que la URL sea correcta y que tengas acceso" -ForegroundColor Yellow
-    exit 1
-}
-
-Write-Host "✅ Exportación desde NeonDB completada" -ForegroundColor Green
-
-Write-Host "⏳ Restaurando en PostgreSQL local..." -ForegroundColor Yellow
-
-# Restaurar en la base local
-docker exec $ContainerName pg_restore -U $LocalDbUser -d $LocalDbName --clean --if-exists "/tmp/$dumpFile"
+Write-Host "Exportando desde NeonDB y restaurando en local..." -ForegroundColor Yellow
+docker run --rm --network gym-saas-network postgres:17-alpine pg_dump "$NeonDbUrl" --data-only --no-owner --no-acl | docker exec -i gym-saas-db psql -U $LocalDbUser -d $LocalDbName
 
 if ($LASTEXITCODE -eq 0) {
-    Write-Host "✅ Migración completada exitosamente" -ForegroundColor Green
+    Write-Host "Migracion completada exitosamente" -ForegroundColor Green
     Write-Host ""
-    Write-Host "📊 Resumen:" -ForegroundColor Cyan
+    Write-Host "Resumen:" -ForegroundColor Cyan
     docker exec $ContainerName psql -U $LocalDbUser -d $LocalDbName -c "
         SELECT 'gimnasios' as tabla, count(*) as registros FROM gimnasios
         UNION ALL SELECT 'usuarios', count(*) FROM usuarios
@@ -62,8 +47,5 @@ if ($LASTEXITCODE -eq 0) {
         UNION ALL SELECT 'ventas_productos', count(*) FROM ventas_productos;
     "
 } else {
-    Write-Host "❌ Error al restaurar en PostgreSQL local" -ForegroundColor Red
+    Write-Host "Error al restaurar en PostgreSQL local" -ForegroundColor Red
 }
-
-# Limpiar
-docker exec $ContainerName rm -f "/tmp/$dumpFile" 2>$null

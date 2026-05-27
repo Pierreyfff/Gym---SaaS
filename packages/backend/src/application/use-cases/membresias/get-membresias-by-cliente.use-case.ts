@@ -10,8 +10,8 @@ export class GetMembresiasByClienteUseCase {
     private readonly membresiaRepository: IMembresiaRepository,
   ) {}
 
-  async execute(clienteId: string): Promise<MembresiaListResponseDto> {
-    const membresiasConRelaciones = await this.membresiaRepository.findByClienteId(clienteId);
+  async execute(clienteId: string, gimnasioId?: string): Promise<MembresiaListResponseDto> {
+    const membresiasConRelaciones = await this.membresiaRepository.findByClienteId(clienteId, gimnasioId);
 
     const membresiaDtos:  MembresiaResponseDto[] = membresiasConRelaciones.map((m) => ({
       id: m.membresia.id,

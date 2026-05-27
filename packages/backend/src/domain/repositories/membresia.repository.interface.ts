@@ -3,7 +3,7 @@ import { MembresiaEntity } from '../entities/membresia.entity';
 export interface IMembresiaRepository {
   findAllByGimnasio(gimnasioId: string): Promise<MembresiaConRelaciones[]>;
   
-  findByClienteId(clienteId: string): Promise<MembresiaConRelaciones[]>;
+  findByClienteId(clienteId: string, gimnasioId?: string): Promise<MembresiaConRelaciones[]>;
   
   findById(id: string): Promise<MembresiaConRelaciones | null>;
   
