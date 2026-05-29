@@ -63,6 +63,7 @@ export function ClientePerfilPage() {
 
   const [perfil, setPerfil] = useState<ClientePerfil | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [tabActiva, setTabActiva] = useState<'membresias' | 'pagos' | 'asistencias' | 'productos'>('membresias');
 
   useEffect(() => {
@@ -74,16 +75,17 @@ export function ClientePerfilPage() {
   const loadPerfil = async () => {
     try {
       setLoading(true);
+      setError(false);
       const data = await apiClient.clientes.getPerfilCompleto(id!);
       setPerfil(data);
     } catch (error) {
       console.error('Error cargando perfil:', error);
+      setError(true);
       toast({
         title: 'Error',
         description: 'No se pudo cargar el perfil del cliente',
         variant: 'destructive',
       });
-      navigate('/clientes');
     } finally {
       setLoading(false);
     }
@@ -114,6 +116,28 @@ export function ClientePerfilPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <p className="text-gray-600">Cargando perfil...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">No se pudo cargar el perfil del cliente</p>
+          <button
+            onClick={loadPerfil}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition"
+          >
+            Reintentar
+          </button>
+          <button
+            onClick={() => navigate('/clientes')}
+            className="ml-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2 rounded-lg transition"
+          >
+            Volver
+          </button>
+        </div>
       </div>
     );
   }

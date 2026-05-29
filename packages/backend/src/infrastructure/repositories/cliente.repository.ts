@@ -28,21 +28,23 @@ export class ClienteRepository implements IClienteRepository {
       },
     });
 
-    // Crear perfiles faltantes
+    // Crear perfiles faltantes en transacción
     const usuariosSinPerfil = usuarios.filter((u) => !u.perfilCliente);
-    for (const usuario of usuariosSinPerfil) {
-      await this.prisma.perfilCliente.create({
-        data: {
-          usuarioId: usuario.id,
-          fechaNacimiento: null,
-          genero: null,
-          notas: null,
-        },
-      });
-    }
-
-    // Recargar usuarios con perfiles creados
     if (usuariosSinPerfil.length > 0) {
+      await this.prisma.$transaction(
+        usuariosSinPerfil.map((u) =>
+          this.prisma.perfilCliente.create({
+            data: {
+              usuarioId: u.id,
+              fechaNacimiento: null,
+              genero: null,
+              notas: null,
+            },
+          }),
+        ),
+      );
+
+      // Recargar con perfiles creados
       const usuariosActualizados = await this.prisma.usuario.findMany({
         where: {
           gimnasioId,
@@ -55,10 +57,14 @@ export class ClienteRepository implements IClienteRepository {
           fechaCreacion: 'desc',
         },
       });
-      return usuariosActualizados.map((u) => this.mapToClienteConPerfil(u));
+      return await Promise.all(
+        usuariosActualizados.map((u) => this.mapToClienteConPerfil(u)),
+      );
     }
 
-    return usuarios.map((u) => this.mapToClienteConPerfil(u));
+    return await Promise.all(
+      usuarios.map((u) => this.mapToClienteConPerfil(u)),
+    );
   }
 
   async findById(id: string): Promise<ClienteConPerfil | null> {
@@ -73,7 +79,17 @@ export class ClienteRepository implements IClienteRepository {
       return null;
     }
 
-    return this.mapToClienteConPerfil(usuario);
+    // Auto-crear perfil si no existe
+    if (!usuario.perfilCliente) {
+      await this.ensurePerfilExists(usuario.id);
+      const usuarioConPerfil = await this.prisma.usuario.findUnique({
+        where: { id },
+        include: { perfilCliente: true },
+      });
+      return await this.mapToClienteConPerfil(usuarioConPerfil);
+    }
+
+    return await this.mapToClienteConPerfil(usuario);
   }
 
   async findByEmailAndGimnasio(
@@ -93,7 +109,7 @@ export class ClienteRepository implements IClienteRepository {
 
     if (!usuario) return null;
 
-    return this.mapToClienteConPerfil(usuario);
+    return await this.mapToClienteConPerfil(usuario);
   }
 
   async findByNombreApellidoTelefono(
@@ -123,7 +139,7 @@ export class ClienteRepository implements IClienteRepository {
 
     if (!usuario) return null;
 
-    return this.mapToClienteConPerfil(usuario);
+    return await this.mapToClienteConPerfil(usuario);
   }
 
   async create(data: CreateClienteData): Promise<ClienteConPerfil> {
@@ -149,7 +165,7 @@ export class ClienteRepository implements IClienteRepository {
       },
     });
 
-    return this.mapToClienteConPerfil(usuario);
+    return await this.mapToClienteConPerfil(usuario);
   }
 
   async update(
@@ -184,7 +200,7 @@ export class ClienteRepository implements IClienteRepository {
       },
     });
 
-    return this.mapToClienteConPerfil(usuario);
+    return await this.mapToClienteConPerfil(usuario);
   }
 
   async delete(id: string): Promise<void> {
@@ -211,7 +227,7 @@ export class ClienteRepository implements IClienteRepository {
     }
   }
 
-  private mapToClienteConPerfil(data: any): ClienteConPerfil {
+  private async mapToClienteConPerfil(data: any): Promise<ClienteConPerfil> {
     const usuario = new UserEntity(
       data.id,
       data.gimnasioId,
@@ -226,28 +242,28 @@ export class ClienteRepository implements IClienteRepository {
       data.fechaActualizacion,
     );
 
-    // Si no tiene perfil, crear uno por defecto
-    if (!data.perfilCliente) {
-      const perfil = new PerfilClienteEntity(
-        'temp-id',
-        data.id,
-        null,
-        null,
-        null,
-        new Date(),
-        new Date(),
-      );
-      return { usuario, perfil };
+    let perfilData = data.perfilCliente;
+
+    // Auto-crear perfil en DB si no existe
+    if (!perfilData) {
+      perfilData = await this.prisma.perfilCliente.create({
+        data: {
+          usuarioId: data.id,
+          fechaNacimiento: null,
+          genero: null,
+          notas: null,
+        },
+      });
     }
 
     const perfil = new PerfilClienteEntity(
-      data.perfilCliente.id,
-      data.perfilCliente.usuarioId,
-      data.perfilCliente.fechaNacimiento,
-      data.perfilCliente.genero,
-      data.perfilCliente.notas,
-      data.perfilCliente.fechaCreacion,
-      data.perfilCliente.fechaActualizacion,
+      perfilData.id,
+      perfilData.usuarioId,
+      perfilData.fechaNacimiento,
+      perfilData.genero,
+      perfilData.notas,
+      perfilData.fechaCreacion,
+      perfilData.fechaActualizacion,
     );
 
     return { usuario, perfil };

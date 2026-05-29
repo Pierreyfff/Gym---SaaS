@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, ConflictException } from '@nestjs/common';
 import { Inject } from '@nestjs/common';
 import { IClienteRepository } from '@domain/repositories/cliente.repository.interface';
 import { UpdateClienteDto, ClienteResponseDto } from '@gym-saas/shared';
@@ -32,7 +32,20 @@ export class UpdateClienteUseCase {
       throw new NotFoundException('Cliente no encontrado');
     }
 
-    // 3. Preparar datos
+    // 3. Validar email único si cambió
+    if (dto.email && dto.email !== clienteExistente.usuario.email) {
+      const existeEmail = await this.clienteRepository.findByEmailAndGimnasio(
+        dto.email,
+        gimnasioId,
+      );
+      if (existeEmail) {
+        throw new ConflictException(
+          `Ya existe un cliente con el email ${dto.email} en este gimnasio`,
+        );
+      }
+    }
+
+    // 5. Preparar datos
     const userData = {
       email: dto.email,
       nombre: dto.nombre,
@@ -46,7 +59,7 @@ export class UpdateClienteUseCase {
       notas: dto.notas,
     };
 
-    // 4. Actualizar
+    // 6. Actualizar
     const clienteActualizado = await this.clienteRepository.update(id, userData, perfilData);
 
     return {

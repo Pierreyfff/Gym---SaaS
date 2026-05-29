@@ -55,7 +55,7 @@ export function ClientePerfilClientePage() {
       });
     } catch (err) {
       console.error('Error cargando perfil completo, usando datos de auth:', err);
-      // Fallback: usar datos del usuario autenticado + intentar con /auth/me
+      // Fallback 1: intentar con /auth/me
       try {
         setCargandoUsuario(true);
         const userData = await apiClient.auth.getCurrentUser();
@@ -67,10 +67,14 @@ export function ClientePerfilClientePage() {
           fechaNacimiento: '',
         });
       } catch {
-        toast({
-          title: 'Error',
-          description: 'No se pudo cargar tu perfil. Intenta recargar la página.',
-          variant: 'destructive',
+        // Fallback 2: usar datos del auth store (ya los tenemos)
+        console.warn('Usando datos del auth store como fallback');
+        setPerfil({
+          nombre: user?.nombre || '',
+          apellido: user?.apellido || '',
+          email: user?.email || '',
+          telefono: '',
+          fechaNacimiento: '',
         });
       } finally {
         setCargandoUsuario(false);

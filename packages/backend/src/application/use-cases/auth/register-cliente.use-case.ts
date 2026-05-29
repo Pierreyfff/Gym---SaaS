@@ -36,25 +36,27 @@ export class RegisterClienteUseCase {
     // Hash de la contraseña
     const hashedPassword = await bcrypt.hash(dto.password, 10);
 
-    // Crear usuario con rol "cliente"
-    const newUser = await this.userRepository.create({
-      email: dto.email,
-      contrasenaHash: hashedPassword,
-      nombre: dto.nombre,
-      apellido: dto.apellido,
-      telefono: dto.telefono,
-      rol: 'cliente',
-      gimnasioId: gimnasio.id,
-    });
-
-    // Crear PerfilCliente (necesario para que el perfil funcione correctamente)
-    await this.prisma.perfilCliente.create({
-      data: {
-        usuarioId: newUser.id,
-        fechaNacimiento: null,
-        genero: null,
-        notas: null,
-      },
+    // Crear usuario + PerfilCliente en una sola transacción atómica
+    const newUser = await this.prisma.$transaction(async (tx) => {
+      const user = await tx.usuario.create({
+        data: {
+          gimnasioId: gimnasio.id,
+          email: dto.email,
+          contrasenaHash: hashedPassword,
+          nombre: dto.nombre,
+          apellido: dto.apellido,
+          telefono: dto.telefono,
+          rol: 'cliente',
+          perfilCliente: {
+            create: {
+              fechaNacimiento: null,
+              genero: null,
+              notas: null,
+            },
+          },
+        },
+      });
+      return user;
     });
 
     // Generar tokens
