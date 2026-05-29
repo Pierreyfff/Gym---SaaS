@@ -173,7 +173,7 @@ model Pago {
   tipo            TipoPago   @default(membresia)
   monto           Decimal    @db.Decimal(10, 2)
   metodoPago      MetodoPago @map("metodo_pago")
-  estado          EstadoPago @default(pagado)
+  estado          EstadoPago @default(completado)
   fechaPago       DateTime   @map("fecha_pago")
   nota            String?    @db.Text
   motivoReembolso String?    @map("motivo_reembolso") @db.Text
@@ -206,9 +206,8 @@ enum MetodoPago {
 
 enum EstadoPago {
   pendiente
-  pagado
-  fallido
-  reembolsado
+  completado
+  rechazado
 }
 
 enum TipoEntrega {
