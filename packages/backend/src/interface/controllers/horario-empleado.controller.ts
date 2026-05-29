@@ -10,7 +10,7 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '@infrastructure/guards/jwt-auth.guard';
 import { RolesGuard } from '@infrastructure/guards/roles.guard';
 import { Roles } from '@infrastructure/decorators/roles.decorator';
 import { CreateHorarioUseCase } from '@application/use-cases/horarios/create-horario.use-case';
@@ -24,7 +24,7 @@ import {
 import { Request } from 'express';
 
 @Controller('horarios')
-@UseGuards(AuthGuard, RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class HorarioEmpleadoController {
   constructor(
     private readonly createHorarioUseCase: CreateHorarioUseCase,
