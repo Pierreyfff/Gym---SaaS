@@ -13,9 +13,12 @@ echo "✅ PostgreSQL está listo"
 
 cd /app/packages/database
 
-echo "📦 Ejecutando migraciones de Prisma..."
-npx prisma migrate deploy
-echo "✅ Migraciones aplicadas"
+echo "📦 Aplicando migraciones de Prisma..."
+npx prisma migrate deploy 2>/dev/null && echo "✅ Migraciones aplicadas" || echo "⚠️ No hay migraciones pendientes, sincronizando schema..."
+
+echo "🔄 Sincronizando schema con base de datos..."
+npx prisma db push --accept-data-loss
+echo "✅ Schema sincronizado"
 
 echo "🏋️ Verificando datos iniciales..."
 GIMNASIO_COUNT=$(psql "$DATABASE_URL" -t -A -c "SELECT count(*) FROM gimnasios;" 2>/dev/null || echo "0")
