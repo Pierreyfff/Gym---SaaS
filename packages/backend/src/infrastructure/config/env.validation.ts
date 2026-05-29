@@ -26,13 +26,6 @@ class EnvironmentVariables {
 }
 
 export function validate(config: Record<string, unknown>) {
-  // DEBUG: Ver qué variables se están leyendo
-  console.log('🔍 Variables de entorno recibidas:', {
-    JWT_ACCESS_SECRET: config.JWT_ACCESS_SECRET,
-    JWT_REFRESH_SECRET: config.JWT_REFRESH_SECRET,
-    DATABASE_URL: config.DATABASE_URL ? '✅ Existe' : '❌ No existe',
-  });
-
   const validatedConfig = plainToClass(EnvironmentVariables, config, {
     enableImplicitConversion: true,
   });

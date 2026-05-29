@@ -40,6 +40,9 @@ export function NuevaVentaPage() {
   const [metodoPago, setMetodoPago] = useState<'efectivo' | 'tarjeta' | 'transferencia'>('efectivo');
   const [tipoEntrega, setTipoEntrega] = useState<'retiro' | 'domicilio'>('retiro');
   const [telefono, setTelefono] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [ciudad, setCiudad] = useState('');
+  const [codigoPostal, setCodigoPostal] = useState('');
   const [nota, setNota] = useState('');
 
   useEffect(() => {
@@ -130,6 +133,9 @@ export function NuevaVentaPage() {
         metodoPago,
         tipoEntrega,
         telefono,
+        direccion: direccion || undefined,
+        ciudad: ciudad || undefined,
+        codigoPostal: codigoPostal || undefined,
         nota: nota || undefined,
       });
 
@@ -304,20 +310,62 @@ export function NuevaVentaPage() {
             </div>
 
             {tipoEntrega === 'domicilio' && (
-              <div>
-                <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 mb-1">
-                  Teléfono de Contacto
-                </label>
-                <input
-                  id="telefono"
-                  type="tel"
-                  value={telefono}
-                  onChange={(e) => setTelefono(e.target.value)}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  placeholder="999 999 999"
-                />
-              </div>
+              <>
+                <div>
+                  <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 mb-1">
+                    Teléfono de Contacto
+                  </label>
+                  <input
+                    id="telefono"
+                    type="tel"
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    placeholder="999 999 999"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="direccion" className="block text-sm font-medium text-gray-700 mb-1">
+                    Dirección
+                  </label>
+                  <input
+                    id="direccion"
+                    value={direccion}
+                    onChange={(e) => setDireccion(e.target.value)}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    placeholder="Calle y número"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="ciudad" className="block text-sm font-medium text-gray-700 mb-1">
+                      Ciudad
+                    </label>
+                    <input
+                      id="ciudad"
+                      value={ciudad}
+                      onChange={(e) => setCiudad(e.target.value)}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="Ciudad"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="codigoPostal" className="block text-sm font-medium text-gray-700 mb-1">
+                      Código Postal
+                    </label>
+                    <input
+                      id="codigoPostal"
+                      value={codigoPostal}
+                      onChange={(e) => setCodigoPostal(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="12345"
+                    />
+                  </div>
+                </div>
+              </>
             )}
 
             <div>

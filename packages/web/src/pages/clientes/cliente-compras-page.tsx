@@ -12,8 +12,24 @@ import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { apiClient } from '@/lib/api/client';
 import { formatCurrency } from '@/lib/format';
-import { ShoppingBag, Package, Calendar, CreditCard, ArrowLeft, Store } from 'lucide-react';
+import { ShoppingBag, Package, Calendar, ArrowLeft, Store, Truck, MapPin } from 'lucide-react';
 import type { VentaProductoResponseDto } from '@gym-saas/shared';
+
+const estadoEnvioLabels: Record<string, string> = {
+  pendiente: 'Pendiente',
+  preparando: 'Preparando',
+  enviado: 'Enviado',
+  entregado: 'Entregado',
+  cancelado: 'Cancelado',
+};
+
+const estadoEnvioColors: Record<string, string> = {
+  pendiente: 'bg-yellow-100 text-yellow-800',
+  preparando: 'bg-blue-100 text-blue-800',
+  enviado: 'bg-purple-100 text-purple-800',
+  entregado: 'bg-green-100 text-green-800',
+  cancelado: 'bg-red-100 text-red-800',
+};
 
 export function ClienteComprasPage() {
   const { user } = useAuthStore();
@@ -116,10 +132,10 @@ export function ClienteComprasPage() {
                 <div className="text-center py-12">
                   <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-600 text-lg mb-2">
-                    No tienes compras registradas
+                    Aún no tienes compras
                   </p>
                   <p className="text-gray-400 text-sm mb-6">
-                    Aún no has realizado ninguna compra en la tienda
+                    Todavía no has realizado ninguna compra en la tienda del gimnasio
                   </p>
                   <Link to="/tienda">
                     <Button className="bg-purple-600 hover:bg-purple-700">
@@ -139,11 +155,11 @@ export function ClienteComprasPage() {
                         <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
                           <Package className="w-6 h-6 text-purple-600" />
                         </div>
-                        <div>
+                        <div className="flex-1">
                           <p className="font-semibold text-gray-900">
                             {compra.producto.nombre}
                           </p>
-                          <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
+                          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 mt-1">
                             <span className="flex items-center gap-1">
                               <Calendar className="w-3 h-3" />
                               {formatDate(compra.fechaVenta)}
@@ -151,7 +167,27 @@ export function ClienteComprasPage() {
                             <Badge variant="secondary" className="capitalize">
                               {metodoPagoLabel[compra.metodoPago] || compra.metodoPago}
                             </Badge>
+                            {compra.tipoEntrega && (
+                              <Badge variant="outline" className="flex items-center gap-1">
+                                {compra.tipoEntrega === 'domicilio' ? (
+                                  <Truck className="w-3 h-3" />
+                                ) : (
+                                  <MapPin className="w-3 h-3" />
+                                )}
+                                {compra.tipoEntrega === 'domicilio' ? 'Domicilio' : 'Retiro'}
+                              </Badge>
+                            )}
+                            {compra.estadoEnvio && (
+                              <Badge className={estadoEnvioColors[compra.estadoEnvio]}>
+                                {estadoEnvioLabels[compra.estadoEnvio]}
+                              </Badge>
+                            )}
                           </div>
+                          {compra.tipoEntrega === 'domicilio' && compra.direccion && (
+                            <p className="text-xs text-gray-400 mt-1">
+                              {compra.direccion}{compra.ciudad ? `, ${compra.ciudad}` : ''}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <div className="text-right">

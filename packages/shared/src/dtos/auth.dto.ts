@@ -46,6 +46,7 @@ export class LoginResponseDto {
 
 export class RefreshTokenResponseDto {
   accessToken: string;
+  refreshToken?: string;
 }
 
 export class UserDto {

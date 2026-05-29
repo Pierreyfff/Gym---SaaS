@@ -1,17 +1,20 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Habilitar CORS para el frontend
+  app.use(helmet());
+
   app.enableCors({
     origin: ['http://localhost:5173', 'http://localhost:3000'],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
-  // Validación global de DTOs
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -20,15 +23,12 @@ async function bootstrap() {
     }),
   );
 
-  // Prefijo global para las rutas
   app.setGlobalPrefix('api');
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
 
-  console.log(`🚀 Servidor corriendo en:  http://localhost:${port}/api`);
-  console.log(`📚 Endpoints disponibles:`);
-  console.log(`   POST http://localhost:${port}/api/auth/login`);
+  console.log(`🚀 Servidor corriendo en: http://localhost:${port}/api`);
 }
 
 bootstrap();

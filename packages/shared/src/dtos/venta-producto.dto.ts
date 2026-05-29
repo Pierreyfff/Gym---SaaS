@@ -55,6 +55,12 @@ export class VentaProductoResponseDto {
   total: number;
   metodoPago: string;
   nota?: string;
+  tipoEntrega?: string;
+  direccion?: string;
+  ciudad?: string;
+  codigoPostal?: string;
+  telefono?: string;
+  estadoEnvio?: string;
   fechaVenta: Date;
   producto: {
     id: string;
@@ -72,4 +78,9 @@ export class VentaProductoListResponseDto {
   ventas: VentaProductoResponseDto[];
   total: number;
   totalIngresos: number;
+}
+
+export class UpdateEstadoEnvioDto {
+  @IsEnum(['pendiente', 'preparando', 'enviado', 'entregado', 'cancelado'])
+  estadoEnvio: 'pendiente' | 'preparando' | 'enviado' | 'entregado' | 'cancelado';
 }

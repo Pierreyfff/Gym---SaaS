@@ -66,17 +66,19 @@ export class ClientesController {
   }
 
   @Get(':id/perfil-completo')
+  @Roles('admin', 'recepcionista', 'entrenador', 'cliente')
   async getPerfilCompleto(@Param('id') id: string, @Request() req: any) {
-    return this.getClientePerfilCompletoUseCase.execute(id, req.user.gimnasioId);
+    return this.getClientePerfilCompletoUseCase.execute(id, req.user.gimnasioId, req.user.userId, req.user.rol);
   }
 
   @Put(':id')
+  @Roles('admin', 'recepcionista', 'entrenador', 'cliente')
   async update(
     @Param('id') id: string,
     @Body() updateClienteDto: UpdateClienteDto,
     @Request() req: any,
   ): Promise<ClienteResponseDto> {
-    return this.updateClienteUseCase.execute(id, updateClienteDto, req.user.gimnasioId);
+    return this.updateClienteUseCase.execute(id, updateClienteDto, req.user.gimnasioId, req.user.userId, req.user.rol);
   }
 
   @Delete(':id')

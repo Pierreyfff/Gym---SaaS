@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ShoppingCart, MapPin, CreditCard, CheckCircle, ArrowLeft, ArrowRight } from 'lucide-react';
+import { ShoppingCart, MapPin, CreditCard, CheckCircle, ArrowLeft, ArrowRight, Truck, Store } from 'lucide-react';
 
 type PasoCheckout = 1 | 2 | 3 | 4;
 
@@ -23,6 +23,7 @@ export function CheckoutPage() {
   
   const [paso, setPaso] = useState<PasoCheckout>(1);
   const [procesando, setProcesando] = useState(false);
+  const [costoEnvio, setCostoEnvio] = useState(0);
   
   // Datos de envio
   const [datosEnvio, setDatosEnvio] = useState({
@@ -38,6 +39,12 @@ export function CheckoutPage() {
   const [datosPago, setDatosPago] = useState({
     metodoPago: 'efectivo',
   });
+
+  useEffect(() => {
+    apiClient.public.getConfiguracion().then((config) => {
+      setCostoEnvio(Number(config.costoEnvio) || 0);
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -61,7 +68,10 @@ export function CheckoutPage() {
     }
   }, [isAuthenticated, navigate, toast, items.length]);
 
-  const totalCarrito = useCartStore((s) => s.totalPrice);
+  const totalProductos = useCartStore((s) => s.totalPrice);
+  const totalCarrito = datosEnvio.tipoEntrega === 'domicilio'
+    ? totalProductos + costoEnvio
+    : totalProductos;
 
   const handleSiguientePaso = () => {
     if (paso === 1) {
@@ -186,23 +196,33 @@ export function CheckoutPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <button
                     onClick={() => setDatosEnvio({ ...datosEnvio, tipoEntrega: 'retiro' })}
-                    className={`p-4 border-2 rounded-lg font-semibold transition ${
+                    className={`p-4 border-2 rounded-lg font-semibold transition text-left ${
                       datosEnvio.tipoEntrega === 'retiro'
                         ? 'border-purple-600 bg-purple-50 text-purple-600'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
-                    Retiro en gimnasio
+                    <div className="flex items-center gap-2 mb-1">
+                      <Store className="w-5 h-5" />
+                      Retiro en gimnasio
+                    </div>
+                    <p className="text-xs font-normal opacity-75">Sin costo adicional</p>
                   </button>
                   <button
                     onClick={() => setDatosEnvio({ ...datosEnvio, tipoEntrega: 'domicilio' })}
-                    className={`p-4 border-2 rounded-lg font-semibold transition ${
+                    className={`p-4 border-2 rounded-lg font-semibold transition text-left ${
                       datosEnvio.tipoEntrega === 'domicilio'
                         ? 'border-purple-600 bg-purple-50 text-purple-600'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
-                    Envio a domicilio
+                    <div className="flex items-center gap-2 mb-1">
+                      <Truck className="w-5 h-5" />
+                      Envio a domicilio
+                    </div>
+                    <p className="text-xs font-normal opacity-75">
+                      + {formatCurrency(costoEnvio)} de envio
+                    </p>
                   </button>
                 </div>
               </div>
@@ -477,11 +497,23 @@ export function CheckoutPage() {
           {paso !== 4 && (
             <Card>
               <CardContent className="pt-6">
-                <div className="flex justify-between items-center mb-6">
-                  <span className="text-2xl font-bold text-gray-900">Total:</span>
-                  <span className="text-3xl font-bold text-purple-600">
-                    {formatCurrency(totalCarrito)}
-                  </span>
+                <div className="space-y-2 mb-4">
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Subtotal productos</span>
+                    <span>{formatCurrency(totalProductos)}</span>
+                  </div>
+                  {datosEnvio.tipoEntrega === 'domicilio' && costoEnvio > 0 && (
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Costo de envio</span>
+                      <span>{formatCurrency(costoEnvio)}</span>
+                    </div>
+                  )}
+                  <div className="border-t pt-2 flex justify-between items-center">
+                    <span className="text-2xl font-bold text-gray-900">Total:</span>
+                    <span className="text-3xl font-bold text-purple-600">
+                      {formatCurrency(totalCarrito)}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="flex gap-3">

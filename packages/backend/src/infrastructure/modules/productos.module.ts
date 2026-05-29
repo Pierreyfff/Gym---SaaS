@@ -23,6 +23,7 @@ import { GetLowStockProductosUseCase } from '@application/use-cases/productos/ge
 // Use Cases - Ventas
 import { CreateVentaUseCase } from '@application/use-cases/ventas/create-venta.use-case';
 import { GetAllVentasUseCase } from '@application/use-cases/ventas/get-all-ventas.use-case';
+import { UpdateEstadoEnvioUseCase } from '@application/use-cases/ventas/update-estado-envio.use-case';
 
 // Repositories
 import { CategoriaProductoRepository } from '@infrastructure/repositories/categoria-producto.repository';
@@ -54,6 +55,7 @@ import { VentaProductoRepository } from '@infrastructure/repositories/venta-prod
     // Use Cases - Ventas
     CreateVentaUseCase,
     GetAllVentasUseCase,
+    UpdateEstadoEnvioUseCase,
 
     // Repositories
     {

@@ -13,9 +13,11 @@ export const apiClient = new GymSaasApiClient({
     return useAuthStore.getState().getRefreshToken();
   },
   
-  setTokens: (accessToken: string,_refreshToken: string) => { // quitarle el _ si es necesario en futuro p
+  setTokens: (accessToken: string, refreshToken: string) => {
     useAuthStore.getState().setAccessToken(accessToken);
-    // El refresh token no cambia, solo el access
+    if (refreshToken) {
+      useAuthStore.getState().setRefreshToken(refreshToken);
+    }
   },
   
   onTokenExpired: () => {

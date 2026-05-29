@@ -165,10 +165,17 @@ export class ClienteRepository implements IClienteRepository {
         apellido: userData.apellido,
         telefono: userData.telefono,
         perfilCliente: {
-          update: {
-            fechaNacimiento: perfilData.fechaNacimiento,
-            genero: perfilData.genero,
-            notas: perfilData.notas,
+          upsert: {
+            create: {
+              fechaNacimiento: perfilData.fechaNacimiento,
+              genero: perfilData.genero,
+              notas: perfilData.notas,
+            },
+            update: {
+              fechaNacimiento: perfilData.fechaNacimiento,
+              genero: perfilData.genero,
+              notas: perfilData.notas,
+            },
           },
         },
       },

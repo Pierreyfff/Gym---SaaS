@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { apiClient } from '@/lib/api/client';
 import { useToast } from '@/hooks/use-toast';
-import { User, Pencil, Save, X, ArrowLeft } from 'lucide-react';
+import { User, Pencil, Save, X, ArrowLeft, RefreshCw } from 'lucide-react';
 
 interface PerfilCliente {
   nombre: string;
@@ -25,10 +25,11 @@ export function ClientePerfilClientePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [cargandoUsuario, setCargandoUsuario] = useState(false);
   const [perfil, setPerfil] = useState<PerfilCliente>({
-    nombre: '',
-    apellido: '',
-    email: '',
+    nombre: user?.nombre || '',
+    apellido: user?.apellido || '',
+    email: user?.email || '',
     telefono: '',
     fechaNacimiento: '',
   });
@@ -44,20 +45,36 @@ export function ClientePerfilClientePage() {
       setLoading(true);
       const data = await apiClient.clientes.getPerfilCompleto(user!.id);
       setPerfil({
-        nombre: data.cliente.nombre || '',
-        apellido: data.cliente.apellido || '',
-        email: data.cliente.email || '',
+        nombre: data.cliente.nombre || user?.nombre || '',
+        apellido: data.cliente.apellido || user?.apellido || '',
+        email: data.cliente.email || user?.email || '',
         telefono: data.cliente.telefono || '',
         fechaNacimiento: data.cliente.fechaNacimiento
           ? new Date(data.cliente.fechaNacimiento).toISOString().split('T')[0]
           : '',
       });
-    } catch {
-      toast({
-        title: 'Error',
-        description: 'No se pudo cargar tu perfil',
-        variant: 'destructive',
-      });
+    } catch (err) {
+      console.error('Error cargando perfil completo, usando datos de auth:', err);
+      // Fallback: usar datos del usuario autenticado + intentar con /auth/me
+      try {
+        setCargandoUsuario(true);
+        const userData = await apiClient.auth.getCurrentUser();
+        setPerfil({
+          nombre: userData.nombre || user?.nombre || '',
+          apellido: userData.apellido || user?.apellido || '',
+          email: userData.email || user?.email || '',
+          telefono: userData.telefono || '',
+          fechaNacimiento: '',
+        });
+      } catch {
+        toast({
+          title: 'Error',
+          description: 'No se pudo cargar tu perfil. Intenta recargar la página.',
+          variant: 'destructive',
+        });
+      } finally {
+        setCargandoUsuario(false);
+      }
     } finally {
       setLoading(false);
     }
@@ -71,7 +88,10 @@ export function ClientePerfilClientePage() {
     try {
       setSaving(true);
       await apiClient.clientes.update(user!.id, {
-        ...perfil,
+        nombre: perfil.nombre,
+        apellido: perfil.apellido,
+        email: perfil.email,
+        telefono: perfil.telefono || undefined,
         fechaNacimiento: perfil.fechaNacimiento || undefined,
       });
       toast({
@@ -79,7 +99,8 @@ export function ClientePerfilClientePage() {
         description: 'Tus datos se han guardado correctamente',
       });
       setEditing(false);
-    } catch {
+    } catch (err) {
+      console.error('Error actualizando perfil:', err);
       toast({
         title: 'Error',
         description: 'No se pudo actualizar tu perfil',
@@ -95,7 +116,7 @@ export function ClientePerfilClientePage() {
     setEditing(false);
   };
 
-  if (loading) {
+  if (loading || cargandoUsuario) {
     return (
       <PublicLayout>
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -109,7 +130,7 @@ export function ClientePerfilClientePage() {
     <PublicLayout>
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-6">
+          <div className="mb-6 flex items-center justify-between">
             <Link
               to="/cliente/dashboard"
               className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-600 transition"
@@ -117,6 +138,15 @@ export function ClientePerfilClientePage() {
               <ArrowLeft className="w-4 h-4" />
               Volver al panel
             </Link>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={loadPerfil}
+              className="text-gray-500"
+            >
+              <RefreshCw className="w-4 h-4 mr-1" />
+              Recargar
+            </Button>
           </div>
           <Card>
             <CardHeader>
@@ -168,7 +198,7 @@ export function ClientePerfilClientePage() {
                     />
                   ) : (
                     <p className="text-lg font-semibold text-gray-900">
-                      {perfil.nombre}
+                      {perfil.nombre || 'No registrado'}
                     </p>
                   )}
                 </div>
@@ -182,7 +212,7 @@ export function ClientePerfilClientePage() {
                     />
                   ) : (
                     <p className="text-lg font-semibold text-gray-900">
-                      {perfil.apellido}
+                      {perfil.apellido || 'No registrado'}
                     </p>
                   )}
                 </div>
@@ -197,7 +227,7 @@ export function ClientePerfilClientePage() {
                     />
                   ) : (
                     <p className="text-lg font-semibold text-gray-900">
-                      {perfil.email}
+                      {perfil.email || 'No registrado'}
                     </p>
                   )}
                 </div>

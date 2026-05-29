@@ -39,7 +39,7 @@ export class RefreshTokenUseCase {
         throw new UnauthorizedException('Usuario inactivo');
       }
 
-      // 3. Generar nuevo access token
+      // 3. Generar nuevo access token y rotar refresh token
       const newPayload = {
         sub: user.id,
         email: user.email,
@@ -48,9 +48,11 @@ export class RefreshTokenUseCase {
       };
 
       const accessToken = await this.jwtService.generateAccessToken(newPayload);
+      const refreshToken = await this.jwtService.generateRefreshToken(newPayload);
 
       return {
         accessToken,
+        refreshToken,
       };
     } catch (error) {
       throw new UnauthorizedException('Refresh token inválido o expirado');

@@ -4,7 +4,7 @@ import { IUserRepository } from '@domain/repositories/user.repository.interface'
 import { IJwtService } from '@domain/services/jwt.service.interface';
 import { LoginDto, LoginResponseDto, UserDto } from '@gym-saas/shared';
 import { Inject } from '@nestjs/common';
-import { PrismaService } from '@infrastructure/database/prisma.service';
+import { PrismaClient } from '@gym-saas/database';
 
 @Injectable()
 export class LoginUseCase {
@@ -13,7 +13,7 @@ export class LoginUseCase {
     private readonly userRepository: IUserRepository,
     @Inject('IJwtService')
     private readonly jwtService: IJwtService,
-    private readonly prisma: PrismaService,
+    private readonly prisma: PrismaClient,
   ) {}
 
   async execute(loginDto: LoginDto): Promise<LoginResponseDto> {

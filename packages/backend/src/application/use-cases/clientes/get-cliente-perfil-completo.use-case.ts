@@ -1,11 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaClient } from '@gym-saas/database';
 
 @Injectable()
 export class GetClientePerfilCompletoUseCase {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async execute(clienteId: string, gimnasioId: string) {
+  async execute(clienteId: string, gimnasioId: string, userId?: string, userRol?: string) {
+    if (userRol === 'cliente' && userId !== clienteId) {
+      throw new ForbiddenException('No puedes ver el perfil de otro cliente');
+    }
     // 1. Obtener usuario cliente con su perfil
     const usuario = await this.prisma.usuario.findFirst({
       where: {
@@ -20,6 +23,18 @@ export class GetClientePerfilCompletoUseCase {
 
     if (!usuario) {
       throw new NotFoundException('Cliente no encontrado');
+    }
+
+    // Auto-crear PerfilCliente si no existe
+    if (!usuario.perfilCliente) {
+      usuario.perfilCliente = await this.prisma.perfilCliente.create({
+        data: {
+          usuarioId: usuario.id,
+          fechaNacimiento: null,
+          genero: null,
+          notas: null,
+        },
+      });
     }
 
     // 2. Obtener membresías
@@ -102,7 +117,7 @@ export class GetClientePerfilCompletoUseCase {
 
     // 7. Calcular resumen
     const totalPagado = pagos
-      .filter((p) => p.estado === 'completado')
+      .filter((p) => p.estado === 'pagado')
       .reduce((sum, p) => sum + Number(p.monto), 0);
 
     const totalAsistencias = asistencias.length;

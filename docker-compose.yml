@@ -33,20 +33,11 @@ services:
       - "3000:3000"
     env_file:
       - .env.docker
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/packages/backend/node_modules
-      - /app/packages/database/node_modules
-      - /app/packages/shared/node_modules
-      - /app/packages/api-client/node_modules
-      - /app/packages/web/node_modules
     depends_on:
       postgres:
         condition: service_healthy
     networks:
       - gym-saas-network
-    command: sh -c "cd /app/packages/backend && npx ts-node -r tsconfig-paths/register src/main.ts"
 
   web:
     build:
@@ -57,23 +48,14 @@ services:
     container_name: gym-saas-web
     restart: unless-stopped
     ports:
-      - "5173:5173"
+      - "80:80"
     env_file:
       - .env.docker
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/packages/backend/node_modules
-      - /app/packages/database/node_modules
-      - /app/packages/shared/node_modules
-      - /app/packages/api-client/node_modules
-      - /app/packages/web/node_modules
     depends_on:
       backend:
         condition: service_started
     networks:
       - gym-saas-network
-    command: pnpm --filter web dev --host 0.0.0.0
 
 volumes:
   postgres_data:

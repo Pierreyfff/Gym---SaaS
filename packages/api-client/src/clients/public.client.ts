@@ -25,6 +25,7 @@ export interface PublicConfiguracion {
   horarioApertura?: string;
   horarioCierre?: string;
   diasLaborales: string[];
+  costoEnvio: number;
 }
 
 export interface PublicStaff {

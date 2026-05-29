@@ -21,6 +21,7 @@ interface AuthState {
   // Actions
   setAuth: (user: User, accessToken: string, refreshToken:  string) => void;
   setAccessToken: (accessToken: string) => void;
+  setRefreshToken: (refreshToken: string) => void;
   clearAuth: () => void;
   
   // Getters
@@ -28,6 +29,19 @@ interface AuthState {
   getRefreshToken: () => string | null;
   isAdmin: () => boolean;
   isStaff: () => boolean;
+}
+
+const STORAGE_KEY = 'gym-saas-auth';
+
+// Escuchar cambios de localStorage desde otras pestañas
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (event) => {
+    if (event.key === STORAGE_KEY && !event.newValue) {
+      // Otra pestaña eliminó la sesión (cerró sesión)
+      useAuthStore.getState().clearAuth();
+      window.location.href = '/login';
+    }
+  });
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -51,6 +65,10 @@ export const useAuthStore = create<AuthState>()(
         set({ accessToken });
       },
 
+      setRefreshToken: (refreshToken) => {
+        set({ refreshToken });
+      },
+
       clearAuth: () => {
         set({
           user: null,
@@ -72,7 +90,7 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: 'gym-saas-auth',
+      name: STORAGE_KEY,
       storage: createJSONStorage(() => localStorage),
     },
   ),

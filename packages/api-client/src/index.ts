@@ -18,6 +18,7 @@ import { StaffClient } from './clients/staff.client';
 import { TestimoniosClient } from './clients/testimonios.client';
 import { GaleriaClient } from './clients/galeria.client';
 import { PublicClient } from './clients/public.client';
+import { HorarioEmpleadoClient } from './clients/horario-empleado.client';
 
 export class GymSaasApiClient {
   private axiosInstance: AxiosInstance;
@@ -27,9 +28,9 @@ export class GymSaasApiClient {
   public readonly clientes: ClientesClient;
   public readonly planes: PlanesClient;
   public readonly membresias: MembresiasClient;
-  public readonly pagos: PagosClient; // ← AGREGAR
-  public readonly asistencias: AsistenciasClient; // ← AGREGAR
-  public readonly inscripciones: InscripcionesClient; // ← AGREGAR
+  public readonly pagos: PagosClient;
+  public readonly asistencias: AsistenciasClient;
+  public readonly inscripciones: InscripcionesClient;
   public readonly estadisticas: EstadisticasClient;
   public readonly configuracion: ConfiguracionGimnasioClient;
   public readonly categoriasProductos: CategoriaProductoClient;
@@ -40,6 +41,7 @@ export class GymSaasApiClient {
   public readonly testimonios: TestimoniosClient;
   public readonly galeria: GaleriaClient;
   public readonly public: PublicClient;
+  public readonly horarios: HorarioEmpleadoClient;
 
   constructor(config: ApiClientConfig) {
     this.axiosInstance = createApiClient(config);
@@ -50,9 +52,9 @@ export class GymSaasApiClient {
     this.clientes = new ClientesClient(this.axiosInstance);
     this.planes = new PlanesClient(this.axiosInstance);
     this.membresias = new MembresiasClient(this.axiosInstance);
-    this.pagos = new PagosClient(this.axiosInstance); // ← AGREGAR
-    this.asistencias = new AsistenciasClient(this.axiosInstance); // ← AGREGAR
-    this.inscripciones = new InscripcionesClient(this.axiosInstance); // ← AGREGAR
+    this.pagos = new PagosClient(this.axiosInstance);
+    this.asistencias = new AsistenciasClient(this.axiosInstance);
+    this.inscripciones = new InscripcionesClient(this.axiosInstance);
     this.estadisticas = new EstadisticasClient(this.axiosInstance);
     this.configuracion = new ConfiguracionGimnasioClient(this.axiosInstance);
     this.categoriasProductos = new CategoriaProductoClient(this.axiosInstance);
@@ -63,6 +65,7 @@ export class GymSaasApiClient {
     this.testimonios = new TestimoniosClient(this.axiosInstance);
     this.galeria = new GaleriaClient(this.axiosInstance);
     this.public = new PublicClient(this.axiosInstance);
+    this.horarios = new HorarioEmpleadoClient(this.axiosInstance);
   }
 
   // Método para obtener la instancia de axios (por si se necesita hacer requests custom)
@@ -78,9 +81,9 @@ export * from './clients/users.client';
 export * from './clients/clientes.client';
 export * from './clients/planes.client';
 export * from './clients/membresias.client';
-export * from './clients/pagos.client'; // ← AGREGAR
-export * from './clients/asistencias.client'; // ← AGREGAR al final
-export * from './clients/inscripciones.client'; // ← AGREGAR al final
+export * from './clients/pagos.client';
+export * from './clients/asistencias.client';
+export * from './clients/inscripciones.client';
 export * from './clients/estadisticas.client';
 export * from './clients/configuracion-gimnasio.client';
 export * from './clients/categoria-producto.client';
@@ -91,6 +94,6 @@ export * from './clients/staff.client'
 export * from './clients/testimonios.client';
 export * from './clients/galeria.client';
 export * from './clients/public.client';
+export * from './clients/horario-empleado.client';
 
-// ❌ NO re-exportar shared (causa problemas con Vite)
-// export * from '@gym-saas/shared';
+

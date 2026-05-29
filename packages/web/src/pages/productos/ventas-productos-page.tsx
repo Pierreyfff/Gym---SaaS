@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, ShoppingCart, DollarSign, TrendingUp, Package } from 'lucide-react';
+import { ArrowLeft, Plus, ShoppingCart, DollarSign, TrendingUp, Package, Truck, Store } from 'lucide-react';
 import { apiClient } from '@/lib/api/client';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { useToast } from '@/hooks/use-toast';
@@ -14,6 +14,11 @@ interface Venta {
   total: number;
   metodoPago: string;
   nota?: string;
+  tipoEntrega?: string;
+  direccion?: string;
+  ciudad?: string;
+  telefono?: string;
+  estadoEnvio?: string;
   fechaVenta: Date;
   producto: {
     id: string;
@@ -77,6 +82,45 @@ export function VentasProductosPage() {
         return 'Transferencia';
       default:
         return 'Otro';
+    }
+  };
+
+  const getEstadoEnvioLabel = (estado?: string) => {
+    const labels: Record<string, string> = {
+      pendiente: 'Pendiente',
+      preparando: 'Preparando',
+      enviado: 'Enviado',
+      entregado: 'Entregado',
+      cancelado: 'Cancelado',
+    };
+    return labels[estado || ''] || '-';
+  };
+
+  const getEstadoEnvioColor = (estado?: string) => {
+    const colors: Record<string, string> = {
+      pendiente: 'bg-yellow-100 text-yellow-800',
+      preparando: 'bg-blue-100 text-blue-800',
+      enviado: 'bg-purple-100 text-purple-800',
+      entregado: 'bg-green-100 text-green-800',
+      cancelado: 'bg-red-100 text-red-800',
+    };
+    return colors[estado || ''] || 'bg-gray-100 text-gray-800';
+  };
+
+  const handleUpdateEstadoEnvio = async (ventaId: string, estadoEnvio: string) => {
+    try {
+      await apiClient.ventasProductos.updateEstadoEnvio(ventaId, estadoEnvio as any);
+      toast({
+        title: 'Estado actualizado',
+        description: `Estado de envío cambiado a: ${getEstadoEnvioLabel(estadoEnvio)}`,
+      });
+      loadVentas();
+    } catch {
+      toast({
+        title: 'Error',
+        description: 'No se pudo actualizar el estado de envío',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -207,10 +251,13 @@ export function VentasProductosPage() {
                     Cantidad
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Precio Unit.
+                    Total
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Total
+                    Entrega
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Estado
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Método
@@ -238,10 +285,41 @@ export function VentasProductosPage() {
                       <div className="text-sm text-gray-900">{venta.cantidad}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-600">{formatCurrency(venta.precioUnitario)}</div>
+                      <div className="text-sm font-bold text-purple-600">{formatCurrency(venta.total)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-bold text-purple-600">{formatCurrency(venta.total)}</div>
+                      <div className="flex items-center gap-1">
+                        {venta.tipoEntrega === 'domicilio' ? (
+                          <Truck className="w-4 h-4 text-purple-600" />
+                        ) : venta.tipoEntrega === 'retiro' ? (
+                          <Store className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <Package className="w-4 h-4 text-gray-400" />
+                        )}
+                        <span className="text-sm text-gray-600 ml-1">
+                          {venta.tipoEntrega === 'domicilio' ? 'Domicilio' : venta.tipoEntrega === 'retiro' ? 'Retiro' : '-'}
+                        </span>
+                      </div>
+                      {venta.tipoEntrega === 'domicilio' && venta.direccion && (
+                        <div className="text-xs text-gray-400 mt-1">{venta.direccion}, {venta.ciudad}</div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {venta.tipoEntrega === 'domicilio' ? (
+                        <select
+                          value={venta.estadoEnvio || 'pendiente'}
+                          onChange={(e) => handleUpdateEstadoEnvio(venta.id, e.target.value)}
+                          className={`text-xs font-medium rounded-full px-3 py-1 border-0 cursor-pointer ${getEstadoEnvioColor(venta.estadoEnvio)}`}
+                        >
+                          <option value="pendiente">Pendiente</option>
+                          <option value="preparando">Preparando</option>
+                          <option value="enviado">Enviado</option>
+                          <option value="entregado">Entregado</option>
+                          <option value="cancelado">Cancelado</option>
+                        </select>
+                      ) : (
+                        <span className="text-sm text-gray-500">-</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="text-sm font-medium text-gray-900">

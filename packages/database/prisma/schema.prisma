@@ -28,15 +28,15 @@ model Gimnasio {
   asistencias           Asistencia[]
   entrenadoresClientes  EntrenadorCliente[]
   rutinas               Rutina[]
-  configuracion         ConfiguracionGimnasio? // ← AGREGAR ESTA LÍNEA
+  configuracion         ConfiguracionGimnasio?
   categoriasProductos   CategoriaProducto[]
   productos             Producto[]
   ventasProductos       VentaProducto[]
   movimientosInventario MovimientoInventario[]
-  // 🆕 NUEVAS RELACIONES
   staff                 Staff[]
   testimonios           Testimonio[]
   imagenesGaleria       ImagenGaleria[]
+  horariosEmpleado      HorarioEmpleado[]
 
   @@map("gimnasios")
 }
@@ -70,6 +70,7 @@ model Usuario {
   ventaProductos          VentaProducto[]
   movimientoInventarios   MovimientoInventario[]
   staff                   Staff[]
+  horarios                HorarioEmpleado[]
 
   @@unique([gimnasioId, email])
   @@index([gimnasioId])
@@ -172,11 +173,11 @@ model Pago {
   tipo            TipoPago   @default(membresia)
   monto           Decimal    @db.Decimal(10, 2)
   metodoPago      MetodoPago @map("metodo_pago")
-  estado          EstadoPago @default(completado) // ← CAMBIAR A EstadoPago
+  estado          EstadoPago @default(pagado)
   fechaPago       DateTime   @map("fecha_pago")
   nota            String?    @db.Text
-  motivoReembolso String?    @map("motivo_reembolso") @db.Text // ← AGREGAR
-  fechaReembolso  DateTime?  @map("fecha_reembolso") // ← AGREGAR
+  motivoReembolso String?    @map("motivo_reembolso") @db.Text
+  fechaReembolso  DateTime?  @map("fecha_reembolso")
   fechaCreacion   DateTime   @default(now()) @map("fecha_creacion")
 
   // Relaciones
@@ -188,7 +189,7 @@ model Pago {
   @@index([clienteId])
   @@index([fechaPago])
   @@index([tipo])
-  @@index([estado]) // ← AGREGAR
+  @@index([estado])
   @@map("pagos")
 }
 
@@ -204,10 +205,23 @@ enum MetodoPago {
 }
 
 enum EstadoPago {
-  completado
   pendiente
+  pagado
+  fallido
   reembolsado
-  rechazado
+}
+
+enum TipoEntrega {
+  retiro
+  domicilio
+}
+
+enum EstadoEnvio {
+  pendiente
+  preparando
+  enviado
+  entregado
+  cancelado
 }
 
 // ============================================
@@ -256,11 +270,11 @@ model ConfiguracionGimnasio {
   facebook  String?
   instagram String?
   twitter   String?
-  whatsapp  String? // ← NUEVO
-  youtube   String? // ← NUEVO
+  whatsapp  String?
+  youtube   String?
   tiktok    String?
 
-  // 🆕 PARA LA WEB PÚBLICA
+  // Web pública
   // Imágenes
   imagenHero       String? // Imagen principal del home (hero)
   imagenesCarrusel String[] @default([]) // Carrusel del home (máx 4)
@@ -277,6 +291,9 @@ model ConfiguracionGimnasio {
   // Políticas
   politicaCancelacion String? @db.Text
   terminosCondiciones String? @db.Text
+
+  // Envíos
+  costoEnvio               Decimal @default(0) @map("costo_envio") @db.Decimal(10, 2)
 
   // Notificaciones
   notificarVencimiento7Dias Boolean @default(true)
@@ -410,17 +427,25 @@ model Producto {
 // VENTAS DE PRODUCTOS
 // ============================================
 model VentaProducto {
-  id             String     @id @default(uuid())
-  gimnasioId     String     @map("gimnasio_id")
-  productoId     String     @map("producto_id")
-  clienteId      String?    @map("cliente_id")
+  id             String       @id @default(uuid())
+  gimnasioId     String       @map("gimnasio_id")
+  productoId     String       @map("producto_id")
+  clienteId      String?      @map("cliente_id")
   cantidad       Int
-  precioUnitario Decimal    @map("precio_unitario") @db.Decimal(10, 2)
-  total          Decimal    @db.Decimal(10, 2)
-  metodoPago     MetodoPago @map("metodo_pago")
+  precioUnitario Decimal      @map("precio_unitario") @db.Decimal(10, 2)
+  total          Decimal      @db.Decimal(10, 2)
+  metodoPago     MetodoPago   @map("metodo_pago")
   nota           String?
-  fechaVenta     DateTime   @default(now()) @map("fecha_venta")
-  fechaCreacion  DateTime   @default(now()) @map("fecha_creacion")
+  // Campos de entrega
+  tipoEntrega    TipoEntrega? @map("tipo_entrega")
+  direccion      String?      @map("direccion")
+  ciudad         String?      @map("ciudad")
+  codigoPostal   String?      @map("codigo_postal")
+  telefono       String?      @map("telefono")
+  estadoEnvio    EstadoEnvio? @map("estado_envio")
+  // Fin campos de entrega
+  fechaVenta     DateTime     @default(now()) @map("fecha_venta")
+  fechaCreacion  DateTime     @default(now()) @map("fecha_creacion")
 
   // Relaciones
   gimnasio Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
@@ -463,13 +488,37 @@ model MovimientoInventario {
 }
 
 // ============================================
+// HORARIOS DE EMPLEADOS
+// ============================================
+model HorarioEmpleado {
+  id             String   @id @default(uuid())
+  gimnasioId     String   @map("gimnasio_id")
+  usuarioId      String   @map("usuario_id")
+  diaSemana      Int      @map("dia_semana") // 0=domingo, 1=lunes, ..., 6=sabado
+  horaInicio     String   @map("hora_inicio") // "HH:mm"
+  horaFin        String   @map("hora_fin") // "HH:mm"
+  activo         Boolean  @default(true)
+  fechaCreacion  DateTime @default(now()) @map("fecha_creacion")
+  fechaActualizacion DateTime @updatedAt @map("fecha_actualizacion")
+
+  // Relaciones
+  gimnasio Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
+  usuario  Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@unique([gimnasioId, usuarioId, diaSemana])
+  @@index([gimnasioId])
+  @@index([usuarioId])
+  @@map("horarios_empleado")
+}
+
+// ============================================
 // STAFF DEL GIMNASIO (para página web)
 // ============================================
 model Staff {
   id          String  @id @default(uuid())
   gimnasioId  String  @map("gimnasio_id")
   
-  // 🆕 VINCULACIÓN OPCIONAL CON USUARIO
+  // Vinculación opcional con usuario
   usuarioId   String? @map("usuario_id") // Si tiene valor, usa datos del usuario
   
   // Campos propios (se usan si NO está vinculado a usuario)
@@ -492,10 +541,10 @@ model Staff {
 
   // Relaciones
   gimnasio Gimnasio @relation(fields: [gimnasioId], references: [id], onDelete: Cascade)
-  usuario  Usuario? @relation(fields: [usuarioId], references: [id], onDelete: SetNull) // 🆕
+  usuario  Usuario? @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
 
   @@index([gimnasioId])
-  @@index([usuarioId]) // 🆕
+  @@index([usuarioId])
   @@index([activo])
   @@map("staff")
 }

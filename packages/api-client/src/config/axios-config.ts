@@ -53,11 +53,10 @@ export function createApiClient(config: ApiClientConfig): AxiosInstance {
               refreshToken,
             });
 
-            const { accessToken } = response.data;
+            const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-            // Guardar nuevo token
             if (config.setTokens) {
-              config.setTokens(accessToken, refreshToken);
+              config.setTokens(accessToken, newRefreshToken || refreshToken);
             }
 
             // Reintentar request original con nuevo token

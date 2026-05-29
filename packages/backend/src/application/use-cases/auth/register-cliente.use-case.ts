@@ -1,19 +1,18 @@
 import { Injectable, ConflictException, NotFoundException, Inject } from '@nestjs/common';
 import { RegisterClienteDto, LoginResponseDto, UserDto } from '@gym-saas/shared';
 import { IUserRepository } from '@domain/repositories/user.repository.interface';
-import { PrismaService } from '@infrastructure/database/prisma.service';
+import { IJwtService } from '@domain/services/jwt.service.interface';
+import { PrismaClient } from '@gym-saas/database';
 import * as bcrypt from 'bcryptjs';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class RegisterClienteUseCase {
   constructor(
     @Inject('IUserRepository')
     private readonly userRepository: IUserRepository,
-    private readonly prisma: PrismaService,
-    private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
+    @Inject('IJwtService')
+    private readonly jwtService: IJwtService,
+    private readonly prisma: PrismaClient,
   ) {}
 
   async execute(dto: RegisterClienteDto): Promise<LoginResponseDto> {
@@ -48,23 +47,28 @@ export class RegisterClienteUseCase {
       gimnasioId: gimnasio.id,
     });
 
+    // Crear PerfilCliente (necesario para que el perfil funcione correctamente)
+    await this.prisma.perfilCliente.create({
+      data: {
+        usuarioId: newUser.id,
+        fechaNacimiento: null,
+        genero: null,
+        notas: null,
+      },
+    });
+
     // Generar tokens
     const payload = { 
-      userId: newUser.id, 
+      sub: newUser.id,
       email: newUser.email, 
       rol: newUser.rol,
       gimnasioId: newUser.gimnasioId,
     };
     
-    const accessToken = this.jwtService.sign(payload, {
-      secret: this.configService.get<string>('JWT_SECRET'),
-      expiresIn: '1h',
-    });
-    
-    const refreshToken = this.jwtService.sign(payload, {
-      secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      expiresIn: '7d',
-    });
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.generateAccessToken(payload),
+      this.jwtService.generateRefreshToken(payload),
+    ]);
 
     const userDto: UserDto = {
       id: newUser.id,

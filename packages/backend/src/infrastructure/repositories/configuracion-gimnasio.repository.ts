@@ -68,6 +68,7 @@ export class ConfiguracionGimnasioRepository implements IConfiguracionGimnasioRe
       notificarVencimiento1Dia: config.notificarVencimiento1Dia,
       notificarBienvenida: config.notificarBienvenida,
       notificarRenovacion: config.notificarRenovacion,
+      costoEnvio: Number(config.costoEnvio) || 0,
       fechaCreacion: config.fechaCreacion,
       fechaActualizacion: config.fechaActualizacion,
     };

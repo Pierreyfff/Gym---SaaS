@@ -128,6 +128,10 @@ export class UpdateConfiguracionGimnasioDto {
   @IsOptional()
   @IsBoolean()
   notificarRenovacion?: boolean;
+
+  @IsOptional()
+  @IsNumber()
+  costoEnvio?: number;
 }
 
 export class ConfiguracionGimnasioResponseDto {
@@ -164,6 +168,7 @@ export class ConfiguracionGimnasioResponseDto {
   notificarVencimiento1Dia: boolean;
   notificarBienvenida: boolean;
   notificarRenovacion: boolean;
+  costoEnvio: number;
   fechaCreacion: Date;
   fechaActualizacion: Date;
 }

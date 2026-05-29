@@ -13,6 +13,6 @@
     "moduleResolution": "node",
     "types": ["node"]
   },
-  "include":  ["prisma/**/*", "src/**/*"],
+  "include":  ["src/**/*"],
   "exclude":  ["node_modules", "dist"]
 }

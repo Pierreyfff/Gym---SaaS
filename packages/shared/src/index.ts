@@ -38,6 +38,9 @@ export * from './dtos/testimonio.dto';
 // Galería
 export * from './dtos/imagen-galeria.dto';
 
+// Horarios Empleados
+export * from './dtos/horario-empleado.dto';
+
 
 // Export all DTOs
 // export * from './dtos/auth.dto';

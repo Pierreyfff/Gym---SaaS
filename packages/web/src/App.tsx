@@ -29,6 +29,7 @@ import { NuevaVentaPage } from '@/pages/productos/nueva-venta-page';
 import { IngresosPage } from '@/pages/ingresos/ingresos-page';
 import { StaffPage } from '@/pages/staff/staff-page';
 import { StaffFormPage } from '@/pages/staff/staff-form-page';
+import { HorariosPage } from '@/pages/horarios/horarios-page';
 import { TestimoniosPage } from '@/pages/testimonios/testimonios-page';
 import { TestimonioFormPage } from '@/pages/testimonios/testimonio-form-page';
 import { GaleriaPage } from '@/pages/galeria/galeria-page';
@@ -380,6 +381,14 @@ function App() {
               element={
                 <ProtectedRoute requiredRoles={['admin']}>
                   <StaffPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/horarios"
+              element={
+                <ProtectedRoute requiredRoles={['admin']}>
+                  <HorariosPage />
                 </ProtectedRoute>
               }
             />

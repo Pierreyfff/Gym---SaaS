@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { formatCurrency } from '@/lib/format';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { apiClient } from '@/lib/api/client';
 import {
@@ -118,15 +118,13 @@ export function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-900">Gym SaaS</h1>
           <div className="flex items-center gap-4">
-            <a
-              href="/home"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/home"
               className="inline-flex items-center gap-1.5 text-sm text-purple-600 hover:text-purple-800 font-medium transition"
             >
               <Globe className="w-4 h-4" />
               Ir a Página Web
-            </a>
+            </Link>
             <span className="text-sm text-gray-600">
               {user?.nombre} {user?.apellido}{' '}
               <span className="font-medium">({user?.rol})</span>
@@ -178,9 +176,12 @@ export function DashboardPage() {
             {/* Stats Grid - CLICKEABLES */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {/* Total Ingresos - Clickeable */}
-              <button
+              <div
                 onClick={() => navigate('/ingresos')}
-                className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white text-left hover:shadow-xl transition-all hover:scale-105"
+                onKeyDown={(e) => e.key === 'Enter' && navigate('/ingresos')}
+                role="button"
+                tabIndex={0}
+                className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white text-left hover:shadow-xl transition-all hover:scale-105 cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-medium opacity-90">
@@ -263,7 +264,7 @@ export function DashboardPage() {
                   </div>
                 )}
                 <p className="text-xs opacity-60 mt-3 text-right">Click para ver detalles →</p>
-              </button>
+              </div>
 
               {/* Clientes - Clickeable */}
               <button
@@ -462,6 +463,14 @@ export function DashboardPage() {
                 >
                   <ImageIcon className="w-5 h-5" />
                   <span>Galería</span>
+                </button>
+
+                <button
+                  onClick={() => navigate('/horarios')}
+                  className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-4 px-6 rounded-lg transition-all flex items-center justify-center gap-3 shadow-md hover:shadow-lg hover:scale-105"
+                >
+                  <Calendar className="w-5 h-5" />
+                  <span>Horarios</span>
                 </button>
               </div>
             </div>

@@ -9,6 +9,7 @@ import {
   CreateVentaProductoDto,
   VentaProductoResponseDto,
   VentaProductoListResponseDto,
+  UpdateEstadoEnvioDto,
 } from '@gym-saas/shared';
 
 @Injectable()
@@ -53,6 +54,12 @@ export class VentaProductoRepository implements IVentaProductoRepository {
           total,
           metodoPago: dto.metodoPago as any,
           nota: dto.nota,
+          tipoEntrega: dto.tipoEntrega as any,
+          direccion: dto.direccion,
+          ciudad: dto.ciudad,
+          codigoPostal: dto.codigoPostal,
+          telefono: dto.telefono,
+          estadoEnvio: dto.tipoEntrega === 'domicilio' ? 'pendiente' : (undefined as any),
         },
         include: {
           producto: true,
@@ -133,6 +140,33 @@ export class VentaProductoRepository implements IVentaProductoRepository {
     return this.mapToResponse(venta);
   }
 
+  async updateEstadoEnvio(
+    id: string,
+    gimnasioId: string,
+    dto: UpdateEstadoEnvioDto,
+  ): Promise<VentaProductoResponseDto> {
+    const venta = await this.prisma.ventaProducto.findFirst({
+      where: { id, gimnasioId },
+    });
+
+    if (!venta) {
+      throw new NotFoundException('Venta no encontrada');
+    }
+
+    const updated = await this.prisma.ventaProducto.update({
+      where: { id },
+      data: {
+        estadoEnvio: dto.estadoEnvio as any,
+      },
+      include: {
+        producto: true,
+        cliente: true,
+      },
+    });
+
+    return this.mapToResponse(updated);
+  }
+
   async findByDateRange(
     gimnasioId: string,
     fechaInicio: Date,
@@ -171,6 +205,12 @@ export class VentaProductoRepository implements IVentaProductoRepository {
       total: Number(venta.total),
       metodoPago: venta.metodoPago,
       nota: venta.nota || undefined,
+      tipoEntrega: venta.tipoEntrega || undefined,
+      direccion: venta.direccion || undefined,
+      ciudad: venta.ciudad || undefined,
+      codigoPostal: venta.codigoPostal || undefined,
+      telefono: venta.telefono || undefined,
+      estadoEnvio: venta.estadoEnvio || undefined,
       fechaVenta: venta.fechaVenta,
       producto: {
         id: venta.producto.id,

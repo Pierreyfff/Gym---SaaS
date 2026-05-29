@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { Inject } from '@nestjs/common';
 import { IClienteRepository } from '@domain/repositories/cliente.repository.interface';
 import { UpdateClienteDto, ClienteResponseDto } from '@gym-saas/shared';
@@ -14,7 +14,12 @@ export class UpdateClienteUseCase {
     id: string,
     dto: UpdateClienteDto,
     gimnasioId: string,
+    userId?: string,
+    userRol?: string,
   ): Promise<ClienteResponseDto> {
+    if (userRol === 'cliente' && userId !== id) {
+      throw new ForbiddenException('No puedes editar el perfil de otro cliente');
+    }
     // 1. Verificar que existe
     const clienteExistente = await this.clienteRepository.findById(id);
 

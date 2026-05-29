@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { validate } from '@infrastructure/config/env.validation';
 import { AuthModule } from '@infrastructure/modules/auth.module';
 import { UsersModule } from '@infrastructure/modules/users.module';
@@ -26,6 +27,7 @@ import { StaffModule } from '@infrastructure/modules/staff.module';
 import { TestimoniosModule } from '@infrastructure/modules/testimonios.module';
 import { GaleriaModule } from '@infrastructure/modules/galeria.module';
 import { PublicModule } from '@infrastructure/modules/public.module';
+import { HorarioEmpleadoModule } from '@infrastructure/modules/horario-empleado.module';
 
 @Module({
   imports: [
@@ -34,6 +36,10 @@ import { PublicModule } from '@infrastructure/modules/public.module';
       validate,
       envFilePath: ['.env'],
     }),
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 60,
+    }]),
     EmailModule,
     ScheduleModule.forRoot(),
     DatabaseModule,
@@ -54,6 +60,7 @@ import { PublicModule } from '@infrastructure/modules/public.module';
     TestimoniosModule,
     GaleriaModule,
     PublicModule,
+    HorarioEmpleadoModule,
   ],
   providers: [
     {
@@ -63,6 +70,10 @@ import { PublicModule } from '@infrastructure/modules/public.module';
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
     MembresiasSchedulerService,
     AlertasMembresiasService,
