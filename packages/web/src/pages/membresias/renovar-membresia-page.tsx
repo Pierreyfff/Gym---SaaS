@@ -153,6 +153,16 @@ export function RenovarMembresiaPage() {
     });
   };
 
+  const calcularNuevasFechas = () => {
+    if (!selectedPlan) return null;
+    const inicio = new Date();
+    const fin = new Date(inicio);
+    fin.setDate(fin.getDate() + selectedPlan.duracionDias);
+    return { inicio, fin };
+  };
+
+  const nuevasFechas = calcularNuevasFechas();
+
   const getMetodoPagoLabel = (metodo: string) => {
     switch (metodo) {
       case 'efectivo':
@@ -346,6 +356,30 @@ export function RenovarMembresiaPage() {
                   </div>
                 </div>
 
+                {/* Fechas de la nueva membresía */}
+                {nuevasFechas && (
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h4 className="text-sm font-semibold text-green-900 mb-3 flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      Nueva Membresía
+                    </h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <p className="text-xs text-green-700">Inicio</p>
+                        <p className="text-sm font-semibold text-green-900">
+                          {formatDate(nuevasFechas.inicio)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-green-700">Fin</p>
+                        <p className="text-sm font-semibold text-green-900">
+                          {formatDate(nuevasFechas.fin)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Método de Pago */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
@@ -431,6 +465,22 @@ export function RenovarMembresiaPage() {
                       {selectedPlan?.duracionDias} días
                     </span>
                   </div>
+                  {nuevasFechas && (
+                    <>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-600">Inicio:</span>
+                        <span className="font-semibold text-gray-900">
+                          {formatDate(nuevasFechas.inicio)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-600">Fin:</span>
+                        <span className="font-semibold text-gray-900">
+                          {formatDate(nuevasFechas.fin)}
+                        </span>
+                      </div>
+                    </>
+                  )}
                   <div className="flex justify-between">
                     <span className="text-sm text-gray-600 dark:text-gray-400">Método de pago:</span>
                     <span className="font-semibold text-gray-900 dark:text-gray-100">

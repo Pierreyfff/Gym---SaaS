@@ -101,7 +101,7 @@ export class CambiarPlanMembresiaUseCase {
             tipo: 'membresia',
             monto: diferenciaPrecio,
             metodoPago,
-            estado: 'completado',
+            estado: 'completado' as any,
             fechaPago: new Date(),
             nota: nota || `Diferencia por cambio de plan: ${membresia.plan.nombre} → ${nuevoPlan.nombre}`,
           },

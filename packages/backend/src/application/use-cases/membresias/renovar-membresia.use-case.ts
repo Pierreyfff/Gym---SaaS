@@ -39,10 +39,11 @@ export class RenovarMembresiaUseCase {
       throw new NotFoundException('Membresía no encontrada');
     }
 
-    // 3. Validar que la membresía está expirada o cancelada
-    if (membresiaAnterior.membresia.estado === 'activa') {
+    // 3. Validar que la membresía esté realmente activa (no vencida en fecha)
+    // Si estado es 'activa' pero fechaFin ya pasó, se permite renovación directa
+    if (membresiaAnterior.membresia.estaActiva()) {
       throw new BadRequestException(
-        'No se puede renovar una membresía activa.  Cancélala primero o espera a que expire.',
+        'No se puede renovar una membresía activa. Cancélala primero o espera a que expire.',
       );
     }
 

@@ -22,17 +22,24 @@ export class GetMembresiaByIdUseCase {
       throw new NotFoundException('Membresía no encontrada');
     }
 
+    const { membresia } = membresiaConRelaciones;
+    const estadoEfectivo: 'activa' | 'expirada' | 'cancelada' = membresia.estaActiva()
+      ? 'activa'
+      : membresia.estado === 'activa'
+        ? 'expirada'
+        : membresia.estado;
+
     return {
-      id: membresiaConRelaciones.membresia.id,
-      gimnasioId:  membresiaConRelaciones.membresia.gimnasioId,
-      fechaInicio: membresiaConRelaciones.membresia.fechaInicio,
-      fechaFin: membresiaConRelaciones.membresia.fechaFin,
-      estado: membresiaConRelaciones.membresia.estado,
-      diasRestantes: membresiaConRelaciones.membresia.diasRestantes(),
+      id: membresia.id,
+      gimnasioId:  membresia.gimnasioId,
+      fechaInicio: membresia.fechaInicio,
+      fechaFin: membresia.fechaFin,
+      estado: estadoEfectivo,
+      diasRestantes: membresia.diasRestantes(),
       cliente: membresiaConRelaciones.cliente,
       plan: membresiaConRelaciones.plan,
-      fechaCreacion: membresiaConRelaciones.membresia.fechaCreacion,
-      fechaActualizacion: membresiaConRelaciones.membresia.fechaActualizacion,
+      fechaCreacion: membresia.fechaCreacion,
+      fechaActualizacion: membresia.fechaActualizacion,
     };
   }
 }

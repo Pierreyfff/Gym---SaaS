@@ -117,7 +117,7 @@ export class GetClientePerfilCompletoUseCase {
 
     // 7. Calcular resumen
     const totalPagado = pagos
-      .filter((p) => p.estado === 'completado')
+      .filter((p: any) => p.estado === 'completado')
       .reduce((sum, p) => sum + Number(p.monto), 0);
 
     const totalAsistencias = asistencias.length;

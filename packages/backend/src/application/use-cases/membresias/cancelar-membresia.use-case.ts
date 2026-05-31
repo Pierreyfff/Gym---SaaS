@@ -2,14 +2,12 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { Inject } from '@nestjs/common';
 import { IMembresiaRepository } from '@domain/repositories/membresia.repository.interface';
 import { MembresiaResponseDto } from '@gym-saas/shared';
-import { PrismaClient } from '@gym-saas/database';
 
 @Injectable()
 export class CancelarMembresiaUseCase {
   constructor(
     @Inject('IMembresiaRepository')
     private readonly membresiaRepository:  IMembresiaRepository,
-    private readonly prisma: PrismaClient,
   ) {}
 
   async execute(id: string, gimnasioId: string): Promise<MembresiaResponseDto> {
@@ -25,28 +23,14 @@ export class CancelarMembresiaUseCase {
       throw new NotFoundException('Membresía no encontrada');
     }
 
-    // 3. Verificar que está activa
-    if (membresia.membresia.estado !== 'activa') {
+    // 3. Verificar que está realmente activa (no vencida en fecha)
+    if (!membresia.membresia.estaActiva()) {
       throw new BadRequestException(
-        `No se puede cancelar una membresía con estado "${membresia.membresia.estado}"`
+        `No se puede cancelar una membresía con estado "${membresia.membresia.estado}" y fecha de fin vencida`
       );
     }
 
-    // 4. Verificar si hay pagos completados asociados
-    const pagosCompletados = await this.prisma.pago.findMany({
-      where: {
-        membresiaId: id,
-        estado: 'completado',
-      },
-    });
-
-    if (pagosCompletados.length > 0) {
-      throw new BadRequestException(
-        `Esta membresía tiene ${pagosCompletados.length} pago(s) completado(s). Para cancelarla, primero debes reembolsar todos los pagos asociados.`
-      );
-    }
-
-    // 5. Cancelar membresía
+    // 4. Cancelar membresía (los pagos previos quedan intactos)
     const membresiaCancelada = await this.membresiaRepository.cancelar(id);
 
     return {

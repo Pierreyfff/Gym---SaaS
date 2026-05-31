@@ -59,7 +59,7 @@ export class PagoRepository implements IPagoRepository {
         tipo: 'membresia',
         monto: data.monto,
         metodoPago:  data.metodoPago,
-        estado: 'completado',
+        estado: 'completado' as any,
         fechaPago: new Date(),
         nota: data.notas,
       },

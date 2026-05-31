@@ -398,7 +398,8 @@ export function MembresiasPage() {
                           </span>
                           {membresia.estado === 'activa' &&
                             membresia.diasRestantes !== undefined &&
-                            membresia.diasRestantes <= 3 && (
+                            membresia.diasRestantes <= 3 &&
+                            membresia.diasRestantes > 0 && (
                               <span className="flex items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-red-100 text-red-700">
                                 <AlertTriangle className="w-3 h-3" />
                                 Vence pronto
@@ -431,7 +432,7 @@ export function MembresiasPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {membresia.estado === 'activa' ? (
+                      {membresia.estado === 'activa' && (membresia.diasRestantes ?? 0) > 0 ? (
                         <div className="flex items-center gap-2">
                           <span
                             className={`text-sm font-semibold ${
@@ -461,6 +462,8 @@ export function MembresiasPage() {
                               </span>
                             )}
                         </div>
+                      ) : membresia.estado === 'activa' ? (
+                        <span className="text-sm font-semibold text-red-600">Vence hoy</span>
                       ) : (
                         <span className="text-sm text-gray-500 dark:text-gray-400">-</span>
                       )}
@@ -484,7 +487,7 @@ export function MembresiasPage() {
                           <Edit className="w-5 h-5" />
                         </button>
 
-                        {membresia.estado === 'activa' && (
+                        {(membresia.estado === 'activa' && (membresia.diasRestantes ?? 0) > 0) && (
                           <button
                             onClick={() => handleCambiarPlanClick(membresia)}
                             className="text-purple-600 hover:text-purple-800 transition"
@@ -494,7 +497,9 @@ export function MembresiasPage() {
                           </button>
                         )}
 
-                        {(membresia.estado === 'expirada' || membresia.estado === 'cancelada') && (
+                        {(membresia.estado === 'expirada' ||
+                          membresia.estado === 'cancelada' ||
+                          (membresia.estado === 'activa' && (membresia.diasRestantes ?? 0) <= 0)) && (
                           <button
                             onClick={() => navigate(`/membresias/${membresia.id}/renovar`)}
                             className="text-green-600 hover:text-green-800 transition"
@@ -504,7 +509,7 @@ export function MembresiasPage() {
                           </button>
                         )}
 
-                        {membresia.estado === 'activa' && (
+                        {(membresia.estado === 'activa' && (membresia.diasRestantes ?? 0) > 0) && (
                           <button
                             onClick={() => handleCancelarClick(membresia)}
                             className="text-yellow-600 hover:text-yellow-800 transition"

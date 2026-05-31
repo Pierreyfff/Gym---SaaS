@@ -1,0 +1,5 @@
+* text=auto
+
+# Docker files must have LF line endings
+docker/entrypoint.sh text eol=lf
+docker/nginx-web.conf text eol=lf

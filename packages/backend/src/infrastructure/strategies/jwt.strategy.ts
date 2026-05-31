@@ -4,10 +4,12 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 
 export interface JwtPayload {
-  sub: string;
+  sub?: string;
+  userId?: string;
   email:  string;
   rol: string;
-  gimnasioId: string;
+  gimnasioId?: string;
+  gimnasioid?: string;
 }
 
 @Injectable()
@@ -21,13 +23,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload) {
-    // El payload ya viene validado por JWT
-    // Aquí podríamos hacer validaciones adicionales si queremos
     return {
-      userId: payload.sub,
+      userId: payload.sub || payload.userId,
       email: payload.email,
       rol: payload.rol,
-      gimnasioId: payload.gimnasioId,
+      gimnasioId: payload.gimnasioId || payload.gimnasioid,
     };
   }
 }
