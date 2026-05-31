@@ -31,8 +31,19 @@ services:
     restart: unless-stopped
     ports:
       - "3000:3000"
-    env_file:
-      - .env.docker
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://gymsaas:gymsaas_secret_2024@postgres:5432/gym_saas?schema=public}
+      POSTGRES_USER: ${POSTGRES_USER:-gymsaas}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gymsaas_secret_2024}
+      POSTGRES_DB: ${POSTGRES_DB:-gym_saas}
+      DB_HOST: ${DB_HOST:-postgres}
+      DB_PORT: ${DB_PORT:-5432}
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:-cambia_esto_en_produccion_access}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-cambia_esto_en_produccion_refresh}
+      PORT: ${PORT:-3000}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-onboarding@resend.dev}
+      DEFAULT_GIMNASIO_ID: ${DEFAULT_GIMNASIO_ID:-32f3950a-94af-4b9e-86f9-20b8dab1ef74}
     volumes:
       - ./backups:/backups
     depends_on:
@@ -47,12 +58,11 @@ services:
       dockerfile: docker/web.Dockerfile
       args:
         PNPM_VERSION: "9.15.0"
+        VITE_API_URL: ${VITE_API_URL:-/api}
     container_name: gym-saas-web
     restart: unless-stopped
     ports:
       - "80:80"
-    env_file:
-      - .env.docker
     depends_on:
       backend:
         condition: service_started

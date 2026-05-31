@@ -1,5 +1,7 @@
 FROM node:22-alpine AS build
 ARG PNPM_VERSION=9.15.0
+ARG VITE_API_URL=/api
+ENV VITE_API_URL=$VITE_API_URL
 WORKDIR /app
 RUN corepack enable && corepack prepare pnpm@${PNPM_VERSION} --activate
 
