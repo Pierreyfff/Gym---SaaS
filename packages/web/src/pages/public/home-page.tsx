@@ -67,7 +67,7 @@ export function HomePage() {
             className={`w-4 h-4 ${
               index < calificacion
                 ? 'text-yellow-400 fill-yellow-400'
-                : 'text-gray-300'
+                : 'text-gray-300 dark:text-gray-600'
             }`}
           />
         ))}
@@ -91,7 +91,7 @@ export function HomePage() {
     return (
       <PublicLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-pulse text-gray-600">Cargando...</div>
+          <div className="animate-pulse text-gray-600 dark:text-gray-400">Cargando...</div>
         </div>
       </PublicLayout>
     );
@@ -123,7 +123,7 @@ export function HomePage() {
                     e.currentTarget.src = config?.imagenHero || '';
                   }}
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-50" />
+                <div className="absolute inset-0 bg-black/50 dark:bg-black/70" />
               </div>
             ))}
 
@@ -132,13 +132,13 @@ export function HomePage() {
               <>
                 <button
                   onClick={prevSlide}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition z-10"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-950/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition z-10"
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </button>
                 <button
                   onClick={nextSlide}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition z-10"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-950/20 hover:bg-white/30 backdrop-blur-sm text-white p-3 rounded-full transition z-10"
                 >
                   <ChevronRight className="w-6 h-6" />
                 </button>
@@ -150,7 +150,7 @@ export function HomePage() {
                       key={index}
                       onClick={() => setCarruselIndex(index)}
                       className={`w-3 h-3 rounded-full transition ${
-                        index === carruselIndex ? 'bg-white' : 'bg-white/50'
+                        index === carruselIndex ? 'bg-white dark:bg-gray-950' : 'bg-white dark:bg-gray-950/50'
                       }`}
                     />
                   ))}
@@ -168,7 +168,7 @@ export function HomePage() {
                 : `linear-gradient(135deg, ${colorPrimario} 0%, ${colorSecundario} 100%)`,
             }}
           >
-            <div className="absolute inset-0 bg-black bg-opacity-50" />
+            <div className="absolute inset-0 bg-black/50 dark:bg-black/70" />
           </div>
         )}
 
@@ -185,14 +185,14 @@ export function HomePage() {
             <div className="flex flex-wrap gap-4">
               <Link
                 to="/planes-publicos"
-                className="bg-white hover:scale-105 text-gray-900 px-8 py-4 rounded-lg font-bold text-lg transition transform shadow-lg"
+                className="bg-white dark:bg-gray-950 hover:scale-105 text-gray-900 dark:text-gray-100 px-8 py-4 rounded-lg font-bold text-lg transition transform shadow-lg"
                 style={{ color: colorPrimario }}
               >
                 Ver Planes
               </Link>
               <Link
                 to="/contacto"
-                className="border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-4 rounded-lg font-bold text-lg transition"
+                className="border-2 border-white hover:bg-white hover:text-gray-900 dark:hover:text-gray-100 text-white px-8 py-4 rounded-lg font-bold text-lg transition"
               >
                 Contacto
               </Link>
@@ -202,20 +202,20 @@ export function HomePage() {
       </section>
 
       {/* Planes Section */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-24 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">
               Nuestros Planes
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 dark:text-gray-400">
               Elige el plan perfecto para ti
             </p>
           </div>
 
           {planes.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-400">
                 No hay planes disponibles en este momento
               </p>
             </div>
@@ -224,13 +224,13 @@ export function HomePage() {
               {planes.map((plan, index) => (
                 <div
                   key={plan.id}
-                  className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up"
+                  className="bg-white dark:bg-gray-950 rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up"
                   style={{
                     animationDelay: `${index * 100}ms`,
                     borderTop: `4px solid ${colorPrimario}`,
                   }}
                 >
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                     {plan.nombre}
                   </h3>
                   <div className="mb-6">
@@ -240,12 +240,12 @@ export function HomePage() {
                     >
                       {formatCurrency(Number(plan.precio))}
                     </span>
-                    <span className="text-gray-600 ml-2">
+                    <span className="text-gray-600 dark:text-gray-400 ml-2">
                       / {plan.duracionDias} días
                     </span>
                   </div>
                   {plan.descripcion && (
-                    <p className="text-gray-600 mb-6 min-h-[48px]">
+                    <p className="text-gray-600 dark:text-gray-400 mb-6 min-h-[48px]">
                       {plan.descripcion}
                     </p>
                   )}
@@ -261,7 +261,7 @@ export function HomePage() {
                           className="w-5 h-5 flex-shrink-0"
                           style={{ color: colorPrimario }}
                         />
-                        <span className="text-gray-700">{feature}</span>
+                        <span className="text-gray-700 dark:text-gray-300">{feature}</span>
                       </div>
                     ))}
                   </div>
@@ -281,13 +281,13 @@ export function HomePage() {
 
       {/* Testimonios Section */}
       {testimonios.length > 0 && (
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 animate-fade-in">
-              <h2 className="text-5xl font-bold text-gray-900 mb-4">
+              <h2 className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 Lo Que Dicen Nuestros Clientes
               </h2>
-              <p className="text-xl text-gray-600">
+              <p className="text-xl text-gray-600 dark:text-gray-400">
                 Historias reales de transformación
               </p>
             </div>
@@ -296,7 +296,7 @@ export function HomePage() {
               {testimonios.map((testimonio, index) => (
                 <div
                   key={testimonio.id}
-                  className="bg-gray-50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in-up"
+                  className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in-up"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="flex items-center gap-4 mb-6">
@@ -324,13 +324,13 @@ export function HomePage() {
                       </div>
                     )}
                     <div>
-                      <h4 className="font-bold text-gray-900 text-lg">
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-lg">
                         {testimonio.nombreCliente}
                       </h4>
                       {renderStars(testimonio.calificacion)}
                     </div>
                   </div>
-                  <p className="text-gray-700 italic leading-relaxed">
+                  <p className="text-gray-700 dark:text-gray-300 italic leading-relaxed">
                     "{testimonio.contenido}"
                   </p>
                 </div>
@@ -365,7 +365,7 @@ export function HomePage() {
           </p>
           <Link
             to="/contacto"
-            className="inline-block bg-white px-10 py-5 rounded-lg font-bold text-xl transition hover:scale-105 transform shadow-2xl"
+            className="inline-block bg-white dark:bg-gray-950 px-10 py-5 rounded-lg font-bold text-xl transition hover:scale-105 transform shadow-2xl"
             style={{ color: colorPrimario }}
           >
             Contactar Ahora

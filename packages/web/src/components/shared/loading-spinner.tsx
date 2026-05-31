@@ -29,7 +29,7 @@ export function LoadingSpinner({
     <div className="flex flex-col items-center justify-center gap-3">
       <Loader2 className={`${sizeClasses[size]} text-blue-600 animate-spin`} />
       {text && (
-        <p className={`${textSizeClasses[size]} text-gray-600 font-medium`}>
+        <p className={`${textSizeClasses[size]} text-gray-600 dark:text-gray-400 font-medium`}>
           {text}
         </p>
       )}
@@ -38,7 +38,7 @@ export function LoadingSpinner({
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 bg-gray-50 bg-opacity-90 backdrop-blur-sm z-50 flex items-center justify-center">
+      <div className="fixed inset-0 bg-gray-50 dark:bg-gray-900 bg-opacity-90 backdrop-blur-sm z-50 flex items-center justify-center">
         {content}
       </div>
     );
@@ -49,7 +49,7 @@ export function LoadingSpinner({
 
 export function LoadingOverlay({ text = 'Procesando...' }: { text?: string }) {
   return (
-    <div className="absolute inset-0 bg-white bg-opacity-90 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
+    <div className="absolute inset-0 bg-white dark:bg-gray-950/90 dark:bg-gray-900/90 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
       <LoadingSpinner size="lg" text={text} />
     </div>
   );

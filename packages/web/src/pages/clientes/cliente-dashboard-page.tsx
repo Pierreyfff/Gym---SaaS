@@ -10,15 +10,15 @@ export function ClienteDashboardPage() {
 
   return (
     <PublicLayout>
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8 flex justify-between items-center">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900">
+              <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
                 Bienvenido, {user?.nombre}
               </h1>
-              <p className="text-gray-600 mt-2">Panel de Cliente</p>
+              <p className="text-gray-600 dark:text-gray-400 mt-2">Panel de Cliente</p>
             </div>
           </div>
 
@@ -33,7 +33,7 @@ export function ClienteDashboardPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   Ver y editar tu información personal
                 </p>
               </CardContent>
@@ -48,7 +48,7 @@ export function ClienteDashboardPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   Historial de compras y pedidos
                 </p>
               </CardContent>
@@ -63,7 +63,7 @@ export function ClienteDashboardPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   Estado de tu membresía actual
                 </p>
               </CardContent>
@@ -78,7 +78,7 @@ export function ClienteDashboardPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   Compra productos y suplementos
                 </p>
               </CardContent>
@@ -93,7 +93,7 @@ export function ClienteDashboardPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   Cómo llegar al gimnasio
                 </p>
               </CardContent>

@@ -40,7 +40,7 @@ export function NosotrosPage() {
           <Star
             key={index}
             className={`w-4 h-4 ${
-              index < calificacion ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
+              index < calificacion ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300 dark:text-gray-600'
             }`}
           />
         ))}
@@ -52,7 +52,7 @@ export function NosotrosPage() {
     return (
       <PublicLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-pulse text-gray-600">Cargando...</div>
+          <div className="animate-pulse text-gray-600 dark:text-gray-400">Cargando...</div>
         </div>
       </PublicLayout>
     );
@@ -86,12 +86,12 @@ export function NosotrosPage() {
 
       {/* Descripción Larga */}
       {config?.descripcionLarga && (
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-white dark:bg-gray-950">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center" style={{ color: colorPrimario }}>
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8 text-center" style={{ color: colorPrimario }}>
               Nuestra Historia
             </h2>
-            <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
+            <div className="prose prose-lg max-w-none text-gray-600 dark:text-gray-400 leading-relaxed">
               {config.descripcionLarga.split('\n').map((paragraph, index) => (
                 paragraph.trim() && (
                   <p key={index} className="mb-6 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
@@ -106,13 +106,13 @@ export function NosotrosPage() {
 
       {/* Misión y Visión */}
       {config?.misionVision && (
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center" style={{ color: colorPrimario }}>
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-12 text-center" style={{ color: colorPrimario }}>
               Misión y Visión
             </h2>
-            <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-              <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
+            <div className="bg-white dark:bg-gray-950 rounded-2xl shadow-xl p-8 md:p-12">
+              <div className="prose prose-lg max-w-none text-gray-600 dark:text-gray-400 leading-relaxed">
                 {config.misionVision.split('\n').map((paragraph, index) => (
                   paragraph.trim() && (
                     <p key={index} className="mb-6">
@@ -128,12 +128,12 @@ export function NosotrosPage() {
 
       {/* Staff con fotos circulares */}
       {staff.length > 0 && (
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-white dark:bg-gray-950">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center" style={{ color: colorPrimario }}>
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center" style={{ color: colorPrimario }}>
               Nuestro Equipo
             </h2>
-            <p className="text-xl text-gray-600 text-center mb-16">
+            <p className="text-xl text-gray-600 dark:text-gray-400 text-center mb-16">
               Profesionales dedicados a tu transformación
             </p>
             
@@ -171,7 +171,7 @@ export function NosotrosPage() {
                   </div>
 
                   {/* Info */}
-                  <h3 className="text-2xl font-bold text-gray-900 mb-1">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">
                     {member.nombre} {member.apellido}
                   </h3>
                   <p 
@@ -182,7 +182,7 @@ export function NosotrosPage() {
                   </p>
                   
                   {member.descripcion && (
-                    <p className="text-gray-600 text-sm mb-4 px-4">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 px-4">
                       {member.descripcion}
                     </p>
                   )}
@@ -219,12 +219,12 @@ export function NosotrosPage() {
 
       {/* Testimonios */}
       {testimonios.length > 0 && (
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-gray-50 dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center" style={{ color: colorPrimario }}>
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 text-center" style={{ color: colorPrimario }}>
               Testimonios de Nuestros Clientes
             </h2>
-            <p className="text-xl text-gray-600 text-center mb-16">
+            <p className="text-xl text-gray-600 dark:text-gray-400 text-center mb-16">
               Historias reales de transformación
             </p>
             
@@ -232,7 +232,7 @@ export function NosotrosPage() {
               {testimonios.map((testimonio, index) => (
                 <div 
                   key={testimonio.id} 
-                  className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in-up"
+                  className="bg-white dark:bg-gray-950 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="flex items-center gap-4 mb-6">
@@ -257,11 +257,11 @@ export function NosotrosPage() {
                       </div>
                     )}
                     <div>
-                      <h4 className="font-bold text-gray-900 text-lg">{testimonio.nombreCliente}</h4>
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100 text-lg">{testimonio.nombreCliente}</h4>
                       {renderStars(testimonio.calificacion)}
                     </div>
                   </div>
-                  <p className="text-gray-700 italic leading-relaxed">
+                  <p className="text-gray-700 dark:text-gray-300 italic leading-relaxed">
                     "{testimonio.contenido}"
                   </p>
                 </div>

@@ -13,20 +13,20 @@ export function PagoFormPage() {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/pagos')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Registrar Pago</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Registrar Pago</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {currentUser?.nombre} {currentUser?.apellido}
             </span>
           </div>

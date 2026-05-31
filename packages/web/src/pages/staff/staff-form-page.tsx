@@ -201,29 +201,29 @@ export function StaffFormPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Cargando...</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Cargando...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/staff')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {isEditing ? 'Editar Staff' : 'Agregar Staff'}
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {currentUser?.nombre} {currentUser?.apellido}
             </span>
           </div>
@@ -231,10 +231,10 @@ export function StaffFormPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 space-y-6">
           <div className="flex items-center gap-3 mb-6">
             <User className="w-6 h-6 text-indigo-600" />
-            <h2 className="text-xl font-semibold text-gray-900">Información del Staff</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Información del Staff</h2>
           </div>
 
           {/* NUEVO: Selector de Usuario Entrenador */}
@@ -264,7 +264,7 @@ export function StaffFormPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Nombre {!isVinculado && <span className="text-red-500">*</span>}
               </label>
               <input
@@ -275,15 +275,15 @@ export function StaffFormPage() {
                 onChange={handleChange}
                 required={!isVinculado}
                 disabled={isVinculado}
-                className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
-                  isVinculado ? 'bg-gray-100 cursor-not-allowed' : ''
+                className={`w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
+                  isVinculado ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed' : ''
                 }`}
                 placeholder="Juan"
               />
             </div>
 
             <div>
-              <label htmlFor="apellido" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="apellido" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Apellido {!isVinculado && <span className="text-red-500">*</span>}
               </label>
               <input
@@ -294,15 +294,15 @@ export function StaffFormPage() {
                 onChange={handleChange}
                 required={!isVinculado}
                 disabled={isVinculado}
-                className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
-                  isVinculado ? 'bg-gray-100 cursor-not-allowed' : ''
+                className={`w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
+                  isVinculado ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed' : ''
                 }`}
                 placeholder="Pérez"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label htmlFor="cargo" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="cargo" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Cargo <span className="text-red-500">*</span>
               </label>
               <input
@@ -312,13 +312,13 @@ export function StaffFormPage() {
                 value={formData.cargo}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="Entrenador Personal"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Descripción
               </label>
               <textarea
@@ -327,13 +327,13 @@ export function StaffFormPage() {
                 value={formData.descripcion || ''}
                 onChange={handleChange}
                 rows={3}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
                 placeholder="Especialista en entrenamiento funcional con 5 años de experiencia..."
               />
             </div>
 
             <div className="md:col-span-2">
-              <label htmlFor="imagenUrl" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="imagenUrl" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 URL de Imagen
               </label>
               <input
@@ -342,7 +342,7 @@ export function StaffFormPage() {
                 name="imagenUrl"
                 value={formData.imagenUrl || ''}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="https://ejemplo.com/foto.jpg"
               />
               {formData.imagenUrl && (
@@ -360,7 +360,7 @@ export function StaffFormPage() {
             </div>
 
             <div>
-              <label htmlFor="instagram" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="instagram" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Instagram
               </label>
               <input
@@ -369,13 +369,13 @@ export function StaffFormPage() {
                 name="instagram"
                 value={formData.instagram || ''}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="@usuario"
               />
             </div>
 
             <div>
-              <label htmlFor="facebook" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="facebook" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Facebook
               </label>
               <input
@@ -384,13 +384,13 @@ export function StaffFormPage() {
                 name="facebook"
                 value={formData.facebook || ''}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="https://facebook.com/usuario"
               />
             </div>
 
             <div>
-              <label htmlFor="orden" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="orden" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Orden de Visualización
               </label>
               <input
@@ -400,9 +400,9 @@ export function StaffFormPage() {
                 value={formData.orden || 0}
                 onChange={handleChange}
                 min="0"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
-              <p className="text-xs text-gray-500 mt-1">Menor número aparece primero</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Menor número aparece primero</p>
             </div>
 
             <div className="flex items-center">
@@ -414,7 +414,7 @@ export function StaffFormPage() {
                   onChange={handleChange}
                   className="w-5 h-5 text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500"
                 />
-                <span className="text-sm font-medium text-gray-700">Mostrar en la web pública</span>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Mostrar en la web pública</span>
               </label>
             </div>
           </div>
@@ -423,7 +423,7 @@ export function StaffFormPage() {
             <button
               type="button"
               onClick={() => navigate('/staff')}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition"
+              className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium transition"
               disabled={saving}
             >
               Cancelar

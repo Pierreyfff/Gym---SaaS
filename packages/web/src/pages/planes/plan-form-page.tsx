@@ -146,22 +146,22 @@ export function PlanFormPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/planes')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {isEditing ? 'Editar Plan' : 'Nuevo Plan'}
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {currentUser?.nombre} {currentUser?.apellido}
             </span>
           </div>
@@ -169,11 +169,11 @@ export function PlanFormPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg: px-8 py-8">
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Nombre */}
             <div>
-              <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Nombre del Plan <span className="text-red-500">*</span>
               </label>
               <input
@@ -183,7 +183,7 @@ export function PlanFormPage() {
                 value={formData.nombre}
                 onChange={handleChange}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
-                  errors.nombre ?  'border-red-500' : 'border-gray-300'
+                  errors.nombre ?  'border-red-500' : 'border-gray-300 dark:border-gray-600'
                 }`}
                 disabled={loading}
                 placeholder="Ej: Plan Mensual, Plan Premium"
@@ -193,7 +193,7 @@ export function PlanFormPage() {
 
             {/* Descripción */}
             <div>
-              <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Descripción
               </label>
               <textarea
@@ -202,7 +202,7 @@ export function PlanFormPage() {
                 rows={3}
                 value={formData.descripcion}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus: ring-purple-500 focus: border-transparent resize-none"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus: ring-purple-500 focus: border-transparent resize-none"
                 disabled={loading}
                 placeholder="Descripción del plan..."
               />
@@ -210,7 +210,7 @@ export function PlanFormPage() {
 
             {/* Duración */}
             <div>
-              <label htmlFor="duracionDias" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="duracionDias" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Duración <span className="text-red-500">*</span>
               </label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
@@ -225,7 +225,7 @@ export function PlanFormPage() {
                     className={`px-3 py-2 text-sm font-medium rounded-lg border transition ${
                       formData.duracionDias === preset.value
                         ? 'bg-purple-100 border-purple-500 text-purple-700'
-                        : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
+                        : 'bg-white dark:bg-gray-950 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                     disabled={loading}
                   >
@@ -242,12 +242,12 @@ export function PlanFormPage() {
                   onChange={handleChange}
                   min="1"
                   className={`flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
-                    errors.duracionDias ? 'border-red-500' : 'border-gray-300'
+                    errors.duracionDias ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                   disabled={loading}
                   placeholder="Días"
                 />
-                <span className="text-sm text-gray-600">días</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">días</span>
               </div>
               {errors.duracionDias && (
                 <p className="mt-1 text-sm text-red-600">{errors.duracionDias}</p>
@@ -256,11 +256,11 @@ export function PlanFormPage() {
 
             {/* Precio */}
             <div>
-              <label htmlFor="precio" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="precio" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Precio <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">
                   $
                 </span>
                 <input
@@ -272,7 +272,7 @@ export function PlanFormPage() {
                   step="0.01"
                   min="0"
                   className={`w-full pl-8 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
-                    errors.precio ? 'border-red-500' : 'border-gray-300'
+                    errors.precio ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                   disabled={loading}
                   placeholder="0.00"
@@ -312,7 +312,7 @@ export function PlanFormPage() {
               <button
                 type="button"
                 onClick={() => navigate('/planes')}
-                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition"
+                className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium transition"
                 disabled={loading}
               >
                 Cancelar

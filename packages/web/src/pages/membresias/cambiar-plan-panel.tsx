@@ -138,21 +138,21 @@ export function CambiarPlanPanel({
 
       {/* Panel Lateral */}
       <div
-        className={`fixed inset-y-0 right-0 w-full sm:w-[600px] bg-white shadow-2xl z-50 overflow-y-auto transition-transform duration-200 ease-out ${
+        className={`fixed inset-y-0 right-0 w-full sm:w-[600px] bg-white dark:bg-gray-950 shadow-2xl z-50 overflow-y-auto transition-transform duration-200 ease-out ${
           isVisible ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center z-10">
+        <div className="sticky top-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex justify-between items-center z-10">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Cambiar Plan de Membresía</h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Cambiar Plan de Membresía</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
               Plan actual: <span className="font-semibold">{planActual.nombre}</span> - {formatCurrency(planActual.precio)}
             </p>
           </div>
           <button
             onClick={handleClose}
-            className="text-gray-400 hover:text-gray-600 transition p-2 hover:bg-gray-100 rounded-lg"
+            className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
             disabled={loading}
           >
             <X className="w-6 h-6" />
@@ -163,11 +163,11 @@ export function CambiarPlanPanel({
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Seleccionar Nuevo Plan */}
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
+            <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
               Nuevo Plan <span className="text-red-600">*</span>
             </label>
             {loadingPlanes ? (
-              <div className="flex items-center justify-center py-8 text-gray-500">
+              <div className="flex items-center justify-center py-8 text-gray-500 dark:text-gray-400">
                 <RefreshCw className="w-5 h-5 animate-spin mr-2" />
                 Cargando planes...
               </div>
@@ -177,7 +177,7 @@ export function CambiarPlanPanel({
                 onChange={(e) =>
                   setFormData({ ...formData, nuevoPlanId: e.target.value })
                 }
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
                 required
               >
                 <option value="">Seleccionar plan</option>
@@ -198,7 +198,7 @@ export function CambiarPlanPanel({
                   ? 'bg-orange-50 border-orange-200'
                   : diferenciaPrecio < 0
                     ? 'bg-blue-50 border-blue-200'
-                    : 'bg-gray-50 border-gray-200'
+                    : 'bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700'
               }`}
             >
               <div className="flex items-start gap-4">
@@ -211,22 +211,22 @@ export function CambiarPlanPanel({
                     <CheckCircle className="w-6 h-6 text-blue-600" />
                   </div>
                 ) : (
-                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <DollarSign className="w-6 h-6 text-gray-600" />
+                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <DollarSign className="w-6 h-6 text-gray-600 dark:text-gray-400" />
                   </div>
                 )}
                 <div className="flex-1">
-                  <h4 className="font-bold text-gray-900 mb-2 text-lg">
+                  <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-2 text-lg">
                     {diferenciaPrecio > 0
                       ? 'Upgrade de Plan'
                       : diferenciaPrecio < 0
                         ? 'Downgrade de Plan'
                         : 'Cambio de Plan'}
                   </h4>
-                  <p className="text-sm text-gray-700 mb-3">
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
                     {planActual.nombre} ({formatCurrency(planActual.precio)}) → {planSeleccionado.nombre} ({formatCurrency(planSeleccionado.precio)})
                   </p>
-                  <p className="font-bold text-gray-900 text-lg">
+                  <p className="font-bold text-gray-900 dark:text-gray-100 text-lg">
                     Diferencia:{' '}
                     <span
                       className={
@@ -234,7 +234,7 @@ export function CambiarPlanPanel({
                           ? 'text-orange-600'
                           : diferenciaPrecio < 0
                             ? 'text-blue-600'
-                            : 'text-gray-600'
+                            : 'text-gray-600 dark:text-gray-400'
                       }
                     >
                       {diferenciaPrecio > 0 ? '+' : ''}
@@ -257,7 +257,7 @@ export function CambiarPlanPanel({
           )}
 
           {/* Ajustar Duración */}
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+          <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
             <div className="flex items-start gap-3">
               <input
                 type="checkbox"
@@ -270,12 +270,12 @@ export function CambiarPlanPanel({
               />
               <label htmlFor="ajustarDuracion" className="flex-1 cursor-pointer">
                 <div className="flex items-center gap-2 mb-1">
-                  <Calendar className="w-4 h-4 text-gray-600" />
-                  <span className="font-semibold text-gray-900">
+                  <Calendar className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                  <span className="font-semibold text-gray-900 dark:text-gray-100">
                     Ajustar duración de membresía
                   </span>
                 </div>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   {formData.ajustarDuracion
                     ? `La membresía se extenderá ${planSeleccionado?.duracionDias || 0} días desde hoy`
                     : 'Se mantendrá la fecha de vencimiento actual'}
@@ -301,11 +301,11 @@ export function CambiarPlanPanel({
                   <label htmlFor="generarPago" className="flex-1 cursor-pointer">
                     <div className="flex items-center gap-2 mb-1">
                       <DollarSign className="w-4 h-4 text-orange-600" />
-                      <span className="font-semibold text-gray-900">
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
                         Registrar pago de la diferencia
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       Se creará un pago por {formatCurrency(diferenciaPrecio)}
                     </p>
                   </label>
@@ -314,7 +314,7 @@ export function CambiarPlanPanel({
 
               {formData.generarPago && (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
                     Método de Pago <span className="text-red-600">*</span>
                   </label>
                   <select
@@ -325,7 +325,7 @@ export function CambiarPlanPanel({
                         metodoPago: e.target.value as any,
                       })
                     }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
                     required
                   >
                     <option value="efectivo">Efectivo</option>
@@ -339,8 +339,8 @@ export function CambiarPlanPanel({
 
           {/* Nota */}
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
-              Nota <span className="text-gray-500 font-normal">(opcional)</span>
+            <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              Nota <span className="text-gray-500 dark:text-gray-400 font-normal">(opcional)</span>
             </label>
             <textarea
               value={formData.nota}
@@ -348,17 +348,17 @@ export function CambiarPlanPanel({
                 setFormData({ ...formData, nota: e.target.value })
               }
               rows={4}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none transition"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none transition"
               placeholder="Agregar nota sobre el cambio de plan..."
             />
           </div>
 
           {/* Botones */}
-          <div className="flex gap-3 pt-4 border-t sticky bottom-0 bg-white">
+          <div className="flex gap-3 pt-4 border-t sticky bottom-0 bg-white dark:bg-gray-950">
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition"
+              className="flex-1 px-6 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition"
               disabled={loading}
             >
               Cancelar

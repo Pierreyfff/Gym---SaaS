@@ -147,7 +147,7 @@ export function TestimonioFormPage() {
               className={`w-8 h-8 transition ${
                 index < (formData.calificacion ?? 5)
                   ? 'text-yellow-400 fill-yellow-400'
-                  : 'text-gray-300 hover:text-yellow-300'
+                  : 'text-gray-300 dark:text-gray-600 hover:text-yellow-300'
               }`}
             />
           </button>
@@ -158,29 +158,29 @@ export function TestimonioFormPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Cargando...</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Cargando...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/testimonios')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {isEditing ? 'Editar Testimonio' : 'Agregar Testimonio'}
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {currentUser?.nombre} {currentUser?.apellido}
             </span>
           </div>
@@ -190,11 +190,11 @@ export function TestimonioFormPage() {
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <form
           onSubmit={handleSubmit}
-          className="bg-white rounded-lg shadow p-6 space-y-6"
+          className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 space-y-6"
         >
           <div className="flex items-center gap-3 mb-6">
             <MessageSquare className="w-6 h-6 text-yellow-600" />
-            <h2 className="text-xl font-semibold text-gray-900">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               Información del Testimonio
             </h2>
           </div>
@@ -203,7 +203,7 @@ export function TestimonioFormPage() {
             <div>
               <label
                 htmlFor="nombreCliente"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 Nombre del Cliente <span className="text-red-500">*</span>
               </label>
@@ -214,7 +214,7 @@ export function TestimonioFormPage() {
                 value={formData.nombreCliente}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 placeholder="María González"
               />
             </div>
@@ -222,7 +222,7 @@ export function TestimonioFormPage() {
             <div>
               <label
                 htmlFor="contenido"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 Testimonio <span className="text-red-500">*</span>
               </label>
@@ -233,20 +233,20 @@ export function TestimonioFormPage() {
                 onChange={handleChange}
                 required
                 rows={5}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-none"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-none"
                 placeholder="Excelente gimnasio, los entrenadores son muy profesionales..."
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {formData.contenido.length} caracteres
               </p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Calificación <span className="text-red-500">*</span>
               </label>
               {renderStarInput()}
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {formData.calificacion} de 5 estrellas
               </p>
             </div>
@@ -254,7 +254,7 @@ export function TestimonioFormPage() {
             <div>
               <label
                 htmlFor="imagenUrl"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 URL de Imagen (Opcional)
               </label>
@@ -264,7 +264,7 @@ export function TestimonioFormPage() {
                 name="imagenUrl"
                 value={formData.imagenUrl}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 placeholder="https://ejemplo.com/foto.jpg"
               />
               {formData.imagenUrl && (
@@ -284,7 +284,7 @@ export function TestimonioFormPage() {
             <div>
               <label
                 htmlFor="orden"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 Orden de Visualización
               </label>
@@ -295,9 +295,9 @@ export function TestimonioFormPage() {
                 value={formData.orden}
                 onChange={handleChange}
                 min="0"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Menor número aparece primero
               </p>
             </div>
@@ -311,7 +311,7 @@ export function TestimonioFormPage() {
                   onChange={handleChange}
                   className="w-5 h-5 text-yellow-600 rounded focus:ring-2 focus:ring-yellow-500"
                 />
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Mostrar en la web pública
                 </span>
               </label>
@@ -322,7 +322,7 @@ export function TestimonioFormPage() {
             <button
               type="button"
               onClick={() => navigate('/testimonios')}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition"
+              className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium transition"
               disabled={saving}
             >
               Cancelar

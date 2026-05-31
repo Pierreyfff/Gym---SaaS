@@ -57,7 +57,7 @@ export function ContactoPage() {
     return (
       <PublicLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-pulse text-gray-600">Cargando...</div>
+          <div className="animate-pulse text-gray-600 dark:text-gray-400">Cargando...</div>
         </div>
       </PublicLayout>
     );
@@ -90,16 +90,16 @@ export function ContactoPage() {
       </section>
 
       {/* Contenido */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Columna Izquierda: Información */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-8" style={{ color: colorPrimario }}>
+                <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8" style={{ color: colorPrimario }}>
                   Información de Contacto
                 </h2>
-                <p className="text-gray-600 text-lg mb-8">
+                <p className="text-gray-600 dark:text-gray-400 text-lg mb-8">
                   Visítanos, llámanos o escríbenos. Estaremos encantados de atenderte.
                 </p>
               </div>
@@ -107,7 +107,7 @@ export function ContactoPage() {
               {/* Cards de contacto */}
               <div className="space-y-6">
                 {config?.telefono && (
-                  <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all group">
+                  <div className="bg-white dark:bg-gray-950 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all group">
                     <div className="flex items-start gap-4">
                       <div
                         className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
@@ -118,10 +118,10 @@ export function ContactoPage() {
                         <Phone className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-gray-900 mb-2 text-lg">Teléfono</h3>
+                        <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-2 text-lg">Teléfono</h3>
                         <a
                           href={`tel:${config.telefono}`}
-                          className="text-gray-600 hover:text-gray-900 transition text-lg"
+                          className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition text-lg"
                         >
                           {config.telefono}
                         </a>
@@ -131,7 +131,7 @@ export function ContactoPage() {
                 )}
 
                 {config?.email && (
-                  <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all group">
+                  <div className="bg-white dark:bg-gray-950 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all group">
                     <div className="flex items-start gap-4">
                       <div
                         className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
@@ -142,10 +142,10 @@ export function ContactoPage() {
                         <Mail className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-gray-900 mb-2 text-lg">Email</h3>
+                        <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-2 text-lg">Email</h3>
                         <a
                           href={`mailto:${config.email}`}
-                          className="text-gray-600 hover:text-gray-900 transition text-lg break-all"
+                          className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition text-lg break-all"
                         >
                           {config.email}
                         </a>
@@ -155,7 +155,7 @@ export function ContactoPage() {
                 )}
 
                 {config?.direccion && (
-                  <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all group">
+                  <div className="bg-white dark:bg-gray-950 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all group">
                     <div className="flex items-start gap-4">
                       <div
                         className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
@@ -166,15 +166,15 @@ export function ContactoPage() {
                         <MapPin className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-gray-900 mb-2 text-lg">Dirección</h3>
-                        <p className="text-gray-600 text-lg">{config.direccion}</p>
+                        <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-2 text-lg">Dirección</h3>
+                        <p className="text-gray-600 dark:text-gray-400 text-lg">{config.direccion}</p>
                       </div>
                     </div>
                   </div>
                 )}
 
                 {config?.horarioApertura && config?.horarioCierre && (
-                  <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all group">
+                  <div className="bg-white dark:bg-gray-950 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all group">
                     <div className="flex items-start gap-4">
                       <div
                         className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
@@ -185,9 +185,9 @@ export function ContactoPage() {
                         <Clock className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-gray-900 mb-2 text-lg">Horarios</h3>
+                        <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-2 text-lg">Horarios</h3>
                         <div className="space-y-1">
-                          <p className="text-gray-600 text-lg">
+                          <p className="text-gray-600 dark:text-gray-400 text-lg">
                             <span className="font-semibold">Lunes a Sábado:</span>
                             <br />
                             {config.horarioApertura} - {config.horarioCierre}
@@ -205,7 +205,7 @@ export function ContactoPage() {
               {/* Mapa */}
               {config?.mapaLatitud && config?.mapaLongitud && (
                 <div className="mt-8">
-                  <h3 className="font-bold text-gray-900 mb-4 text-2xl">Encuéntranos</h3>
+                  <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-4 text-2xl">Encuéntranos</h3>
                   <div className="rounded-2xl overflow-hidden shadow-2xl">
                     <iframe
                       src={`https://www.google.com/maps?q=${config.mapaLatitud},${config.mapaLongitud}&output=embed`}
@@ -222,17 +222,17 @@ export function ContactoPage() {
 
             {/* Columna Derecha: Formulario */}
             <div>
-              <div className="bg-white rounded-2xl shadow-2xl p-8 lg:p-10 sticky top-24">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2" style={{ color: colorPrimario }}>
+              <div className="bg-white dark:bg-gray-950 rounded-2xl shadow-2xl p-8 lg:p-10 sticky top-24">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2" style={{ color: colorPrimario }}>
                   Envíanos un Mensaje
                 </h2>
-                <p className="text-gray-600 mb-8">
+                <p className="text-gray-600 dark:text-gray-400 mb-8">
                   Completa el formulario y nos pondremos en contacto contigo pronto
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label htmlFor="nombre" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="nombre" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                       Nombre completo *
                     </label>
                     <input
@@ -242,7 +242,7 @@ export function ContactoPage() {
                       value={formData.nombre}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:border-transparent transition"
+                      className="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:border-transparent transition"
                       style={{ 
                         '--tw-ring-color': colorPrimario,
                       } as React.CSSProperties}
@@ -251,7 +251,7 @@ export function ContactoPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                       Email *
                     </label>
                     <input
@@ -261,7 +261,7 @@ export function ContactoPage() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:border-transparent transition"
+                      className="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:border-transparent transition"
                       style={{ 
                         '--tw-ring-color': colorPrimario,
                       } as React.CSSProperties}
@@ -270,7 +270,7 @@ export function ContactoPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="telefono" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="telefono" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                       Teléfono
                     </label>
                     <input
@@ -279,7 +279,7 @@ export function ContactoPage() {
                       name="telefono"
                       value={formData.telefono}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:border-transparent transition"
+                      className="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:border-transparent transition"
                       style={{ 
                         '--tw-ring-color': colorPrimario,
                       } as React.CSSProperties}
@@ -288,7 +288,7 @@ export function ContactoPage() {
                   </div>
 
                   <div>
-                    <label htmlFor="mensaje" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="mensaje" className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                       Mensaje *
                     </label>
                     <textarea
@@ -298,7 +298,7 @@ export function ContactoPage() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:border-transparent resize-none transition"
+                      className="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:border-transparent resize-none transition"
                       style={{ 
                         '--tw-ring-color': colorPrimario,
                       } as React.CSSProperties}

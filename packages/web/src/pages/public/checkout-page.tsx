@@ -51,7 +51,7 @@ export function CheckoutPage() {
       toast({
         variant: 'destructive',
         title: 'Acceso denegado',
-        description: 'Debes iniciar sesion para acceder al checkout',
+        description: 'Debes iniciar sesión para acceder al checkout',
       });
       navigate('/login?returnUrl=/checkout');
       return;
@@ -154,7 +154,7 @@ export function CheckoutPage() {
             <CardContent>
               <div className="space-y-4">
                 {items.map((item) => (
-                  <div key={item.producto.id} className="flex gap-4 bg-gray-50 rounded-lg p-4">
+                  <div key={item.producto.id} className="flex gap-4 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
                     <img
                       src={item.producto.imagenUrl || 'https://via.placeholder.com/100'}
                       alt={item.producto.nombre}
@@ -164,8 +164,8 @@ export function CheckoutPage() {
                       }}
                     />
                     <div className="flex-1">
-                      <h4 className="font-bold text-gray-900">{item.producto.nombre}</h4>
-                      <p className="text-sm text-gray-600 mt-1">
+                      <h4 className="font-bold text-gray-900 dark:text-gray-100">{item.producto.nombre}</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                         Cantidad: {item.cantidad}
                       </p>
                       <p className="text-sm font-bold text-purple-600 mt-1">
@@ -199,7 +199,7 @@ export function CheckoutPage() {
                     className={`p-4 border-2 rounded-lg font-semibold transition text-left ${
                       datosEnvio.tipoEntrega === 'retiro'
                         ? 'border-purple-600 bg-purple-50 text-purple-600'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1">
@@ -213,7 +213,7 @@ export function CheckoutPage() {
                     className={`p-4 border-2 rounded-lg font-semibold transition text-left ${
                       datosEnvio.tipoEntrega === 'domicilio'
                         ? 'border-purple-600 bg-purple-50 text-purple-600'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1">
@@ -304,12 +304,12 @@ export function CheckoutPage() {
                     className={`w-full p-4 border-2 rounded-lg font-semibold text-left transition ${
                       datosPago.metodoPago === 'efectivo'
                         ? 'border-purple-600 bg-purple-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 ${
-                        datosPago.metodoPago === 'efectivo' ? 'border-purple-600 bg-purple-600' : 'border-gray-300'
+                        datosPago.metodoPago === 'efectivo' ? 'border-purple-600 bg-purple-600' : 'border-gray-300 dark:border-gray-600'
                       }`}>
                         {datosPago.metodoPago === 'efectivo' && (
                           <CheckCircle className="w-full h-full text-white" />
@@ -317,7 +317,7 @@ export function CheckoutPage() {
                       </div>
                       <div>
                         <p className="font-bold">Pago en Efectivo</p>
-                        <p className="text-sm text-gray-600">Paga al recibir el producto</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Paga al recibir el producto</p>
                       </div>
                     </div>
                   </button>
@@ -327,12 +327,12 @@ export function CheckoutPage() {
                     className={`w-full p-4 border-2 rounded-lg font-semibold text-left transition ${
                       datosPago.metodoPago === 'tarjeta'
                         ? 'border-purple-600 bg-purple-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 ${
-                        datosPago.metodoPago === 'tarjeta' ? 'border-purple-600 bg-purple-600' : 'border-gray-300'
+                        datosPago.metodoPago === 'tarjeta' ? 'border-purple-600 bg-purple-600' : 'border-gray-300 dark:border-gray-600'
                       }`}>
                         {datosPago.metodoPago === 'tarjeta' && (
                           <CheckCircle className="w-full h-full text-white" />
@@ -340,7 +340,7 @@ export function CheckoutPage() {
                       </div>
                       <div>
                         <p className="font-bold">Tarjeta de Credito/Debito</p>
-                        <p className="text-sm text-gray-600">Stripe (Proximamente)</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Stripe (Proximamente)</p>
                       </div>
                     </div>
                   </button>
@@ -350,12 +350,12 @@ export function CheckoutPage() {
                     className={`w-full p-4 border-2 rounded-lg font-semibold text-left transition ${
                       datosPago.metodoPago === 'transferencia'
                         ? 'border-purple-600 bg-purple-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 ${
-                        datosPago.metodoPago === 'transferencia' ? 'border-purple-600 bg-purple-600' : 'border-gray-300'
+                        datosPago.metodoPago === 'transferencia' ? 'border-purple-600 bg-purple-600' : 'border-gray-300 dark:border-gray-600'
                       }`}>
                         {datosPago.metodoPago === 'transferencia' && (
                           <CheckCircle className="w-full h-full text-white" />
@@ -363,7 +363,7 @@ export function CheckoutPage() {
                       </div>
                       <div>
                         <p className="font-bold">Transferencia Bancaria</p>
-                        <p className="text-sm text-gray-600">Mercado Pago (Proximamente)</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Mercado Pago (Proximamente)</p>
                       </div>
                     </div>
                   </button>
@@ -388,8 +388,8 @@ export function CheckoutPage() {
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="w-12 h-12 text-green-600" />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Compra Exitosa</h2>
-              <p className="text-gray-600 mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Compra Exitosa</h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-8">
                 Tu pedido ha sido registrado correctamente. Nos pondremos en contacto contigo pronto.
               </p>
               <div className="space-y-3">
@@ -417,10 +417,10 @@ export function CheckoutPage() {
   if (!isAuthenticated) {
     return (
       <PublicLayout>
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Redirigiendo al inicio de sesion...</p>
+            <p className="text-gray-600 dark:text-gray-400">Redirigiendo al inicio de sesión...</p>
           </div>
         </div>
       </PublicLayout>
@@ -431,11 +431,11 @@ export function CheckoutPage() {
   if (items.length === 0) {
     return (
       <PublicLayout>
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
           <div className="text-center">
-            <ShoppingCart className="w-20 h-20 text-gray-300 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Tu carrito esta vacio</h2>
-            <p className="text-gray-600 mb-6">Agrega productos desde la tienda</p>
+            <ShoppingCart className="w-20 h-20 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Tu carrito esta vacio</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">Agrega productos desde la tienda</p>
             <Button onClick={() => navigate('/tienda')}>
               Ir a la Tienda
             </Button>
@@ -447,12 +447,12 @@ export function CheckoutPage() {
 
   return (
     <PublicLayout>
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">Checkout</h1>
-            <p className="text-gray-600">Usuario: {user?.nombre} {user?.apellido}</p>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">Checkout</h1>
+            <p className="text-gray-600 dark:text-gray-400">Usuario: {user?.nombre} {user?.apellido}</p>
           </div>
 
           {/* Progress Bar */}
@@ -465,7 +465,7 @@ export function CheckoutPage() {
                       className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
                         paso >= numPaso
                           ? 'bg-purple-600 text-white'
-                          : 'bg-gray-200 text-gray-500'
+                          : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                       }`}
                     >
                       {numPaso}
@@ -473,14 +473,14 @@ export function CheckoutPage() {
                     {numPaso < 3 && (
                       <div
                         className={`flex-1 h-1 mx-2 ${
-                          paso > numPaso ? 'bg-purple-600' : 'bg-gray-200'
+                          paso > numPaso ? 'bg-purple-600' : 'bg-gray-200 dark:bg-gray-700'
                         }`}
                       />
                     )}
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between text-sm text-gray-600">
+              <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
                 <span>Productos</span>
                 <span>Entrega</span>
                 <span>Pago</span>
@@ -498,18 +498,18 @@ export function CheckoutPage() {
             <Card>
               <CardContent className="pt-6">
                 <div className="space-y-2 mb-4">
-                  <div className="flex justify-between text-sm text-gray-600">
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
                     <span>Subtotal productos</span>
                     <span>{formatCurrency(totalProductos)}</span>
                   </div>
                   {datosEnvio.tipoEntrega === 'domicilio' && costoEnvio > 0 && (
-                    <div className="flex justify-between text-sm text-gray-600">
+                    <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
                       <span>Costo de envio</span>
                       <span>{formatCurrency(costoEnvio)}</span>
                     </div>
                   )}
                   <div className="border-t pt-2 flex justify-between items-center">
-                    <span className="text-2xl font-bold text-gray-900">Total:</span>
+                    <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">Total:</span>
                     <span className="text-3xl font-bold text-purple-600">
                       {formatCurrency(totalCarrito)}
                     </span>

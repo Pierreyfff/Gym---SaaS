@@ -33,6 +33,8 @@ services:
       - "3000:3000"
     env_file:
       - .env.docker
+    volumes:
+      - ./backups:/backups
     depends_on:
       postgres:
         condition: service_healthy

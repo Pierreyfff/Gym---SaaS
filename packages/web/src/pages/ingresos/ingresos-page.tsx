@@ -126,23 +126,23 @@ export function IngresosPage() {
   const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6'];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white shadow">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/dashboard')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               Reportes de Ingresos
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}
             </span>
           </div>
@@ -151,15 +151,15 @@ export function IngresosPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Filtros */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 mb-6">
           <div className="flex items-center gap-2 mb-4">
-            <Filter className="w-5 h-5 text-gray-600" />
-            <h2 className="text-lg font-semibold text-gray-900">Filtros</h2>
+            <Filter className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Filtros</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Fecha Inicio
               </label>
               <input
@@ -168,12 +168,12 @@ export function IngresosPage() {
                 onChange={(e) =>
                   setFiltros({ ...filtros, fechaInicio: e.target.value })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Fecha Fin
               </label>
               <input
@@ -182,12 +182,12 @@ export function IngresosPage() {
                 onChange={(e) =>
                   setFiltros({ ...filtros, fechaFin: e.target.value })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Tipo
               </label>
               <select
@@ -198,7 +198,7 @@ export function IngresosPage() {
                     tipo: e.target.value as any,
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               >
                 <option value="todos">Todos</option>
                 <option value="membresia">Membresías</option>
@@ -207,7 +207,7 @@ export function IngresosPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Método de Pago
               </label>
               <select
@@ -215,7 +215,7 @@ export function IngresosPage() {
                 onChange={(e) =>
                   setFiltros({ ...filtros, metodoPago: e.target.value })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               >
                 <option value="">Todos</option>
                 <option value="efectivo">Efectivo</option>
@@ -243,8 +243,8 @@ export function IngresosPage() {
 
         {loading ? (
           <div className="text-center py-12">
-            <RefreshCw className="w-12 h-12 text-gray-400 mx-auto mb-3 animate-spin" />
-            <p className="text-gray-600">Cargando reportes...</p>
+            <RefreshCw className="w-12 h-12 text-gray-400 dark:text-gray-500 mx-auto mb-3 animate-spin" />
+            <p className="text-gray-600 dark:text-gray-400">Cargando reportes...</p>
           </div>
         ) : (
           <>
@@ -265,49 +265,49 @@ export function IngresosPage() {
                 </p>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-medium text-gray-600">
+                  <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
                     Membresías
                   </h3>
                   <CreditCard className="w-8 h-8 text-orange-600" />
                 </div>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                   {formatCurrency(resumen?.totalMembresias ?? 0)}
                 </p>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-medium text-gray-600">
+                  <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
                     Productos
                   </h3>
                   <ShoppingCart className="w-8 h-8 text-blue-600" />
                 </div>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                   {formatCurrency(resumen?.totalProductos ?? 0)}
                 </p>
               </div>
 
-              <div className="bg-white rounded-lg shadow p-6">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-medium text-gray-600">
+                  <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
                     Promedio
                   </h3>
                   <DollarSign className="w-8 h-8 text-purple-600" />
                 </div>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                   {formatCurrency(resumen?.promedioTransaccion ?? 0)}
                 </p>
-                <p className="text-xs text-gray-500 mt-2">por transacción</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">por transacción</p>
               </div>
             </div>
 
             {/* Gráficos */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
               {/* Ingresos Diarios */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                   Ingresos Diarios (Últimos 30 días)
                 </h3>
                 <ResponsiveContainer width="100%" height={300}>
@@ -353,8 +353,8 @@ export function IngresosPage() {
               </div>
 
               {/* Métodos de Pago */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                   Ingresos por Método de Pago
                 </h3>
                 {metodosPagoData.length > 0 ? (
@@ -382,15 +382,15 @@ export function IngresosPage() {
                     </PieChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div className="h-[300px] flex items-center justify-center text-gray-400">
+                  <div className="h-[300px] flex items-center justify-center text-gray-400 dark:text-gray-500">
                     No hay datos
                   </div>
                 )}
               </div>
 
               {/* Top Productos */}
-              <div className="bg-white rounded-lg shadow p-6 lg:col-span-2">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 lg:col-span-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                   Top 5 Productos Más Vendidos
                 </h3>
                 {productosMasVendidos.length > 0 ? (
@@ -421,7 +421,7 @@ export function IngresosPage() {
                     </BarChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div className="h-[300px] flex items-center justify-center text-gray-400">
+                  <div className="h-[300px] flex items-center justify-center text-gray-400 dark:text-gray-500">
                     No hay datos
                   </div>
                 )}
@@ -429,9 +429,9 @@ export function IngresosPage() {
             </div>
 
             {/* Tabla de Transacciones */}
-            <div className="bg-white rounded-lg shadow">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow">
               <div className="p-6 border-b flex justify-between items-center">
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                   Detalle de Transacciones ({ingresos.length})
                 </h3>
                 <button
@@ -450,42 +450,42 @@ export function IngresosPage() {
 
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50">
+                  <thead className="bg-gray-50 dark:bg-gray-900">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                         Fecha
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                         Tipo
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                         Descripción
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                         Cliente
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                         Método
                       </th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                         Monto
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                     {ingresos.length === 0 ? (
                       <tr>
                         <td
                           colSpan={6}
-                          className="px-6 py-12 text-center text-gray-500"
+                          className="px-6 py-12 text-center text-gray-500 dark:text-gray-400"
                         >
                           No hay transacciones en el periodo seleccionado
                         </td>
                       </tr>
                     ) : (
                       ingresos.map((ingreso) => (
-                        <tr key={ingreso.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <tr key={ingreso.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                             {formatDate(ingreso.fecha)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
@@ -501,16 +501,16 @@ export function IngresosPage() {
                                 : 'Producto'}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-sm text-gray-900">
+                          <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
                             {ingreso.descripcion}
                           </td>
-                          <td className="px-6 py-4 text-sm text-gray-500">
+                          <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                             {ingreso.cliente.nombre} {ingreso.cliente.apellido}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 capitalize">
                             {ingreso.metodoPago}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 text-right">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900 dark:text-gray-100 text-right">
                             {formatCurrency(ingreso.monto)}
                           </td>
                         </tr>

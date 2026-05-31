@@ -129,8 +129,8 @@ export function TiendaPage() {
     if (!isAuthenticated) {
       setCartOpen(false);
       toast({
-        title: 'Inicia sesion para continuar',
-        description: 'Seras redirigido al login',
+        title: 'Inicia sesión para continuar',
+        description: 'Serás redirigido al login',
       });
       setTimeout(() => {
         navigate('/login?returnUrl=/checkout');
@@ -157,7 +157,7 @@ export function TiendaPage() {
     return (
       <PublicLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-pulse text-gray-600">
+          <div className="animate-pulse text-gray-600 dark:text-gray-400">
             Cargando productos...
           </div>
         </div>
@@ -196,18 +196,18 @@ export function TiendaPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
             <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
                 <input
                   type="text"
                   placeholder="Buscar productos..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:border-transparent w-full sm:w-64"
+                  className="pl-10 pr-4 py-2 border-2 border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:border-transparent w-full sm:w-64"
                   style={
                     { '--tw-ring-color': colorPrimario } as React.CSSProperties
                   }
@@ -216,11 +216,11 @@ export function TiendaPage() {
 
               {categorias.length > 0 && (
                 <div className="relative">
-                  <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 dark:text-gray-500" />
                   <select
                     value={categoriaFilter}
                     onChange={(e) => setCategoriaFilter(e.target.value)}
-                    className="pl-10 pr-8 py-2 border-2 border-gray-200 rounded-lg focus:ring-2 focus:border-transparent appearance-none cursor-pointer"
+                    className="pl-10 pr-8 py-2 border-2 border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:border-transparent appearance-none cursor-pointer"
                     style={
                       {
                         '--tw-ring-color': colorPrimario,
@@ -278,8 +278,8 @@ export function TiendaPage() {
                   <div className="flex-1 overflow-y-auto p-6">
                     {wishlistProductos.length === 0 ? (
                       <div className="text-center py-12">
-                        <HeartOff className="w-20 h-20 text-gray-300 mx-auto mb-4" />
-                        <p className="text-gray-600 text-lg">
+                        <HeartOff className="w-20 h-20 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+                        <p className="text-gray-600 dark:text-gray-400 text-lg">
                           No tienes favoritos
                         </p>
                       </div>
@@ -288,7 +288,7 @@ export function TiendaPage() {
                         {wishlistProductos.map((producto) => (
                           <div
                             key={producto.id}
-                            className="flex gap-4 bg-gray-50 rounded-xl p-4 hover:shadow-md transition"
+                            className="flex gap-4 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 hover:shadow-md transition"
                           >
                             <img
                               src={
@@ -303,7 +303,7 @@ export function TiendaPage() {
                               }}
                             />
                             <div className="flex-1">
-                              <h4 className="font-bold text-gray-900 line-clamp-1">
+                              <h4 className="font-bold text-gray-900 dark:text-gray-100 line-clamp-1">
                                 {producto.nombre}
                               </h4>
                               <p
@@ -381,8 +381,8 @@ export function TiendaPage() {
                   <div className="flex-1 overflow-y-auto p-6">
                     {items.length === 0 ? (
                       <div className="text-center py-12">
-                        <ShoppingCart className="w-20 h-20 text-gray-300 mx-auto mb-4" />
-                        <p className="text-gray-600 text-lg">
+                        <ShoppingCart className="w-20 h-20 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+                        <p className="text-gray-600 dark:text-gray-400 text-lg">
                           Tu carrito esta vacio
                         </p>
                       </div>
@@ -391,7 +391,7 @@ export function TiendaPage() {
                         {items.map((item) => (
                           <div
                             key={item.producto.id}
-                            className="flex gap-4 bg-gray-50 rounded-xl p-4 hover:shadow-md transition"
+                            className="flex gap-4 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 hover:shadow-md transition"
                           >
                             <img
                               src={
@@ -406,7 +406,7 @@ export function TiendaPage() {
                               }}
                             />
                             <div className="flex-1">
-                              <h4 className="font-bold text-gray-900 line-clamp-1">
+                              <h4 className="font-bold text-gray-900 dark:text-gray-100 line-clamp-1">
                                 {item.producto.nombre}
                               </h4>
                               <p
@@ -423,7 +423,7 @@ export function TiendaPage() {
                                       item.cantidad - 1,
                                     )
                                   }
-                                  className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center justify-center transition"
+                                  className="w-8 h-8 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 rounded-lg flex items-center justify-center transition"
                                 >
                                   <Minus className="w-4 h-4" />
                                 </button>
@@ -434,7 +434,7 @@ export function TiendaPage() {
                                   onClick={() =>
                                     handleAumentarCantidad(item.producto.id)
                                   }
-                                  className="w-8 h-8 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center justify-center transition"
+                                  className="w-8 h-8 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 rounded-lg flex items-center justify-center transition"
                                 >
                                   <Plus className="w-4 h-4" />
                                 </button>
@@ -455,9 +455,9 @@ export function TiendaPage() {
                   </div>
 
                   {items.length > 0 && (
-                    <div className="border-t-2 p-6 bg-gray-50">
+                    <div className="border-t-2 p-6 bg-gray-50 dark:bg-gray-900">
                       <div className="flex justify-between items-center mb-6">
-                        <span className="text-xl font-bold text-gray-900">
+                        <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
                           Total:
                         </span>
                         <span
@@ -478,7 +478,7 @@ export function TiendaPage() {
                       </button>
                       <button
                         onClick={clearCart}
-                        className="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 py-3 rounded-xl font-semibold transition"
+                        className="w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 text-gray-700 dark:text-gray-300 py-3 rounded-xl font-semibold transition"
                       >
                         Vaciar Carrito
                       </button>
@@ -490,14 +490,14 @@ export function TiendaPage() {
           </div>
 
           {productosFiltrados.length === 0 ? (
-            <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-              <Package className="w-20 h-20 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-600 font-medium mb-2 text-xl">
+            <div className="bg-white dark:bg-gray-950 rounded-2xl shadow-lg p-12 text-center">
+              <Package className="w-20 h-20 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-gray-400 font-medium mb-2 text-xl">
                 {searchTerm || categoriaFilter !== 'all'
                   ? 'No se encontraron productos con esos filtros'
                   : 'No hay productos disponibles'}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 {searchTerm || categoriaFilter !== 'all'
                   ? 'Intenta con otros terminos de busqueda'
                   : 'Pronto habra nuevos productos'}
@@ -508,10 +508,10 @@ export function TiendaPage() {
               {productosFiltrados.map((producto, index) => (
                 <div
                   key={producto.id}
-                  className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group animate-fade-in-up"
+                  className="bg-white dark:bg-gray-950 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.05}s` }}
                 >
-                  <div className="relative aspect-square bg-gray-200 overflow-hidden">
+                  <div className="relative aspect-square bg-gray-200 dark:bg-gray-700 overflow-hidden">
                     <img
                       src={
                         producto.imagenUrl ||
@@ -526,13 +526,13 @@ export function TiendaPage() {
                     />
                     <button
                       onClick={() => toggleWishlist(producto.id)}
-                      className="absolute top-3 right-3 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+                      className="absolute top-3 right-3 w-10 h-10 bg-white dark:bg-gray-950 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
                     >
                       <Heart
                         className={`w-5 h-5 ${
                           isInWishlist(producto.id)
                             ? 'fill-red-500 text-red-500'
-                            : 'text-gray-400'
+                            : 'text-gray-400 dark:text-gray-500'
                         }`}
                       />
                     </button>
@@ -554,11 +554,11 @@ export function TiendaPage() {
                         {producto.categoria.nombre}
                       </span>
                     )}
-                    <h3 className="text-lg font-bold text-gray-900 mt-2 line-clamp-2">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mt-2 line-clamp-2">
                       {producto.nombre}
                     </h3>
                     {producto.descripcion && (
-                      <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">
                         {producto.descripcion}
                       </p>
                     )}
@@ -570,7 +570,7 @@ export function TiendaPage() {
                         >
                           {formatCurrency(Number(producto.precio))}
                         </span>
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                           Stock: {producto.stock} unidades
                         </p>
                       </div>

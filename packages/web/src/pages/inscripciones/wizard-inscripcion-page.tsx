@@ -292,31 +292,31 @@ export function WizardInscripcionPage() {
 
   if (loadingData) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Cargando datos...</p>
+          <p className="text-gray-600 dark:text-gray-400">Cargando datos...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/membresias')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
               disabled={loading}
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Nueva Inscripción</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Nueva Inscripción</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {currentUser?.nombre} {currentUser?.apellido}
             </span>
           </div>
@@ -333,7 +333,7 @@ export function WizardInscripcionPage() {
                   className={`flex items-center justify-center w-12 h-12 rounded-full font-bold transition-all ${
                     currentStep >= step
                       ? 'bg-blue-600 text-white shadow-lg scale-110'
-                      : 'bg-gray-200 text-gray-500'
+                      : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                   } ${currentStep === step ? 'ring-4 ring-blue-200' : ''}`}
                 >
                   {currentStep > step ? <Check className="w-6 h-6" /> : step}
@@ -341,7 +341,7 @@ export function WizardInscripcionPage() {
                 {step < 5 && (
                   <div
                     className={`flex-1 h-2 mx-2 rounded-full transition-all ${
-                      currentStep > step ? 'bg-blue-600' : 'bg-gray-200'
+                      currentStep > step ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
                     }`}
                   />
                 )}
@@ -349,18 +349,18 @@ export function WizardInscripcionPage() {
             ))}
           </div>
           <div className="flex justify-between mt-3">
-            <span className="text-xs font-semibold text-gray-700">Cliente</span>
-            <span className="text-xs font-semibold text-gray-700">Plan</span>
-            <span className="text-xs font-semibold text-gray-700">Método</span>
-            <span className="text-xs font-semibold text-gray-700">Pago</span>
-            <span className="text-xs font-semibold text-gray-700">Confirmación</span>
+            <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">Cliente</span>
+            <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">Plan</span>
+            <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">Método</span>
+            <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">Pago</span>
+            <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">Confirmación</span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-lg p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6">
               {/* PASO 1: Seleccionar Cliente */}
               {currentStep === 1 && (
                 <div>
@@ -369,8 +369,8 @@ export function WizardInscripcionPage() {
                       <UserCheck className="w-6 h-6 text-blue-600" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900">Seleccionar Cliente</h2>
-                      <p className="text-sm text-gray-600">Paso 1 de 5</p>
+                      <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Seleccionar Cliente</h2>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Paso 1 de 5</p>
                     </div>
                   </div>
 
@@ -388,12 +388,12 @@ export function WizardInscripcionPage() {
                   </div>
 
                   {clientes.length === 0 ? (
-                    <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-                      <UserCheck className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                      <p className="text-gray-600 font-medium mb-2">
+                    <div className="text-center py-12 bg-gray-50 dark:bg-gray-900 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
+                      <UserCheck className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+                      <p className="text-gray-600 dark:text-gray-400 font-medium mb-2">
                         No hay clientes disponibles para inscripción
                       </p>
-                      <p className="text-sm text-gray-500 mb-4">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                         Todos los clientes ya tienen una membresía activa o no hay clientes
                         registrados
                       </p>
@@ -410,7 +410,7 @@ export function WizardInscripcionPage() {
                         <input
                           type="text"
                           placeholder="Buscar cliente por nombre o email..."
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
                       </div>
                       <div className="grid grid-cols-1 gap-3 max-h-96 overflow-y-auto">
@@ -421,17 +421,17 @@ export function WizardInscripcionPage() {
                             className={`p-4 border-2 rounded-lg text-left transition-all ${
                               selectedClienteId === cliente.id
                                 ? 'border-blue-500 bg-blue-50 shadow-md'
-                                : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                                : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                             }`}
                           >
                             <div className="flex items-center justify-between">
                               <div className="flex-1">
-                                <p className="font-bold text-gray-900 text-lg">
+                                <p className="font-bold text-gray-900 dark:text-gray-100 text-lg">
                                   {cliente.nombre} {cliente.apellido}
                                 </p>
-                                <p className="text-sm text-gray-600">{cliente.email}</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">{cliente.email}</p>
                                 {cliente.telefono && (
-                                  <p className="text-sm text-gray-500">{cliente.telefono}</p>
+                                  <p className="text-sm text-gray-500 dark:text-gray-400">{cliente.telefono}</p>
                                 )}
                               </div>
                               {selectedClienteId === cliente.id && (
@@ -454,15 +454,15 @@ export function WizardInscripcionPage() {
                       <CreditCard className="w-6 h-6 text-purple-600" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900">Seleccionar Plan</h2>
-                      <p className="text-sm text-gray-600">Paso 2 de 5</p>
+                      <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Seleccionar Plan</h2>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Paso 2 de 5</p>
                     </div>
                   </div>
 
                   {planes.length === 0 ? (
-                    <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-                      <CreditCard className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                      <p className="text-gray-600 font-medium mb-4">No hay planes disponibles</p>
+                    <div className="text-center py-12 bg-gray-50 dark:bg-gray-900 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
+                      <CreditCard className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+                      <p className="text-gray-600 dark:text-gray-400 font-medium mb-4">No hay planes disponibles</p>
                       <button
                         onClick={() => navigate('/planes/nuevo')}
                         className="text-blue-600 hover:text-blue-700 font-semibold underline"
@@ -479,24 +479,24 @@ export function WizardInscripcionPage() {
                           className={`p-6 border-2 rounded-xl text-left transition-all hover:shadow-lg ${
                             selectedPlanId === plan.id
                               ? 'border-purple-500 bg-purple-50 shadow-xl scale-105'
-                              : 'border-gray-200 hover:border-purple-300'
+                              : 'border-gray-200 dark:border-gray-700 hover:border-purple-300'
                           }`}
                         >
                           <div className="flex items-start justify-between mb-3">
-                            <h3 className="font-bold text-xl text-gray-900">{plan.nombre}</h3>
+                            <h3 className="font-bold text-xl text-gray-900 dark:text-gray-100">{plan.nombre}</h3>
                             {selectedPlanId === plan.id && (
                               <CheckCircle className="w-6 h-6 text-purple-600 flex-shrink-0" />
                             )}
                           </div>
                           {plan.descripcion && (
-                            <p className="text-sm text-gray-600 mb-4">{plan.descripcion}</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{plan.descripcion}</p>
                           )}
                           <div className="flex items-baseline gap-2 mb-3">
                             <span className="text-3xl font-bold text-purple-600">
                               {formatCurrency(plan.precio)}
                             </span>
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                             <Calendar className="w-4 h-4" />
                             <span>{plan.duracionDias} días de acceso</span>
                           </div>
@@ -515,8 +515,8 @@ export function WizardInscripcionPage() {
                       <DollarSign className="w-6 h-6 text-green-600" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900">Método de Pago</h2>
-                      <p className="text-sm text-gray-600">Paso 3 de 5</p>
+                      <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Método de Pago</h2>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Paso 3 de 5</p>
                     </div>
                   </div>
 
@@ -527,7 +527,7 @@ export function WizardInscripcionPage() {
                       className={`p-6 border-2 rounded-xl text-left transition-all ${
                         metodoPago === 'efectivo'
                           ? 'border-green-500 bg-green-50 shadow-lg'
-                          : 'border-gray-200 hover:border-green-300'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-green-300'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-3">
@@ -536,8 +536,8 @@ export function WizardInscripcionPage() {
                           <CheckCircle className="w-6 h-6 text-green-600" />
                         )}
                       </div>
-                      <h3 className="font-bold text-lg text-gray-900 mb-1">Efectivo</h3>
-                      <p className="text-sm text-gray-600">Pago en persona al momento</p>
+                      <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-1">Efectivo</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Pago en persona al momento</p>
                     </button>
 
                     {/* Tarjeta */}
@@ -546,7 +546,7 @@ export function WizardInscripcionPage() {
                       className={`p-6 border-2 rounded-xl text-left transition-all ${
                         metodoPago === 'tarjeta'
                           ? 'border-blue-500 bg-blue-50 shadow-lg'
-                          : 'border-gray-200 hover:border-blue-300'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-blue-300'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-3">
@@ -555,11 +555,11 @@ export function WizardInscripcionPage() {
                           <CheckCircle className="w-6 h-6 text-blue-600" />
                         )}
                       </div>
-                      <h3 className="font-bold text-lg text-gray-900 mb-1">Tarjeta</h3>
-                      <p className="text-sm text-gray-600">Débito o crédito</p>
+                      <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-1">Tarjeta</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Débito o crédito</p>
                       <div className="flex items-center gap-1 mt-2">
-                        <Lock className="w-3 h-3 text-gray-500" />
-                        <span className="text-xs text-gray-500">Pago seguro</span>
+                        <Lock className="w-3 h-3 text-gray-500 dark:text-gray-400" />
+                        <span className="text-xs text-gray-500 dark:text-gray-400">Pago seguro</span>
                       </div>
                     </button>
 
@@ -569,7 +569,7 @@ export function WizardInscripcionPage() {
                       className={`p-6 border-2 rounded-xl text-left transition-all ${
                         metodoPago === 'transferencia'
                           ? 'border-purple-500 bg-purple-50 shadow-lg'
-                          : 'border-gray-200 hover:border-purple-300'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-purple-300'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-3">
@@ -578,20 +578,20 @@ export function WizardInscripcionPage() {
                           <CheckCircle className="w-6 h-6 text-purple-600" />
                         )}
                       </div>
-                      <h3 className="font-bold text-lg text-gray-900 mb-1">Transferencia</h3>
-                      <p className="text-sm text-gray-600">Bancaria o electrónica</p>
+                      <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-1">Transferencia</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Bancaria o electrónica</p>
                     </button>
 
                     {/* Stripe (Futuro) */}
                     <button
                       disabled
-                      className="p-6 border-2 border-gray-200 rounded-xl text-left opacity-50 cursor-not-allowed"
+                      className="p-6 border-2 border-gray-200 dark:border-gray-700 rounded-xl text-left opacity-50 cursor-not-allowed"
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <Shield className="w-8 h-8 text-gray-400" />
+                        <Shield className="w-8 h-8 text-gray-400 dark:text-gray-500" />
                       </div>
-                      <h3 className="font-bold text-lg text-gray-900 mb-1">Stripe / PayPal</h3>
-                      <p className="text-sm text-gray-600">Próximamente</p>
+                      <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-1">Stripe / PayPal</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Próximamente</p>
                     </button>
                   </div>
                 </div>
@@ -605,8 +605,8 @@ export function WizardInscripcionPage() {
                       <Lock className="w-6 h-6 text-orange-600" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900">Detalles de Pago</h2>
-                      <p className="text-sm text-gray-600">Paso 4 de 5</p>
+                      <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Detalles de Pago</h2>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Paso 4 de 5</p>
                     </div>
                   </div>
 
@@ -631,7 +631,7 @@ export function WizardInscripcionPage() {
                   {metodoPago === 'efectivo' && (
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                           Referencia / Recibo
                         </label>
                         <input
@@ -640,12 +640,12 @@ export function WizardInscripcionPage() {
                           onChange={(e) =>
                             setPagoEfectivo({ ...pagoEfectivo, referencia: e.target.value })
                           }
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                           placeholder="Ej: REC-001, #12345"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                           Notas
                         </label>
                         <textarea
@@ -654,7 +654,7 @@ export function WizardInscripcionPage() {
                             setPagoEfectivo({ ...pagoEfectivo, notas: e.target.value })
                           }
                           rows={4}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
                           placeholder="Información adicional del pago..."
                         />
                       </div>
@@ -675,7 +675,7 @@ export function WizardInscripcionPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                           Número de Tarjeta
                         </label>
                         <input
@@ -687,14 +687,14 @@ export function WizardInscripcionPage() {
                               setPagoTarjeta({ ...pagoTarjeta, numeroTarjeta: formatted });
                             }
                           }}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-lg"
+                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-lg"
                           placeholder="1234 5678 9012 3456"
                           maxLength={19}
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                           Nombre del Titular
                         </label>
                         <input
@@ -706,14 +706,14 @@ export function WizardInscripcionPage() {
                               nombreTitular: e.target.value.toUpperCase(),
                             })
                           }
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase"
+                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase"
                           placeholder="JUAN PEREZ"
                         />
                       </div>
 
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             Fecha de Expiración
                           </label>
                           <input
@@ -725,13 +725,13 @@ export function WizardInscripcionPage() {
                                 setPagoTarjeta({ ...pagoTarjeta, fechaExpiracion: formatted });
                               }
                             }}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"
+                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"
                             placeholder="MM/AA"
                             maxLength={5}
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             CVV
                           </label>
                           <input
@@ -743,7 +743,7 @@ export function WizardInscripcionPage() {
                                 setPagoTarjeta({ ...pagoTarjeta, cvv: value });
                               }
                             }}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"
+                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"
                             placeholder="123"
                             maxLength={4}
                           />
@@ -760,7 +760,7 @@ export function WizardInscripcionPage() {
                           }
                           className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                         />
-                        <label htmlFor="guardarTarjeta" className="text-sm text-gray-700">
+                        <label htmlFor="guardarTarjeta" className="text-sm text-gray-700 dark:text-gray-300">
                           Guardar tarjeta para futuros pagos
                         </label>
                       </div>
@@ -771,7 +771,7 @@ export function WizardInscripcionPage() {
                   {metodoPago === 'transferencia' && (
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                           Banco
                         </label>
                         <select
@@ -779,7 +779,7 @@ export function WizardInscripcionPage() {
                           onChange={(e) =>
                             setPagoTransferencia({ ...pagoTransferencia, banco: e.target.value })
                           }
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         >
                           <option value="">Seleccionar banco</option>
                           <option value="BCP">Banco de Crédito del Perú</option>
@@ -792,7 +792,7 @@ export function WizardInscripcionPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                           Número de Referencia / Operación
                         </label>
                         <input
@@ -804,13 +804,13 @@ export function WizardInscripcionPage() {
                               numeroReferencia: e.target.value,
                             })
                           }
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                           placeholder="Ej: 000123456789"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                           Fecha de Transferencia
                         </label>
                         <input
@@ -822,12 +822,12 @@ export function WizardInscripcionPage() {
                               fechaTransferencia: e.target.value,
                             })
                           }
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                           Comprobante (Opcional)
                         </label>
                         <input
@@ -837,9 +837,9 @@ export function WizardInscripcionPage() {
                             const file = e.target.files?.[0] || null;
                             setPagoTransferencia({ ...pagoTransferencia, comprobante: file });
                           }}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         />
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                           Sube una imagen o PDF del comprobante de transferencia
                         </p>
                       </div>
@@ -854,37 +854,37 @@ export function WizardInscripcionPage() {
                   <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
                     <Check className="w-12 h-12 text-green-600" />
                   </div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-3">
                     Inscripción Exitosa
                   </h2>
-                  <p className="text-gray-600 mb-8 text-lg">
+                  <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
                     La membresía y el pago han sido registrados correctamente
                   </p>
 
                   <div className="bg-gradient-to-br from-green-50 to-blue-50 border-2 border-green-200 p-8 rounded-xl max-w-md mx-auto mb-8 shadow-lg">
                     <div className="space-y-4 text-left">
                       <div className="flex justify-between items-center pb-3 border-b">
-                        <span className="text-sm text-gray-600">Cliente:</span>
-                        <span className="font-bold text-gray-900">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Cliente:</span>
+                        <span className="font-bold text-gray-900 dark:text-gray-100">
                           {selectedCliente?.nombre} {selectedCliente?.apellido}
                         </span>
                       </div>
                       <div className="flex justify-between items-center pb-3 border-b">
-                        <span className="text-sm text-gray-600">Plan:</span>
-                        <span className="font-bold text-gray-900">{selectedPlan?.nombre}</span>
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Plan:</span>
+                        <span className="font-bold text-gray-900 dark:text-gray-100">{selectedPlan?.nombre}</span>
                       </div>
                       <div className="flex justify-between items-center pb-3 border-b">
-                        <span className="text-sm text-gray-600">Duración:</span>
-                        <span className="font-bold text-gray-900">
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Duración:</span>
+                        <span className="font-bold text-gray-900 dark:text-gray-100">
                           {selectedPlan?.duracionDias} días
                         </span>
                       </div>
                       <div className="flex justify-between items-center pb-3 border-b">
-                        <span className="text-sm text-gray-600">Método de pago:</span>
-                        <span className="font-bold text-gray-900 capitalize">{metodoPago}</span>
+                        <span className="text-sm text-gray-600 dark:text-gray-400">Método de pago:</span>
+                        <span className="font-bold text-gray-900 dark:text-gray-100 capitalize">{metodoPago}</span>
                       </div>
                       <div className="flex justify-between items-center pt-3">
-                        <span className="font-bold text-gray-900 text-lg">Total pagado:</span>
+                        <span className="font-bold text-gray-900 dark:text-gray-100 text-lg">Total pagado:</span>
                         <span className="text-2xl font-bold text-green-600">
                           {selectedPlan && formatCurrency(selectedPlan.precio)}
                         </span>
@@ -922,7 +922,7 @@ export function WizardInscripcionPage() {
                         setValidationErrors([]);
                         loadData();
                       }}
-                      className="px-8 py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-all"
+                      className="px-8 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-bold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
                     >
                       Nueva Inscripción
                     </button>
@@ -936,7 +936,7 @@ export function WizardInscripcionPage() {
                   <button
                     onClick={handleBack}
                     disabled={currentStep === 1 || loading}
-                    className="flex items-center gap-2 px-6 py-3 border-2 border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 px-6 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <ArrowLeft className="w-5 h-5" />
                     <span>Atrás</span>
@@ -982,8 +982,8 @@ export function WizardInscripcionPage() {
           {/* Sidebar - Resumen */}
           {currentStep < 5 && (
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg shadow-lg p-6 sticky top-8">
-                <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 sticky top-8">
+                <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-blue-600" />
                   Resumen de Inscripción
                 </h3>
@@ -991,44 +991,44 @@ export function WizardInscripcionPage() {
                 <div className="space-y-4">
                   {/* Cliente */}
                   <div className="pb-4 border-b">
-                    <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Cliente</p>
+                    <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">Cliente</p>
                     {selectedCliente ? (
                       <div>
-                        <p className="font-bold text-gray-900">
+                        <p className="font-bold text-gray-900 dark:text-gray-100">
                           {selectedCliente.nombre} {selectedCliente.apellido}
                         </p>
-                        <p className="text-sm text-gray-600">{selectedCliente.email}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">{selectedCliente.email}</p>
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-400 italic">No seleccionado</p>
+                      <p className="text-sm text-gray-400 dark:text-gray-500 italic">No seleccionado</p>
                     )}
                   </div>
 
                   {/* Plan */}
                   <div className="pb-4 border-b">
-                    <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Plan</p>
+                    <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">Plan</p>
                     {selectedPlan ? (
                       <div>
-                        <p className="font-bold text-gray-900">{selectedPlan.nombre}</p>
-                        <p className="text-sm text-gray-600">{selectedPlan.duracionDias} días</p>
+                        <p className="font-bold text-gray-900 dark:text-gray-100">{selectedPlan.nombre}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">{selectedPlan.duracionDias} días</p>
                         <p className="text-lg font-bold text-blue-600 mt-2">
                           {formatCurrency(selectedPlan.precio)}
                         </p>
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-400 italic">No seleccionado</p>
+                      <p className="text-sm text-gray-400 dark:text-gray-500 italic">No seleccionado</p>
                     )}
                   </div>
 
                   {/* Método de Pago */}
                   <div className="pb-4 border-b">
-                    <p className="text-xs font-semibold text-gray-500 uppercase mb-2">
+                    <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">
                       Método de Pago
                     </p>
                     {metodoPago && currentStep >= 3 ? (
-                      <p className="font-bold text-gray-900 capitalize">{metodoPago}</p>
+                      <p className="font-bold text-gray-900 dark:text-gray-100 capitalize">{metodoPago}</p>
                     ) : (
-                      <p className="text-sm text-gray-400 italic">No seleccionado</p>
+                      <p className="text-sm text-gray-400 dark:text-gray-500 italic">No seleccionado</p>
                     )}
                   </div>
 
@@ -1036,15 +1036,15 @@ export function WizardInscripcionPage() {
                   {selectedPlan && (
                     <div className="pt-4">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="text-gray-700">Subtotal:</span>
+                        <span className="text-gray-700 dark:text-gray-300">Subtotal:</span>
                         <span className="font-semibold">{formatCurrency(selectedPlan.precio)}</span>
                       </div>
                       <div className="flex justify-between items-center mb-2">
-                        <span className="text-gray-700">Descuento:</span>
+                        <span className="text-gray-700 dark:text-gray-300">Descuento:</span>
                         <span className="font-semibold text-green-600">$0.00</span>
                       </div>
                       <div className="flex justify-between items-center pt-3 border-t-2">
-                        <span className="text-lg font-bold text-gray-900">Total:</span>
+                        <span className="text-lg font-bold text-gray-900 dark:text-gray-100">Total:</span>
                         <span className="text-2xl font-bold text-blue-600">
                           {formatCurrency(selectedPlan.precio)}
                         </span>
@@ -1055,7 +1055,7 @@ export function WizardInscripcionPage() {
 
                 {/* Security Badge */}
                 <div className="mt-6 pt-6 border-t">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                     <Shield className="w-5 h-5 text-green-600" />
                     <span>Transacción segura y encriptada</span>
                   </div>

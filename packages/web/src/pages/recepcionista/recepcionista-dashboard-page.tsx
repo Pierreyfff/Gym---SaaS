@@ -119,13 +119,13 @@ export function RecepcionistaDashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white shadow">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Gym SaaS - Recepción</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Gym SaaS - Recepción</h1>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}{' '}
               <span className="font-medium">({user?.rol})</span>
             </span>
@@ -149,8 +149,8 @@ export function RecepcionistaDashboardPage() {
           <div className="space-y-8">
             {/* Header */}
             <div>
-              <h2 className="text-3xl font-bold text-gray-900">Dashboard de Recepción</h2>
-              <p className="text-gray-600 mt-2 flex items-center gap-2">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dashboard de Recepción</h2>
+              <p className="text-gray-600 dark:text-gray-400 mt-2 flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 {new Date().toLocaleDateString('es-ES', { 
                   weekday: 'long', 
@@ -172,8 +172,8 @@ export function RecepcionistaDashboardPage() {
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                        <p className="text-3xl font-bold text-gray-900 mt-2">{stat.value}</p>
+                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{stat.title}</p>
+                        <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{stat.value}</p>
                       </div>
                       <div className={`w-12 h-12 rounded-lg ${stat.bgColor} flex items-center justify-center`}>
                         <stat.icon className={`w-6 h-6 ${stat.color}`} />
@@ -186,7 +186,7 @@ export function RecepcionistaDashboardPage() {
 
             {/* Quick Actions */}
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Acciones Rápidas</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Acciones Rápidas</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {quickActions.map((action, index) => (
                   <Card 
@@ -200,8 +200,8 @@ export function RecepcionistaDashboardPage() {
                           <action.icon className="w-8 h-8 text-white" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-gray-900">{action.title}</h4>
-                          <p className="text-sm text-gray-600 mt-1">{action.description}</p>
+                          <h4 className="font-bold text-gray-900 dark:text-gray-100">{action.title}</h4>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{action.description}</p>
                         </div>
                       </div>
                     </CardContent>
@@ -223,31 +223,31 @@ export function RecepcionistaDashboardPage() {
                   <div className="space-y-3">
                     <button
                       onClick={() => navigate('/clientes')}
-                      className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition"
+                      className="w-full text-left px-4 py-3 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
                     >
-                      <p className="font-semibold text-gray-900">Ver Clientes</p>
-                      <p className="text-sm text-gray-600">Gestionar clientes del gimnasio</p>
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">Ver Clientes</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Gestionar clientes del gimnasio</p>
                     </button>
                     <button
                       onClick={() => navigate('/membresias')}
-                      className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition"
+                      className="w-full text-left px-4 py-3 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
                     >
-                      <p className="font-semibold text-gray-900">Ver Membresías</p>
-                      <p className="text-sm text-gray-600">Gestionar membresías activas</p>
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">Ver Membresías</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Gestionar membresías activas</p>
                     </button>
                     <button
                       onClick={() => navigate('/productos')}
-                      className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition"
+                      className="w-full text-left px-4 py-3 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
                     >
-                      <p className="font-semibold text-gray-900">Ver Productos</p>
-                      <p className="text-sm text-gray-600">Gestionar inventario</p>
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">Ver Productos</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Gestionar inventario</p>
                     </button>
                     <button
                       onClick={() => navigate('/ventas-productos')}
-                      className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition"
+                      className="w-full text-left px-4 py-3 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
                     >
-                      <p className="font-semibold text-gray-900">Ver Ventas</p>
-                      <p className="text-sm text-gray-600">Historial de ventas de productos</p>
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">Ver Ventas</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Historial de ventas de productos</p>
                     </button>
                   </div>
                 </CardContent>
@@ -263,19 +263,19 @@ export function RecepcionistaDashboardPage() {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between py-2 border-b">
-                      <span className="text-sm text-gray-600">Asistencias del Mes</span>
-                      <span className="font-bold text-gray-900">{stats?.asistenciasMesActual || 0}</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Asistencias del Mes</span>
+                      <span className="font-bold text-gray-900 dark:text-gray-100">{stats?.asistenciasMesActual || 0}</span>
                     </div>
                     <div className="flex items-center justify-between py-2 border-b">
-                      <span className="text-sm text-gray-600">Membresías Activas</span>
-                      <span className="font-bold text-gray-900">{stats?.membresiasActivas || 0}</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Membresías Activas</span>
+                      <span className="font-bold text-gray-900 dark:text-gray-100">{stats?.membresiasActivas || 0}</span>
                     </div>
                     <div className="flex items-center justify-between py-2 border-b">
-                      <span className="text-sm text-gray-600">Clientes Activos</span>
-                      <span className="font-bold text-gray-900">{stats?.clientesActivos || 0}</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Clientes Activos</span>
+                      <span className="font-bold text-gray-900 dark:text-gray-100">{stats?.clientesActivos || 0}</span>
                     </div>
                     <div className="flex items-center justify-between py-2">
-                      <span className="text-sm text-gray-600">Ingresos del Mes</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Ingresos del Mes</span>
                       <span className="font-bold text-green-600">${stats?.ingresosMesActual?.toLocaleString() || 0}</span>
                     </div>
                   </div>

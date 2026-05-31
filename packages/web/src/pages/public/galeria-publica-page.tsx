@@ -74,7 +74,7 @@ export function GaleriaPublicaPage() {
     return (
       <PublicLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-pulse text-gray-600">Cargando galería...</div>
+          <div className="animate-pulse text-gray-600 dark:text-gray-400">Cargando galería...</div>
         </div>
       </PublicLayout>
     );
@@ -107,15 +107,15 @@ export function GaleriaPublicaPage() {
       </section>
 
       {/* Galería */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {imagenes.length === 0 ? (
-            <div className="bg-white rounded-2xl shadow-lg p-16 text-center">
-              <ImageIcon className="w-20 h-20 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-600 text-xl font-medium mb-2">
+            <div className="bg-white dark:bg-gray-950 rounded-2xl shadow-lg p-16 text-center">
+              <ImageIcon className="w-20 h-20 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-gray-400 text-xl font-medium mb-2">
                 No hay imágenes disponibles
               </p>
-              <p className="text-gray-500">
+              <p className="text-gray-500 dark:text-gray-400">
                 Pronto agregaremos fotos de nuestras instalaciones
               </p>
             </div>
@@ -124,7 +124,7 @@ export function GaleriaPublicaPage() {
               {imagenes.map((imagen, index) => (
                 <div
                   key={imagen.id}
-                  className="group relative aspect-square bg-gray-200 rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 animate-fade-in-up"
+                  className="group relative aspect-square bg-gray-200 dark:bg-gray-700 rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 animate-fade-in-up"
                   style={{ animationDelay: `${index * 0.05}s` }}
                   onClick={() => openLightbox(index)}
                 >
@@ -146,7 +146,7 @@ export function GaleriaPublicaPage() {
 
                   {/* Título */}
                   {imagen.titulo && (
-                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black via-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black dark:from-gray-950 via-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <h3 className="text-white font-bold text-lg">{imagen.titulo}</h3>
                       {imagen.descripcion && (
                         <p className="text-white text-sm opacity-90 line-clamp-2 mt-1">
@@ -164,11 +164,11 @@ export function GaleriaPublicaPage() {
 
       {/* Lightbox */}
       {lightboxOpen && imagenes.length > 0 && (
-        <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4 animate-fade-in">
+        <div className="fixed inset-0 bg-black/95 dark:bg-black/95 z-50 flex items-center justify-center p-4 animate-fade-in">
           {/* Botón Cerrar */}
           <button
             onClick={closeLightbox}
-            className="absolute top-4 right-4 w-12 h-12 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center transition z-10"
+            className="absolute top-4 right-4 w-12 h-12 bg-white dark:bg-gray-950 bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center transition z-10"
             aria-label="Cerrar"
           >
             <X className="w-6 h-6 text-white" />
@@ -187,7 +187,7 @@ export function GaleriaPublicaPage() {
 
             {/* Info */}
             {(imagenes[currentImageIndex].titulo || imagenes[currentImageIndex].descripcion) && (
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent rounded-b-lg">
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black dark:from-gray-950 to-transparent rounded-b-lg">
                 {imagenes[currentImageIndex].titulo && (
                   <h3 className="text-white font-bold text-2xl mb-2">
                     {imagenes[currentImageIndex].titulo}
@@ -206,14 +206,14 @@ export function GaleriaPublicaPage() {
               <>
                 <button
                   onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center transition"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white dark:bg-gray-950 bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center transition"
                   aria-label="Imagen anterior"
                 >
                   <ChevronLeft className="w-8 h-8 text-white" />
                 </button>
                 <button
                   onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center transition"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white dark:bg-gray-950 bg-opacity-20 hover:bg-opacity-30 rounded-full flex items-center justify-center transition"
                   aria-label="Siguiente imagen"
                 >
                   <ChevronRight className="w-8 h-8 text-white" />
@@ -222,7 +222,7 @@ export function GaleriaPublicaPage() {
             )}
 
             {/* Contador */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full text-sm font-semibold">
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 dark:bg-black/70 text-white px-4 py-2 rounded-full text-sm font-semibold">
               {currentImageIndex + 1} / {imagenes.length}
             </div>
           </div>

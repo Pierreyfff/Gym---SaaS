@@ -130,27 +130,27 @@ export function AsistenciaFormPage() {
 
   if (loadingData) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Cargando datos...</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Cargando datos...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm: px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/asistencias')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Registrar Asistencia</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Registrar Asistencia</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {currentUser?.nombre} {currentUser?.apellido}
             </span>
           </div>
@@ -158,22 +158,22 @@ export function AsistenciaFormPage() {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg: px-8 py-8">
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Cliente */}
             <div>
-              <label htmlFor="clienteId" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="clienteId" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Cliente <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <UserCheck className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <UserCheck className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
                 <select
                   id="clienteId"
                   name="clienteId"
                   value={formData.clienteId}
                   onChange={handleChange}
                   className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.clienteId ? 'border-red-500' : 'border-gray-300'
+                    errors.clienteId ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                   disabled={loading}
                 >
@@ -203,7 +203,7 @@ export function AsistenciaFormPage() {
             {/* Fecha y Hora */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label htmlFor="marcaTiempo" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="marcaTiempo" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Fecha y Hora <span className="text-red-500">*</span>
                 </label>
                 <button
@@ -215,7 +215,7 @@ export function AsistenciaFormPage() {
                 </button>
               </div>
               <div className="relative">
-                <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <CalendarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
                 <input
                   type="datetime-local"
                   id="marcaTiempo"
@@ -223,7 +223,7 @@ export function AsistenciaFormPage() {
                   value={formData.marcaTiempo}
                   onChange={handleChange}
                   className={`w-full pl-10 pr-4 py-2 border rounded-lg focus: ring-2 focus:ring-green-500 focus:border-transparent ${
-                    errors.marcaTiempo ? 'border-red-500' : 'border-gray-300'
+                    errors.marcaTiempo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                   disabled={loading}
                 />
@@ -265,7 +265,7 @@ export function AsistenciaFormPage() {
               <button
                 type="button"
                 onClick={() => navigate('/asistencias')}
-                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition"
+                className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium transition"
                 disabled={loading}
               >
                 Cancelar

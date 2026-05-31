@@ -233,9 +233,9 @@ export function MembresiasPage() {
       case 'expirada':
         return 'bg-red-100 text-red-800';
       case 'cancelada':
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200';
     }
   };
 
@@ -255,20 +255,20 @@ export function MembresiasPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/dashboard')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Gestión de Membresías</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Gestión de Membresías</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {currentUser?.nombre} {currentUser?.apellido}
             </span>
           </div>
@@ -283,21 +283,21 @@ export function MembresiasPage() {
             className={`p-4 rounded-lg border-2 transition ${
               filterEstado === 'todas'
                 ? 'border-orange-500 bg-orange-50'
-                : 'border-gray-200 bg-white hover:border-gray-300'
+                : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-gray-300'
             }`}
           >
-            <p className="text-sm text-gray-600">Todas</p>
-            <p className="text-2xl font-bold text-gray-900">{estadoStats.todas}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Todas</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{estadoStats.todas}</p>
           </button>
           <button
             onClick={() => setFilterEstado('activa')}
             className={`p-4 rounded-lg border-2 transition ${
               filterEstado === 'activa'
                 ? 'border-green-500 bg-green-50'
-                : 'border-gray-200 bg-white hover:border-gray-300'
+                : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-gray-300'
             }`}
           >
-            <p className="text-sm text-gray-600">Activas</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Activas</p>
             <p className="text-2xl font-bold text-green-600">{estadoStats.activa}</p>
           </button>
           <button
@@ -305,35 +305,35 @@ export function MembresiasPage() {
             className={`p-4 rounded-lg border-2 transition ${
               filterEstado === 'expirada'
                 ? 'border-red-500 bg-red-50'
-                : 'border-gray-200 bg-white hover:border-gray-300'
+                : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-gray-300'
             }`}
           >
-            <p className="text-sm text-gray-600">Expiradas</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Expiradas</p>
             <p className="text-2xl font-bold text-red-600">{estadoStats.expirada}</p>
           </button>
           <button
             onClick={() => setFilterEstado('cancelada')}
             className={`p-4 rounded-lg border-2 transition ${
               filterEstado === 'cancelada'
-                ? 'border-gray-500 bg-gray-50'
-                : 'border-gray-200 bg-white hover:border-gray-300'
+                ? 'border-gray-500 bg-gray-50 dark:bg-gray-900'
+                : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-gray-300'
             }`}
           >
-            <p className="text-sm text-gray-600">Canceladas</p>
-            <p className="text-2xl font-bold text-gray-600">{estadoStats.cancelada}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Canceladas</p>
+            <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">{estadoStats.cancelada}</p>
           </button>
         </div>
 
         {/* Actions Bar */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div className="relative w-full sm:w-96">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
             <input
               type="text"
               placeholder="Buscar por cliente o plan..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
             />
           </div>
 
@@ -350,50 +350,50 @@ export function MembresiasPage() {
         {loading ? (
           <TableSkeleton rows={10} columns={7} />
         ) : filteredMembresias.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-8 text-center">
-            <CreditCard className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-600 font-medium mb-2">No se encontraron membresías</p>
-            <p className="text-sm text-gray-500">
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-8 text-center">
+            <CreditCard className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <p className="text-gray-600 dark:text-gray-400 font-medium mb-2">No se encontraron membresías</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               {searchTerm || filterEstado !== 'todas'
                 ? 'Intenta con otros filtros de búsqueda'
                 : 'Comienza agregando tu primera membresía'}
             </p>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow overflow-hidden">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-900">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Cliente
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Plan
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Fecha Inicio
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Fecha Fin
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Días Restantes
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Estado
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Acciones
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-gray-950 divide-y divide-gray-200 dark:divide-gray-700">
                 {filteredMembresias.map((membresia) => (
-                  <tr key={membresia.id} className="hover:bg-gray-50 transition">
+                  <tr key={membresia.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-900">
+                          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                             {membresia.cliente.nombre} {membresia.cliente.apellido}
                           </span>
                           {membresia.estado === 'activa' &&
@@ -405,27 +405,27 @@ export function MembresiasPage() {
                               </span>
                             )}
                         </div>
-                        <div className="text-sm text-gray-500">{membresia.cliente.email}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">{membresia.cliente.email}</div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           {membresia.plan.nombre}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
                           {formatCurrency(membresia.plan.precio)}
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-1 text-sm text-gray-600">
+                      <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
                         <Calendar className="w-4 h-4" />
                         {formatDate(membresia.fechaInicio)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-1 text-sm text-gray-600">
+                      <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
                         <Calendar className="w-4 h-4" />
                         {formatDate(membresia.fechaFin)}
                       </div>
@@ -441,7 +441,7 @@ export function MembresiasPage() {
                                 : membresia.diasRestantes !== undefined &&
                                     membresia.diasRestantes <= 7
                                   ? 'text-orange-600'
-                                  : 'text-gray-900'
+                                  : 'text-gray-900 dark:text-gray-100'
                             }`}
                           >
                             {membresia.diasRestantes} días
@@ -462,7 +462,7 @@ export function MembresiasPage() {
                             )}
                         </div>
                       ) : (
-                        <span className="text-sm text-gray-500">-</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">-</span>
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

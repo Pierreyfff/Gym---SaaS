@@ -192,29 +192,29 @@ export function MembresiaFormPage() {
 
   if (loadingData) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Cargando datos...</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Cargando datos...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/membresias')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {isEditing ? 'Editar Membresía' : 'Nueva Membresía'}
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {currentUser?.nombre} {currentUser?.apellido}
             </span>
           </div>
@@ -222,22 +222,22 @@ export function MembresiaFormPage() {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Cliente */}
             <div>
-              <label htmlFor="clienteId" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="clienteId" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Cliente <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
                 <select
                   id="clienteId"
                   name="clienteId"
                   value={formData.clienteId}
                   onChange={handleChange}
                   className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
-                    errors.clienteId ? 'border-red-500' : 'border-gray-300'
+                    errors.clienteId ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                   disabled={loading || isEditing}
                 >
@@ -254,18 +254,18 @@ export function MembresiaFormPage() {
 
             {/* Plan */}
             <div>
-              <label htmlFor="planId" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="planId" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Plan <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
                 <select
                   id="planId"
                   name="planId"
                   value={formData.planId}
                   onChange={handleChange}
                   className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
-                    errors.planId ? 'border-red-500' :  'border-gray-300'
+                    errors.planId ? 'border-red-500' :  'border-gray-300 dark:border-gray-600'
                   }`}
                   disabled={loading || isEditing}
                 >
@@ -282,11 +282,11 @@ export function MembresiaFormPage() {
 
             {/* Fecha Inicio */}
             <div>
-              <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="fechaInicio" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Fecha de Inicio <span className="text-red-500">*</span>
               </label>
               <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
                 <input
                   type="date"
                   id="fechaInicio"
@@ -294,7 +294,7 @@ export function MembresiaFormPage() {
                   value={formData.fechaInicio}
                   onChange={handleChange}
                   className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
-                    errors.fechaInicio ? 'border-red-500' : 'border-gray-300'
+                    errors.fechaInicio ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                   }`}
                   disabled={loading}
                 />
@@ -356,7 +356,7 @@ export function MembresiaFormPage() {
               <button
                 type="button"
                 onClick={() => navigate('/membresias')}
-                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition"
+                className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium transition"
                 disabled={loading}
               >
                 Cancelar

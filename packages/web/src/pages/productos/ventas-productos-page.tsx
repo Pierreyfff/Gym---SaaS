@@ -104,7 +104,7 @@ export function VentasProductosPage() {
       entregado: 'bg-green-100 text-green-800',
       cancelado: 'bg-red-100 text-red-800',
     };
-    return colors[estado || ''] || 'bg-gray-100 text-gray-800';
+    return colors[estado || ''] || 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200';
   };
 
   const handleUpdateEstadoEnvio = async (ventaId: string, estadoEnvio: string) => {
@@ -137,20 +137,20 @@ export function VentasProductosPage() {
   const ingresosSemana = ventasSemana.reduce((sum, v) => sum + v.total, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/dashboard')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Ventas de Productos</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Ventas de Productos</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}
             </span>
           </div>
@@ -162,7 +162,7 @@ export function VentasProductosPage() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="bg-white rounded-lg shadow p-6">
+              <div key={i} className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-3">
                   <Skeleton className="h-4 w-24" />
                   <Skeleton className="h-10 w-10 rounded-full" />
@@ -182,36 +182,36 @@ export function VentasProductosPage() {
               <p className="text-3xl font-bold">{formatCurrency(totalIngresos)}</p>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-medium text-gray-600">Ventas Totales</h3>
+                <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Ventas Totales</h3>
                 <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
                   <ShoppingCart className="w-5 h-5 text-purple-600" />
                 </div>
               </div>
-              <p className="text-3xl font-bold text-gray-900">{ventas.length}</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{ventas.length}</p>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-medium text-gray-600">Hoy</h3>
+                <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Hoy</h3>
                 <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
                   <TrendingUp className="w-5 h-5 text-green-600" />
                 </div>
               </div>
               <p className="text-2xl font-bold text-green-600">{formatCurrency(ingresosHoy)}</p>
-              <p className="text-xs text-gray-500 mt-1">{ventasHoy.length} ventas</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{ventasHoy.length} ventas</p>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-medium text-gray-600">Esta Semana</h3>
+                <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Esta Semana</h3>
                 <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                   <Package className="w-5 h-5 text-blue-600" />
                 </div>
               </div>
               <p className="text-2xl font-bold text-blue-600">{formatCurrency(ingresosSemana)}</p>
-              <p className="text-xs text-gray-500 mt-1">{ventasSemana.length} ventas</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{ventasSemana.length} ventas</p>
             </div>
           </div>
         )}
@@ -231,58 +231,58 @@ export function VentasProductosPage() {
         {loading ? (
           <TableSkeleton rows={10} columns={7} />
         ) : ventas.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-8 text-center">
-            <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-600 font-medium mb-2">No hay ventas registradas</p>
-            <p className="text-sm text-gray-500">Comienza registrando tu primera venta</p>
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-8 text-center">
+            <ShoppingCart className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+            <p className="text-gray-600 dark:text-gray-400 font-medium mb-2">No hay ventas registradas</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Comienza registrando tu primera venta</p>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow overflow-hidden">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-900">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Producto
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Cliente
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Cantidad
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Total
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Entrega
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Estado
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Método
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Fecha
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-gray-950 divide-y divide-gray-200 dark:divide-gray-700">
                 {ventas.map((venta) => (
-                  <tr key={venta.id} className="hover:bg-gray-50 transition">
+                  <tr key={venta.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{venta.producto.nombre}</div>
-                      {venta.nota && <div className="text-sm text-gray-500">{venta.nota}</div>}
+                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{venta.producto.nombre}</div>
+                      {venta.nota && <div className="text-sm text-gray-500 dark:text-gray-400">{venta.nota}</div>}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-gray-600 dark:text-gray-400">
                         {venta.cliente
                           ? `${venta.cliente.nombre} ${venta.cliente.apellido}`
                           : 'Venta directa'}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{venta.cantidad}</div>
+                      <div className="text-sm text-gray-900 dark:text-gray-100">{venta.cantidad}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-bold text-purple-600">{formatCurrency(venta.total)}</div>
@@ -294,14 +294,14 @@ export function VentasProductosPage() {
                         ) : venta.tipoEntrega === 'retiro' ? (
                           <Store className="w-4 h-4 text-green-600" />
                         ) : (
-                          <Package className="w-4 h-4 text-gray-400" />
+                          <Package className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                         )}
-                        <span className="text-sm text-gray-600 ml-1">
+                        <span className="text-sm text-gray-600 dark:text-gray-400 ml-1">
                           {venta.tipoEntrega === 'domicilio' ? 'Domicilio' : venta.tipoEntrega === 'retiro' ? 'Retiro' : '-'}
                         </span>
                       </div>
                       {venta.tipoEntrega === 'domicilio' && venta.direccion && (
-                        <div className="text-xs text-gray-400 mt-1">{venta.direccion}, {venta.ciudad}</div>
+                        <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">{venta.direccion}, {venta.ciudad}</div>
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -318,16 +318,16 @@ export function VentasProductosPage() {
                           <option value="cancelado">Cancelado</option>
                         </select>
                       ) : (
-                        <span className="text-sm text-gray-500">-</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">-</span>
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-medium text-gray-900">
+                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                         {getMetodoPagoLabel(venta.metodoPago)}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-600">{formatDate(venta.fechaVenta)}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">{formatDate(venta.fechaVenta)}</div>
                     </td>
                   </tr>
                 ))}

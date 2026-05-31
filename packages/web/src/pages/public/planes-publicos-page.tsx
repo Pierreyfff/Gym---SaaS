@@ -35,7 +35,7 @@ export function PlanesPublicosPage() {
     return (
       <PublicLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-pulse text-gray-600">Cargando planes...</div>
+          <div className="animate-pulse text-gray-600 dark:text-gray-400">Cargando planes...</div>
         </div>
       </PublicLayout>
     );
@@ -71,11 +71,11 @@ export function PlanesPublicosPage() {
       </section>
 
       {/* Planes */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {planes.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-gray-600 text-xl">No hay planes disponibles en este momento</p>
+              <p className="text-gray-600 dark:text-gray-400 text-xl">No hay planes disponibles en este momento</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -108,7 +108,7 @@ export function PlanesPublicosPage() {
                     <div className="p-8">
                       {/* Header del plan */}
                       <div className="text-center mb-8">
-                        <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                        <h3 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                           {plan.nombre}
                         </h3>
                         
@@ -120,14 +120,14 @@ export function PlanesPublicosPage() {
                           >
                             {formatCurrency(Number(plan.precio))}
                           </span>
-                          <span className="text-gray-600 text-lg ml-2">
+                          <span className="text-gray-600 dark:text-gray-400 text-lg ml-2">
                             / {plan.duracionDias} días
                           </span>
                         </div>
 
                         {/* Descripción */}
                         {plan.descripcion && (
-                          <p className="text-gray-600 min-h-[48px] leading-relaxed">
+                          <p className="text-gray-600 dark:text-gray-400 min-h-[48px] leading-relaxed">
                             {plan.descripcion}
                           </p>
                         )}
@@ -153,7 +153,7 @@ export function PlanesPublicosPage() {
                                 style={{ color: colorPrimario }}
                               />
                             </div>
-                            <span className="text-gray-700 leading-relaxed">{feature}</span>
+                            <span className="text-gray-700 dark:text-gray-300 leading-relaxed">{feature}</span>
                           </div>
                         ))}
                       </div>
@@ -205,11 +205,11 @@ export function PlanesPublicosPage() {
 
           {/* CTA Final */}
           <div className="mt-20 text-center">
-            <div className="bg-white rounded-2xl shadow-xl p-12 max-w-3xl mx-auto">
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">
+            <div className="bg-white dark:bg-gray-950 rounded-2xl shadow-xl p-12 max-w-3xl mx-auto">
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                 ¿No estás seguro cuál plan elegir?
               </h3>
-              <p className="text-gray-600 text-lg mb-8">
+              <p className="text-gray-600 dark:text-gray-400 text-lg mb-8">
                 Contáctanos y te ayudaremos a encontrar el plan perfecto para tus objetivos
               </p>
               <Link

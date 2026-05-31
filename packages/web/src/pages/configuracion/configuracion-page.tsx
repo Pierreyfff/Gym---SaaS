@@ -295,29 +295,29 @@ export function ConfiguracionPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Cargando configuración...</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Cargando configuración...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/dashboard')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               Configuración del Gimnasio
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}
             </span>
           </div>
@@ -326,7 +326,7 @@ export function ConfiguracionPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Tabs */}
-        <div className="bg-white rounded-lg shadow mb-6 overflow-x-auto">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow mb-6 overflow-x-auto">
           <div className="flex border-b">
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -337,7 +337,7 @@ export function ConfiguracionPage() {
                   className={`flex items-center gap-2 px-6 py-4 font-medium transition whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'border-b-2 border-green-600 text-green-600'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -351,10 +351,10 @@ export function ConfiguracionPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* TAB: Información Básica */}
           {activeTab === 'basico' && (
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center gap-3 mb-6">
                 <Building2 className="w-6 h-6 text-green-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Información Básica
                 </h2>
               </div>
@@ -363,7 +363,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="nombreNegocio"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Nombre del Gimnasio
                   </label>
@@ -373,7 +373,7 @@ export function ConfiguracionPage() {
                     name="nombreNegocio"
                     value={formData.nombreNegocio}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="Ej: Gimnasio PowerFit"
                   />
                 </div>
@@ -381,7 +381,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="logoUrl"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     URL del Logo
                   </label>
@@ -391,7 +391,7 @@ export function ConfiguracionPage() {
                     name="logoUrl"
                     value={formData.logoUrl}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="https://ejemplo.com/logo.png"
                   />
                 </div>
@@ -399,7 +399,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="colorPrimario"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Color Primario
                   </label>
@@ -410,7 +410,7 @@ export function ConfiguracionPage() {
                       name="colorPrimario"
                       value={formData.colorPrimario}
                       onChange={handleChange}
-                      className="h-10 w-20 border border-gray-300 rounded cursor-pointer"
+                      className="h-10 w-20 border border-gray-300 dark:border-gray-600 rounded cursor-pointer"
                     />
                     <input
                       type="text"
@@ -421,7 +421,7 @@ export function ConfiguracionPage() {
                           colorPrimario: e.target.value,
                         })
                       }
-                      className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -429,7 +429,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="colorSecundario"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Color Secundario
                   </label>
@@ -440,7 +440,7 @@ export function ConfiguracionPage() {
                       name="colorSecundario"
                       value={formData.colorSecundario}
                       onChange={handleChange}
-                      className="h-10 w-20 border border-gray-300 rounded cursor-pointer"
+                      className="h-10 w-20 border border-gray-300 dark:border-gray-600 rounded cursor-pointer"
                     />
                     <input
                       type="text"
@@ -451,7 +451,7 @@ export function ConfiguracionPage() {
                           colorSecundario: e.target.value,
                         })
                       }
-                      className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -461,10 +461,10 @@ export function ConfiguracionPage() {
 
           {/* TAB: Horarios */}
           {activeTab === 'horarios' && (
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center gap-3 mb-6">
                 <Clock className="w-6 h-6 text-green-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Horarios
                 </h2>
               </div>
@@ -473,7 +473,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="horarioApertura"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Hora de Apertura
                   </label>
@@ -483,14 +483,14 @@ export function ConfiguracionPage() {
                     name="horarioApertura"
                     value={formData.horarioApertura}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="horarioCierre"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Hora de Cierre
                   </label>
@@ -500,13 +500,13 @@ export function ConfiguracionPage() {
                     name="horarioCierre"
                     value={formData.horarioCierre}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Días Laborales
                 </label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -518,7 +518,7 @@ export function ConfiguracionPage() {
                       className={`px-4 py-2 rounded-lg border-2 transition ${
                         formData.diasLaborales.includes(dia.value)
                           ? 'border-green-500 bg-green-50 text-green-700'
-                          : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
+                          : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 hover:border-gray-400'
                       }`}
                     >
                       {dia.label}
@@ -531,10 +531,10 @@ export function ConfiguracionPage() {
 
           {/* TAB: Contacto */}
           {activeTab === 'contacto' && (
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center gap-3 mb-6">
                 <Phone className="w-6 h-6 text-green-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Información de Contacto
                 </h2>
               </div>
@@ -543,7 +543,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="telefono"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Teléfono
                   </label>
@@ -553,7 +553,7 @@ export function ConfiguracionPage() {
                     name="telefono"
                     value={formData.telefono}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="+1 234 567 8900"
                   />
                 </div>
@@ -561,7 +561,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Email
                   </label>
@@ -571,7 +571,7 @@ export function ConfiguracionPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="info@gimnasio.com"
                   />
                 </div>
@@ -579,7 +579,7 @@ export function ConfiguracionPage() {
                 <div className="md:col-span-2">
                   <label
                     htmlFor="direccion"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Dirección
                   </label>
@@ -589,7 +589,7 @@ export function ConfiguracionPage() {
                     name="direccion"
                     value={formData.direccion}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="Calle Principal #123, Ciudad"
                   />
                 </div>
@@ -597,7 +597,7 @@ export function ConfiguracionPage() {
                 <div className="md:col-span-2">
                   <label
                     htmlFor="sitioweb"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Sitio Web
                   </label>
@@ -607,7 +607,7 @@ export function ConfiguracionPage() {
                     name="sitioweb"
                     value={formData.sitioweb}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="https://www.gimnasio.com"
                   />
                 </div>
@@ -617,10 +617,10 @@ export function ConfiguracionPage() {
 
           {/* TAB: Redes Sociales */}
           {activeTab === 'redes' && (
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center gap-3 mb-6">
                 <Share2 className="w-6 h-6 text-green-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Redes Sociales
                 </h2>
               </div>
@@ -629,7 +629,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="facebook"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Facebook
                   </label>
@@ -639,7 +639,7 @@ export function ConfiguracionPage() {
                     name="facebook"
                     value={formData.facebook}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="https://facebook.com/gimnasio"
                   />
                 </div>
@@ -647,7 +647,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="instagram"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Instagram
                   </label>
@@ -657,7 +657,7 @@ export function ConfiguracionPage() {
                     name="instagram"
                     value={formData.instagram}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="@gimnasio"
                   />
                 </div>
@@ -665,7 +665,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="twitter"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Twitter / X
                   </label>
@@ -675,7 +675,7 @@ export function ConfiguracionPage() {
                     name="twitter"
                     value={formData.twitter}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="@gimnasio"
                   />
                 </div>
@@ -683,7 +683,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="whatsapp"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     WhatsApp
                   </label>
@@ -693,7 +693,7 @@ export function ConfiguracionPage() {
                     name="whatsapp"
                     value={formData.whatsapp}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="+1 234 567 8900"
                   />
                 </div>
@@ -701,7 +701,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="youtube"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     YouTube
                   </label>
@@ -711,7 +711,7 @@ export function ConfiguracionPage() {
                     name="youtube"
                     value={formData.youtube}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="https://youtube.com/@gimnasio"
                   />
                 </div>
@@ -719,7 +719,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="tiktok"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     TikTok
                   </label>
@@ -729,7 +729,7 @@ export function ConfiguracionPage() {
                     name="tiktok"
                     value={formData.tiktok}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="@gimnasio"
                   />
                 </div>
@@ -739,10 +739,10 @@ export function ConfiguracionPage() {
 
           {/* TAB: Imágenes */}
           {activeTab === 'imagenes' && (
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center gap-3 mb-6">
                 <ImageIcon className="w-6 h-6 text-green-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Imágenes de la Web
                 </h2>
               </div>
@@ -752,11 +752,11 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="imagenHero"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Imagen Principal (Hero)
                   </label>
-                  <p className="text-xs text-gray-500 mb-2">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                     Esta imagen se mostrará en la parte superior de la página de
                     inicio
                   </p>
@@ -766,7 +766,7 @@ export function ConfiguracionPage() {
                     name="imagenHero"
                     value={formData.imagenHero}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="https://ejemplo.com/hero.jpg"
                   />
                   {formData.imagenHero && (
@@ -786,10 +786,10 @@ export function ConfiguracionPage() {
 
                 {/* Carrusel */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Carrusel de Imágenes (Máximo 4)
                   </label>
-                  <p className="text-xs text-gray-500 mb-2">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                     Estas imágenes rotarán automáticamente en el inicio de la
                     página web
                   </p>
@@ -799,7 +799,7 @@ export function ConfiguracionPage() {
                     {formData.imagenesCarrusel.map((url, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-2 p-2 border border-gray-200 rounded-lg"
+                        className="flex items-center gap-2 p-2 border border-gray-200 dark:border-gray-700 rounded-lg"
                       >
                         <img
                           src={url}
@@ -811,10 +811,10 @@ export function ConfiguracionPage() {
                           }}
                         />
                         <div className="flex-1">
-                          <p className="text-sm text-gray-600 truncate">
+                          <p className="text-sm text-gray-600 dark:text-gray-400 truncate">
                             {url}
                           </p>
-                          <p className="text-xs text-gray-400">
+                          <p className="text-xs text-gray-400 dark:text-gray-500">
                             Imagen {index + 1}
                           </p>
                         </div>
@@ -836,7 +836,7 @@ export function ConfiguracionPage() {
                         type="text"
                         value={newImagenCarrusel}
                         onChange={(e) => setNewImagenCarrusel(e.target.value)}
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         placeholder="https://ejemplo.com/imagen.jpg"
                       />
                       <button
@@ -856,10 +856,10 @@ export function ConfiguracionPage() {
 
           {/* TAB: Textos */}
           {activeTab === 'textos' && (
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center gap-3 mb-6">
                 <FileText className="w-6 h-6 text-green-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Textos de la Web
                 </h2>
               </div>
@@ -868,11 +868,11 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="descripcionCorta"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Descripción Corta
                   </label>
-                  <p className="text-xs text-gray-500 mb-2">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                     Se mostrará en la sección hero y meta description (máx. 160
                     caracteres)
                   </p>
@@ -883,10 +883,10 @@ export function ConfiguracionPage() {
                     onChange={handleChange}
                     rows={2}
                     maxLength={160}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
                     placeholder="El mejor gimnasio de la ciudad..."
                   />
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                     {formData.descripcionCorta.length}/160 caracteres
                   </p>
                 </div>
@@ -894,11 +894,11 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="descripcionLarga"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Descripción Larga (Nosotros)
                   </label>
-                  <p className="text-xs text-gray-500 mb-2">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                     Descripción completa del gimnasio para la página "Nosotros"
                   </p>
                   <textarea
@@ -907,7 +907,7 @@ export function ConfiguracionPage() {
                     value={formData.descripcionLarga}
                     onChange={handleChange}
                     rows={6}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
                     placeholder="Somos un gimnasio fundado en..."
                   />
                 </div>
@@ -915,11 +915,11 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="misionVision"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Misión y Visión
                   </label>
-                  <p className="text-xs text-gray-500 mb-2">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                     Describe la misión y visión de tu gimnasio
                   </p>
                   <textarea
@@ -928,7 +928,7 @@ export function ConfiguracionPage() {
                     value={formData.misionVision}
                     onChange={handleChange}
                     rows={6}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
                     placeholder="Misión: Transformar vidas...&#10;Visión: Ser el gimnasio líder..."
                   />
                 </div>
@@ -938,10 +938,10 @@ export function ConfiguracionPage() {
 
           {/* TAB: Ubicación */}
           {activeTab === 'ubicacion' && (
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center gap-3 mb-6">
                 <MapPin className="w-6 h-6 text-green-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Ubicación (Google Maps)
                 </h2>
               </div>
@@ -963,7 +963,7 @@ export function ConfiguracionPage() {
                   <div>
                     <label
                       htmlFor="mapaLatitud"
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                     >
                       Latitud
                     </label>
@@ -973,7 +973,7 @@ export function ConfiguracionPage() {
                       name="mapaLatitud"
                       value={formData.mapaLatitud}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       placeholder="-12.046373"
                     />
                   </div>
@@ -981,7 +981,7 @@ export function ConfiguracionPage() {
                   <div>
                     <label
                       htmlFor="mapaLongitud"
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                     >
                       Longitud
                     </label>
@@ -991,7 +991,7 @@ export function ConfiguracionPage() {
                       name="mapaLongitud"
                       value={formData.mapaLongitud}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       placeholder="-77.042755"
                     />
                   </div>
@@ -999,7 +999,7 @@ export function ConfiguracionPage() {
 
                 {formData.mapaLatitud && formData.mapaLongitud && (
                   <div className="mt-4">
-                    <p className="text-sm font-medium text-gray-700 mb-2">
+                    <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Vista previa:
                     </p>
                     <iframe
@@ -1019,10 +1019,10 @@ export function ConfiguracionPage() {
 
           {/* TAB: Políticas */}
           {activeTab === 'politicas' && (
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center gap-3 mb-6">
                 <FileText className="w-6 h-6 text-green-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Políticas y Términos
                 </h2>
               </div>
@@ -1031,7 +1031,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="politicaCancelacion"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Política de Cancelación
                   </label>
@@ -1041,7 +1041,7 @@ export function ConfiguracionPage() {
                     value={formData.politicaCancelacion}
                     onChange={handleChange}
                     rows={6}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
                     placeholder="Describe tu política de cancelación..."
                   />
                 </div>
@@ -1049,7 +1049,7 @@ export function ConfiguracionPage() {
                 <div>
                   <label
                     htmlFor="terminosCondiciones"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Términos y Condiciones
                   </label>
@@ -1059,7 +1059,7 @@ export function ConfiguracionPage() {
                     value={formData.terminosCondiciones}
                     onChange={handleChange}
                     rows={6}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
                     placeholder="Describe tus términos y condiciones..."
                   />
                 </div>
@@ -1069,16 +1069,16 @@ export function ConfiguracionPage() {
 
           {/* TAB: Notificaciones */}
           {activeTab === 'notificaciones' && (
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center gap-3 mb-6">
                 <Bell className="w-6 h-6 text-green-600" />
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                   Notificaciones por Email
                 </h2>
               </div>
 
               <div className="space-y-3">
-                <label className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
                   <input
                     type="checkbox"
                     name="notificarBienvenida"
@@ -1087,16 +1087,16 @@ export function ConfiguracionPage() {
                     className="w-5 h-5 text-green-600 rounded focus:ring-2 focus:ring-green-500"
                   />
                   <div>
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-gray-900 dark:text-gray-100">
                       Email de Bienvenida
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       Enviar email cuando se crea un nuevo cliente
                     </p>
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
                   <input
                     type="checkbox"
                     name="notificarRenovacion"
@@ -1105,16 +1105,16 @@ export function ConfiguracionPage() {
                     className="w-5 h-5 text-green-600 rounded focus:ring-2 focus:ring-green-500"
                   />
                   <div>
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-gray-900 dark:text-gray-100">
                       Confirmación de Renovación
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       Enviar email cuando se renueva una membresía
                     </p>
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
                   <input
                     type="checkbox"
                     name="notificarVencimiento7Dias"
@@ -1123,16 +1123,16 @@ export function ConfiguracionPage() {
                     className="w-5 h-5 text-green-600 rounded focus:ring-2 focus:ring-green-500"
                   />
                   <div>
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-gray-900 dark:text-gray-100">
                       Alerta 7 días antes del vencimiento
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       Notificar cuando falten 7 días para que venza la membresía
                     </p>
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
                   <input
                     type="checkbox"
                     name="notificarVencimiento3Dias"
@@ -1141,16 +1141,16 @@ export function ConfiguracionPage() {
                     className="w-5 h-5 text-green-600 rounded focus:ring-2 focus:ring-green-500"
                   />
                   <div>
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-gray-900 dark:text-gray-100">
                       Alerta 3 días antes del vencimiento
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       Notificar cuando falten 3 días para que venza la membresía
                     </p>
                   </div>
                 </label>
 
-                <label className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <label className="flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
                   <input
                     type="checkbox"
                     name="notificarVencimiento1Dia"
@@ -1159,10 +1159,10 @@ export function ConfiguracionPage() {
                     className="w-5 h-5 text-green-600 rounded focus:ring-2 focus:ring-green-500"
                   />
                   <div>
-                    <p className="font-medium text-gray-900">
+                    <p className="font-medium text-gray-900 dark:text-gray-100">
                       Alerta 1 día antes del vencimiento
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       Notificar cuando falte 1 día para que venza la membresía
                     </p>
                   </div>
@@ -1176,7 +1176,7 @@ export function ConfiguracionPage() {
             <button
               type="button"
               onClick={() => navigate('/dashboard')}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition"
+              className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium transition"
               disabled={saving}
             >
               Cancelar

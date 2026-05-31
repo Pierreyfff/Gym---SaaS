@@ -155,20 +155,20 @@ export function AsistenciasPage() {
   ).length;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/dashboard')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Check-in de Asistencias</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Check-in de Asistencias</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {currentUser?.nombre} {currentUser?.apellido}
             </span>
           </div>
@@ -208,7 +208,7 @@ export function AsistenciasPage() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="bg-white rounded-lg shadow p-6">
+              <div key={i} className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
                 <div className="flex items-center justify-between mb-3">
                   <Skeleton className="h-4 w-20" />
                   <Skeleton className="h-10 w-10 rounded-full" />
@@ -219,19 +219,19 @@ export function AsistenciasPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-medium text-gray-600">Total</h3>
+                <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total</h3>
                 <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                   <UserCheck className="w-5 h-5 text-blue-600" />
                 </div>
               </div>
-              <p className="text-3xl font-bold text-gray-900">{asistencias.length}</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{asistencias.length}</p>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-medium text-gray-600">Hoy</h3>
+                <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Hoy</h3>
                 <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
                   <Calendar className="w-5 h-5 text-green-600" />
                 </div>
@@ -239,9 +239,9 @@ export function AsistenciasPage() {
               <p className="text-3xl font-bold text-green-600">{asistenciasHoy}</p>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-medium text-gray-600">Esta Semana</h3>
+                <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Esta Semana</h3>
                 <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
                   <Calendar className="w-5 h-5 text-purple-600" />
                 </div>
@@ -249,9 +249,9 @@ export function AsistenciasPage() {
               <p className="text-3xl font-bold text-purple-600">{asistenciasSemana}</p>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-medium text-gray-600">Este Mes</h3>
+                <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Este Mes</h3>
                 <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
                   <Calendar className="w-5 h-5 text-orange-600" />
                 </div>
@@ -263,10 +263,10 @@ export function AsistenciasPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Check-in rápido */}
-          <div className="bg-white rounded-lg shadow">
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow">
             <div className="p-6 border-b">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-gray-900">Check-in Rápido</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Check-in Rápido</h2>
                 <button
                   onClick={loadClientesElegibles}
                   disabled={loadingClientes}
@@ -291,13 +291,13 @@ export function AsistenciasPage() {
               </div>
 
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Buscar cliente por nombre o email..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-lg"
                   autoFocus
                 />
               </div>
@@ -321,17 +321,17 @@ export function AsistenciasPage() {
                 <div className="p-8 text-center">
                   {clientesElegibles.length === 0 ? (
                     <>
-                      <CheckCircle className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                      <p className="text-gray-600 font-medium mb-2">No hay clientes elegibles</p>
-                      <p className="text-sm text-gray-500">
+                      <CheckCircle className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+                      <p className="text-gray-600 dark:text-gray-400 font-medium mb-2">No hay clientes elegibles</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         Todos los clientes ya marcaron entrada hoy o no tienen membresía activa
                       </p>
                     </>
                   ) : (
                     <>
-                      <AlertCircle className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                      <p className="text-gray-600 font-medium">No se encontraron resultados</p>
-                      <p className="text-sm text-gray-500">Intenta con otro término de búsqueda</p>
+                      <AlertCircle className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+                      <p className="text-gray-600 dark:text-gray-400 font-medium">No se encontraron resultados</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Intenta con otro término de búsqueda</p>
                     </>
                   )}
                 </div>
@@ -340,11 +340,11 @@ export function AsistenciasPage() {
                   {filteredClientes.map((cliente) => (
                     <div
                       key={cliente.id}
-                      className="p-4 hover:bg-gray-50 transition flex items-center justify-between"
+                      className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition flex items-center justify-between"
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-1">
-                          <p className="font-semibold text-gray-900">
+                          <p className="font-semibold text-gray-900 dark:text-gray-100">
                             {cliente.nombre} {cliente.apellido}
                           </p>
                           <div className="flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-green-100 text-green-700">
@@ -352,8 +352,8 @@ export function AsistenciasPage() {
                             <span>Elegible</span>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-500">{cliente.email}</p>
-                        <p className="text-xs text-gray-400 mt-1">{cliente.plan.nombre}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{cliente.email}</p>
+                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{cliente.plan.nombre}</p>
                       </div>
 
                       <button
@@ -373,16 +373,16 @@ export function AsistenciasPage() {
           </div>
 
           {/* Historial de hoy */}
-          <div className="bg-white rounded-lg shadow">
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow">
             <div className="p-6 border-b">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                 Historial de Asistencias
               </h2>
               <input
                 type="date"
                 value={filterDate || today}
                 onChange={(e) => setFilterDate(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
             </div>
 
@@ -406,21 +406,21 @@ export function AsistenciasPage() {
                 </div>
               ) : filteredAsistencias.length === 0 ? (
                 <div className="p-8 text-center">
-                  <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                  <p className="text-gray-600 font-medium">
+                  <Calendar className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+                  <p className="text-gray-600 dark:text-gray-400 font-medium">
                     No hay asistencias{filterDate ? ' en esta fecha' : ' hoy'}
                   </p>
                 </div>
               ) : (
                 <div className="divide-y">
                   {filteredAsistencias.map((asistencia) => (
-                    <div key={asistencia.id} className="p-4 hover:bg-gray-50 transition">
+                    <div key={asistencia.id} className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="font-semibold text-gray-900">
+                          <p className="font-semibold text-gray-900 dark:text-gray-100">
                             {asistencia.cliente.nombre} {asistencia.cliente.apellido}
                           </p>
-                          <p className="text-sm text-gray-500">{asistencia.cliente.email}</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">{asistencia.cliente.email}</p>
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-semibold text-green-600">
@@ -429,7 +429,7 @@ export function AsistenciasPage() {
                               minute: '2-digit',
                             })}
                           </p>
-                          <p className="text-xs text-gray-400">
+                          <p className="text-xs text-gray-400 dark:text-gray-500">
                             {new Date(asistencia.marcaTiempo).toLocaleDateString('es-ES', {
                               day: '2-digit',
                               month: 'short',

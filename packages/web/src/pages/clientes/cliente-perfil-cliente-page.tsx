@@ -123,8 +123,8 @@ export function ClientePerfilClientePage() {
   if (loading || cargandoUsuario) {
     return (
       <PublicLayout>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="animate-pulse text-gray-600">Cargando perfil...</div>
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+          <div className="animate-pulse text-gray-600 dark:text-gray-400">Cargando perfil...</div>
         </div>
       </PublicLayout>
     );
@@ -132,12 +132,12 @@ export function ClientePerfilClientePage() {
 
   return (
     <PublicLayout>
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-6 flex items-center justify-between">
             <Link
               to="/cliente/dashboard"
-              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-600 transition"
+              className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600 transition"
             >
               <ArrowLeft className="w-4 h-4" />
               Volver al panel
@@ -146,7 +146,7 @@ export function ClientePerfilClientePage() {
               variant="ghost"
               size="sm"
               onClick={loadPerfil}
-              className="text-gray-500"
+              className="text-gray-500 dark:text-gray-400"
             >
               <RefreshCw className="w-4 h-4 mr-1" />
               Recargar
@@ -201,7 +201,7 @@ export function ClientePerfilClientePage() {
                       onChange={(e) => handleChange('nombre', e.target.value)}
                     />
                   ) : (
-                    <p className="text-lg font-semibold text-gray-900">
+                    <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                       {perfil.nombre || 'No registrado'}
                     </p>
                   )}
@@ -215,7 +215,7 @@ export function ClientePerfilClientePage() {
                       onChange={(e) => handleChange('apellido', e.target.value)}
                     />
                   ) : (
-                    <p className="text-lg font-semibold text-gray-900">
+                    <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                       {perfil.apellido || 'No registrado'}
                     </p>
                   )}
@@ -230,7 +230,7 @@ export function ClientePerfilClientePage() {
                       onChange={(e) => handleChange('email', e.target.value)}
                     />
                   ) : (
-                    <p className="text-lg font-semibold text-gray-900">
+                    <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                       {perfil.email || 'No registrado'}
                     </p>
                   )}
@@ -244,7 +244,7 @@ export function ClientePerfilClientePage() {
                       onChange={(e) => handleChange('telefono', e.target.value)}
                     />
                   ) : (
-                    <p className="text-lg font-semibold text-gray-900">
+                    <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                       {perfil.telefono || 'No registrado'}
                     </p>
                   )}
@@ -261,7 +261,7 @@ export function ClientePerfilClientePage() {
                       }
                     />
                   ) : (
-                    <p className="text-lg font-semibold text-gray-900">
+                    <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                       {perfil.fechaNacimiento
                         ? new Date(
                             perfil.fechaNacimiento

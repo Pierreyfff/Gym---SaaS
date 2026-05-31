@@ -186,7 +186,7 @@ export function RegistroPage() {
                 onChange={handleChange}
                 disabled={isLoading}
               />
-              <p className="text-xs text-gray-500">Mínimo 6 caracteres</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Mínimo 6 caracteres</p>
             </div>
 
             <div className="space-y-2">
@@ -212,7 +212,7 @@ export function RegistroPage() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             ¿Ya tienes cuenta?{' '}
             <Link to="/login" className="text-primary hover:underline font-semibold">
               Inicia sesión

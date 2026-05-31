@@ -159,20 +159,20 @@ export function CategoriasPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg: px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/productos')}
-              className="text-gray-600 hover: text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover: text-gray-900 dark:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Categorías de Productos</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Categorías de Productos</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}
             </span>
           </div>
@@ -182,13 +182,13 @@ export function CategoriasPage() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg: px-8 py-8">
         {/* Formulario */}
         {showForm ?  (
-          <div className="bg-white rounded-lg shadow p-6 mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 mb-6">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
               {editingId ?  'Editar Categoría' : 'Nueva Categoría'}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Nombre *
                 </label>
                 <input
@@ -197,13 +197,13 @@ export function CategoriasPage() {
                   value={formData.nombre}
                   onChange={(e) => setFormData({ ...formData, nombre: e. target.value })}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Ej:  Suplementos"
                 />
               </div>
 
               <div>
-                <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Descripción
                 </label>
                 <textarea
@@ -211,7 +211,7 @@ export function CategoriasPage() {
                   value={formData. descripcion}
                   onChange={(e) => setFormData({ ... formData, descripcion: e. target.value })}
                   rows={2}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                   placeholder="Descripción opcional..."
                 />
               </div>
@@ -220,7 +220,7 @@ export function CategoriasPage() {
                 <button
                   type="button"
                   onClick={handleCancelForm}
-                  className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition"
+                  className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium transition"
                   disabled={saving}
                 >
                   <X className="w-4 h-4" />
@@ -251,23 +251,23 @@ export function CategoriasPage() {
 
         {/* Lista */}
         {loading ? (
-          <div className="bg-white rounded-lg shadow p-8 text-center">
-            <p className="text-gray-600">Cargando categorías... </p>
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-8 text-center">
+            <p className="text-gray-600 dark:text-gray-400">Cargando categorías... </p>
           </div>
         ) : categorias.length === 0 ?  (
-          <div className="bg-white rounded-lg shadow p-8 text-center">
-            <p className="text-gray-600">No hay categorías creadas</p>
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-8 text-center">
+            <p className="text-gray-600 dark:text-gray-400">No hay categorías creadas</p>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <ul className="divide-y divide-gray-200">
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow overflow-hidden">
+            <ul className="divide-y divide-gray-200 dark:divide-gray-700">
               {categorias.map((categoria) => (
-                <li key={categoria.id} className="p-4 hover:bg-gray-50 transition">
+                <li key={categoria.id} className="p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900">{categoria.nombre}</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-gray-100">{categoria.nombre}</h3>
                       {categoria.descripcion && (
-                        <p className="text-sm text-gray-600 mt-1">{categoria. descripcion}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{categoria. descripcion}</p>
                       )}
                     </div>
                     <div className="flex gap-2 ml-4">

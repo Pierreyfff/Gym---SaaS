@@ -101,8 +101,8 @@ export function LoginPage() {
     } catch (error: any) {
       toast({
         variant: 'destructive',
-        title: 'Error al iniciar sesion',
-        description: error.response?.data?.message || 'Credenciales invalidas',
+        title: 'Error al iniciar sesión',
+        description: error.response?.data?.message || 'Credenciales inválidas',
       });
     } finally {
       setIsLoading(false);
@@ -127,7 +127,7 @@ export function LoginPage() {
 
     toast({
       title: 'Email enviado',
-      description: 'Si la cuenta existe, recibiras un enlace de recuperacion',
+      description: 'Si la cuenta existe, recibirás un enlace de recuperación',
     });
 
     setIsRecoveryLoading(false);
@@ -160,9 +160,9 @@ export function LoginPage() {
           </CardTitle>
           <CardDescription className="text-center">
             {showRecovery
-              ? 'Recupera tu contrasena'
+              ? 'Recupera tu contraseña'
               : returnUrl === '/checkout'
-                ? 'Inicia sesion para completar tu compra'
+                ? 'Inicia sesión para completar tu compra'
                 : 'Ingresa tus credenciales para acceder'
             }
           </CardDescription>
@@ -194,7 +194,7 @@ export function LoginPage() {
                   ) : (
                     <KeyRound className="h-4 w-4" />
                   )}
-                  {isRecoveryLoading ? 'Enviando...' : 'Enviar enlace de recuperacion'}
+                  {isRecoveryLoading ? 'Enviando...' : 'Enviar enlace de recuperación'}
                 </Button>
 
                 <div className="text-center pt-2">
@@ -204,7 +204,7 @@ export function LoginPage() {
                     className="text-sm text-muted-foreground hover:text-primary inline-flex items-center gap-1.5 transition-colors"
                   >
                     <ArrowLeft className="h-3.5 w-3.5" />
-                    Volver al inicio de sesion
+                    Volver al inicio de sesión
                   </button>
                 </div>
               </form>
@@ -228,7 +228,7 @@ export function LoginPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password">Contrasena</Label>
+                  <Label htmlFor="password">Contraseña</Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
@@ -273,7 +273,7 @@ export function LoginPage() {
                     }}
                     className="text-sm text-primary hover:underline transition-all"
                   >
-                    Olvidaste tu contrasena?
+                    Olvidaste tu contraseña?
                   </button>
                 </div>
 
@@ -281,7 +281,7 @@ export function LoginPage() {
                   {isLoading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : null}
-                  {isLoading ? 'Iniciando sesion...' : 'Iniciar sesion'}
+                  {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
                 </Button>
               </form>
             )}

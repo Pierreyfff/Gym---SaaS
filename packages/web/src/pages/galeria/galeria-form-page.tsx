@@ -127,29 +127,29 @@ export function GaleriaFormPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Cargando...</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Cargando...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/galeria')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {isEditing ? 'Editar Imagen' : 'Agregar Imagen'}
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {currentUser?.nombre} {currentUser?.apellido}
             </span>
           </div>
@@ -157,15 +157,15 @@ export function GaleriaFormPage() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 space-y-6">
           <div className="flex items-center gap-3 mb-6">
             <ImageIcon className="w-6 h-6 text-pink-600" />
-            <h2 className="text-xl font-semibold text-gray-900">Información de la Imagen</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Información de la Imagen</h2>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 URL de la Imagen <span className="text-red-500">*</span>
               </label>
               <input
@@ -175,20 +175,20 @@ export function GaleriaFormPage() {
                 value={formData.url}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                 placeholder="https://ejemplo.com/imagen.jpg"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Ingresa la URL completa de la imagen
               </p>
             </div>
 
             {formData.url && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Vista Previa
                 </label>
-                <div className="border border-gray-200 rounded-lg p-2">
+                <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-2">
                   <img
                     src={formData.url}
                     alt="Preview"
@@ -202,7 +202,7 @@ export function GaleriaFormPage() {
             )}
 
             <div>
-              <label htmlFor="titulo" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="titulo" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Título (Opcional)
               </label>
               <input
@@ -211,13 +211,13 @@ export function GaleriaFormPage() {
                 name="titulo"
                 value={formData.titulo}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                 placeholder="Área de pesas"
               />
             </div>
 
             <div>
-              <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Descripción (Opcional)
               </label>
               <textarea
@@ -226,13 +226,13 @@ export function GaleriaFormPage() {
                 value={formData.descripcion}
                 onChange={handleChange}
                 rows={3}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-none"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-none"
                 placeholder="Vista del área de entrenamiento con pesas..."
               />
             </div>
 
             <div>
-              <label htmlFor="orden" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="orden" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Orden de Visualización
               </label>
               <input
@@ -242,9 +242,9 @@ export function GaleriaFormPage() {
                 value={formData.orden}
                 onChange={handleChange}
                 min="0"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 Menor número aparece primero en la galería
               </p>
             </div>
@@ -258,7 +258,7 @@ export function GaleriaFormPage() {
                   onChange={handleChange}
                   className="w-5 h-5 text-pink-600 rounded focus:ring-2 focus:ring-pink-500"
                 />
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Mostrar en la galería pública
                 </span>
               </label>
@@ -269,7 +269,7 @@ export function GaleriaFormPage() {
             <button
               type="button"
               onClick={() => navigate('/galeria')}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition"
+              className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium transition"
               disabled={saving}
             >
               Cancelar

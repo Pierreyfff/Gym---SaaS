@@ -94,14 +94,14 @@ export function ClientePerfilPage() {
   const getEstadoBadge = (estado: string) => {
     const badges: Record<string, string> = {
       activa: 'bg-green-100 text-green-800',
-      expirada: 'bg-gray-100 text-gray-800',
+      expirada: 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200',
       cancelada: 'bg-red-100 text-red-800',
       completado: 'bg-green-100 text-green-800',
       pendiente: 'bg-yellow-100 text-yellow-800',
       reembolsado: 'bg-red-100 text-red-800',
-      rechazado: 'bg-gray-100 text-gray-800',
+      rechazado: 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200',
     };
-    return badges[estado] || 'bg-gray-100 text-gray-800';
+    return badges[estado] || 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200';
   };
 
   const formatDate = (date: Date) => {
@@ -114,17 +114,17 @@ export function ClientePerfilPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Cargando perfil...</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Cargando perfil...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600 mb-4">No se pudo cargar el perfil del cliente</p>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">No se pudo cargar el perfil del cliente</p>
           <button
             onClick={loadPerfil}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition"
@@ -133,7 +133,7 @@ export function ClientePerfilPage() {
           </button>
           <button
             onClick={() => navigate('/clientes')}
-            className="ml-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2 rounded-lg transition"
+            className="ml-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 text-gray-700 dark:text-gray-300 font-semibold px-6 py-2 rounded-lg transition"
           >
             Volver
           </button>
@@ -147,23 +147,23 @@ export function ClientePerfilPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white shadow">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               <button
                 onClick={() => navigate('/clientes')}
-                className="text-gray-600 hover:text-gray-900 transition"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
               >
                 <ArrowLeft className="w-6 h-6" />
               </button>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {perfil.cliente.nombre} {perfil.cliente.apellido}
                 </h1>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   Cliente desde {formatDate(perfil.cliente.fechaCreacion)}
                 </p>
               </div>
@@ -181,16 +181,16 @@ export function ClientePerfilPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Información Personal */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Información Personal</h2>
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 mb-6">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Información Personal</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                 <Mail className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Email</p>
-                <p className="font-semibold text-gray-900">{perfil.cliente.email}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Email</p>
+                <p className="font-semibold text-gray-900 dark:text-gray-100">{perfil.cliente.email}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -198,8 +198,8 @@ export function ClientePerfilPage() {
                 <Phone className="w-5 h-5 text-green-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Teléfono</p>
-                <p className="font-semibold text-gray-900">{perfil.cliente.telefono || 'No registrado'}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Teléfono</p>
+                <p className="font-semibold text-gray-900 dark:text-gray-100">{perfil.cliente.telefono || 'No registrado'}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -207,8 +207,8 @@ export function ClientePerfilPage() {
                 <Calendar className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Fecha de Nacimiento</p>
-                <p className="font-semibold text-gray-900">
+                <p className="text-sm text-gray-600 dark:text-gray-400">Fecha de Nacimiento</p>
+                <p className="font-semibold text-gray-900 dark:text-gray-100">
                   {perfil.cliente.fechaNacimiento ? formatDate(perfil.cliente.fechaNacimiento) : 'No registrada'}
                 </p>
               </div>
@@ -223,7 +223,7 @@ export function ClientePerfilPage() {
             <div className="flex items-center justify-between mb-4">
               <CreditCard className="w-8 h-8" />
               {perfil.resumen.membresiaActiva && (
-                <span className="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm font-semibold">
+                <span className="px-3 py-1 bg-white dark:bg-gray-950 bg-opacity-20 rounded-full text-sm font-semibold">
                   {perfil.resumen.membresiaActiva.diasRestantes} días
                 </span>
               )}
@@ -254,8 +254,8 @@ export function ClientePerfilPage() {
         </div>
 
         {/* Gráfico de Asistencias */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Asistencias Mensuales</h2>
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 mb-6">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Asistencias Mensuales</h2>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={perfil.asistenciasMensuales}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -268,15 +268,15 @@ export function ClientePerfilPage() {
         </div>
 
         {/* Tabs */}
-        <div className="bg-white rounded-lg shadow">
-          <div className="border-b border-gray-200">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow">
+          <div className="border-b border-gray-200 dark:border-gray-700">
             <nav className="flex">
               <button
                 onClick={() => setTabActiva('membresias')}
                 className={`px-6 py-3 text-sm font-semibold border-b-2 transition ${
                   tabActiva === 'membresias'
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                    : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                 }`}
               >
                 Membresías ({perfil.membresias.length})
@@ -286,7 +286,7 @@ export function ClientePerfilPage() {
                 className={`px-6 py-3 text-sm font-semibold border-b-2 transition ${
                   tabActiva === 'pagos'
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                    : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                 }`}
               >
                 Pagos ({perfil.pagos.length})
@@ -296,7 +296,7 @@ export function ClientePerfilPage() {
                 className={`px-6 py-3 text-sm font-semibold border-b-2 transition ${
                   tabActiva === 'asistencias'
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                    : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                 }`}
               >
                 Asistencias ({perfil.asistencias.length})
@@ -306,7 +306,7 @@ export function ClientePerfilPage() {
                 className={`px-6 py-3 text-sm font-semibold border-b-2 transition ${
                   tabActiva === 'productos'
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                    : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                 }`}
               >
                 Productos ({perfil.ventasProductos.length})
@@ -319,38 +319,38 @@ export function ClientePerfilPage() {
             {tabActiva === 'membresias' && (
               <div className="space-y-4">
                 {perfil.membresias.length === 0 ? (
-                  <p className="text-gray-600 text-center py-8">No hay membresías registradas</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-center py-8">No hay membresías registradas</p>
                 ) : (
                   perfil.membresias.map((membresia) => (
                     <div
                       key={membresia.id}
-                      className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition"
+                      className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                     >
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <h3 className="font-bold text-gray-900">{membresia.plan.nombre}</h3>
+                            <h3 className="font-bold text-gray-900 dark:text-gray-100">{membresia.plan.nombre}</h3>
                             <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getEstadoBadge(membresia.estado)}`}>
                               {membresia.estado}
                             </span>
                           </div>
                           <div className="grid grid-cols-2 gap-4 text-sm">
                             <div>
-                              <p className="text-gray-600">Inicio</p>
-                              <p className="font-semibold text-gray-900">{formatDate(membresia.fechaInicio)}</p>
+                              <p className="text-gray-600 dark:text-gray-400">Inicio</p>
+                              <p className="font-semibold text-gray-900 dark:text-gray-100">{formatDate(membresia.fechaInicio)}</p>
                             </div>
                             <div>
-                              <p className="text-gray-600">Fin</p>
-                              <p className="font-semibold text-gray-900">{formatDate(membresia.fechaFin)}</p>
+                              <p className="text-gray-600 dark:text-gray-400">Fin</p>
+                              <p className="font-semibold text-gray-900 dark:text-gray-100">{formatDate(membresia.fechaFin)}</p>
                             </div>
                             <div>
-                              <p className="text-gray-600">Precio</p>
-                              <p className="font-semibold text-gray-900">{formatCurrency(membresia.plan.precio)}</p>
+                              <p className="text-gray-600 dark:text-gray-400">Precio</p>
+                              <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(membresia.plan.precio)}</p>
                             </div>
                             {membresia.estado === 'activa' && (
                               <div>
-                                <p className="text-gray-600">Días restantes</p>
-                                <p className="font-semibold text-gray-900">{membresia.diasRestantes}</p>
+                                <p className="text-gray-600 dark:text-gray-400">Días restantes</p>
+                                <p className="font-semibold text-gray-900 dark:text-gray-100">{membresia.diasRestantes}</p>
                               </div>
                             )}
                           </div>
@@ -366,12 +366,12 @@ export function ClientePerfilPage() {
             {tabActiva === 'pagos' && (
               <div className="space-y-4">
                 {perfil.pagos.length === 0 ? (
-                  <p className="text-gray-600 text-center py-8">No hay pagos registrados</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-center py-8">No hay pagos registrados</p>
                 ) : (
                   perfil.pagos.map((pago) => (
                     <div
                       key={pago.id}
-                      className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition"
+                      className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                     >
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
@@ -383,17 +383,17 @@ export function ClientePerfilPage() {
                           </div>
                           <div className="grid grid-cols-3 gap-4 text-sm">
                             <div>
-                              <p className="text-gray-600">Método</p>
-                              <p className="font-semibold text-gray-900 capitalize">{pago.metodoPago}</p>
+                              <p className="text-gray-600 dark:text-gray-400">Método</p>
+                              <p className="font-semibold text-gray-900 dark:text-gray-100 capitalize">{pago.metodoPago}</p>
                             </div>
                             <div>
-                              <p className="text-gray-600">Fecha</p>
-                              <p className="font-semibold text-gray-900">{formatDate(pago.fechaPago)}</p>
+                              <p className="text-gray-600 dark:text-gray-400">Fecha</p>
+                              <p className="font-semibold text-gray-900 dark:text-gray-100">{formatDate(pago.fechaPago)}</p>
                             </div>
                             {pago.membresia && (
                               <div>
-                                <p className="text-gray-600">Plan</p>
-                                <p className="font-semibold text-gray-900">{pago.membresia.planNombre}</p>
+                                <p className="text-gray-600 dark:text-gray-400">Plan</p>
+                                <p className="font-semibold text-gray-900 dark:text-gray-100">{pago.membresia.planNombre}</p>
                               </div>
                             )}
                           </div>
@@ -409,20 +409,20 @@ export function ClientePerfilPage() {
             {tabActiva === 'asistencias' && (
               <div className="space-y-2">
                 {perfil.asistencias.length === 0 ? (
-                  <p className="text-gray-600 text-center py-8">No hay asistencias registradas</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-center py-8">No hay asistencias registradas</p>
                 ) : (
                   perfil.asistencias.slice(0, 20).map((asistencia) => (
                     <div
                       key={asistencia.id}
-                      className="flex items-center justify-between border border-gray-200 rounded-lg p-3 hover:bg-gray-50 transition"
+                      className="flex items-center justify-between border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
                           <CheckCircle className="w-5 h-5 text-green-600" />
                         </div>
                         <div>
-                          <p className="font-semibold text-gray-900">{formatDate(asistencia.fechaHora)}</p>
-                          <p className="text-sm text-gray-600">
+                          <p className="font-semibold text-gray-900 dark:text-gray-100">{formatDate(asistencia.fechaHora)}</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
                             {new Date(asistencia.fechaHora).toLocaleTimeString('es-ES', {
                               hour: '2-digit',
                               minute: '2-digit',
@@ -440,31 +440,31 @@ export function ClientePerfilPage() {
             {tabActiva === 'productos' && (
               <div className="space-y-4">
                 {perfil.ventasProductos.length === 0 ? (
-                  <p className="text-gray-600 text-center py-8">No hay compras de productos registradas</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-center py-8">No hay compras de productos registradas</p>
                 ) : (
                   perfil.ventasProductos.map((venta) => (
                     <div
                       key={venta.id}
-                      className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition"
+                      className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                     >
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
-                          <h3 className="font-bold text-gray-900 mb-2">{venta.productoNombre}</h3>
+                          <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-2">{venta.productoNombre}</h3>
                           <div className="grid grid-cols-3 gap-4 text-sm">
                             <div>
-                              <p className="text-gray-600">Cantidad</p>
-                              <p className="font-semibold text-gray-900">{venta.cantidad}</p>
+                              <p className="text-gray-600 dark:text-gray-400">Cantidad</p>
+                              <p className="font-semibold text-gray-900 dark:text-gray-100">{venta.cantidad}</p>
                             </div>
                             <div>
-                              <p className="text-gray-600">Precio Unit.</p>
-                              <p className="font-semibold text-gray-900">{formatCurrency(venta.precioUnitario)}</p>
+                              <p className="text-gray-600 dark:text-gray-400">Precio Unit.</p>
+                              <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(venta.precioUnitario)}</p>
                             </div>
                             <div>
-                              <p className="text-gray-600">Total</p>
+                              <p className="text-gray-600 dark:text-gray-400">Total</p>
                               <p className="font-semibold text-blue-600">{formatCurrency(venta.total)}</p>
                             </div>
                           </div>
-                          <p className="text-xs text-gray-600 mt-2">{formatDate(venta.fechaVenta)}</p>
+                          <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">{formatDate(venta.fechaVenta)}</p>
                         </div>
                       </div>
                     </div>

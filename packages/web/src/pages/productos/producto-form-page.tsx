@@ -168,29 +168,29 @@ export function ProductoFormPage() {
 
   if (loadingData) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Cargando producto...</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Cargando producto...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/productos')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {isEdit ? 'Editar Producto' : 'Nuevo Producto'}
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}
             </span>
           </div>
@@ -200,7 +200,7 @@ export function ProductoFormPage() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <form
           onSubmit={handleSubmit}
-          className="bg-white rounded-lg shadow p-6 space-y-6"
+          className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 space-y-6"
         >
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Columna izquierda: Formulario */}
@@ -209,7 +209,7 @@ export function ProductoFormPage() {
               <div>
                 <label
                   htmlFor="nombre"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                 >
                   Nombre del Producto *
                 </label>
@@ -220,7 +220,7 @@ export function ProductoFormPage() {
                   value={formData.nombre}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="Ej: Proteína Whey 1kg"
                 />
               </div>
@@ -229,7 +229,7 @@ export function ProductoFormPage() {
               <div>
                 <label
                   htmlFor="descripcion"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                 >
                   Descripción
                 </label>
@@ -239,7 +239,7 @@ export function ProductoFormPage() {
                   value={formData.descripcion}
                   onChange={handleChange}
                   rows={3}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                   placeholder="Descripción del producto..."
                 />
               </div>
@@ -249,7 +249,7 @@ export function ProductoFormPage() {
                 <div>
                   <label
                     htmlFor="precio"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Precio *
                   </label>
@@ -262,7 +262,7 @@ export function ProductoFormPage() {
                     required
                     min="0"
                     step="0.01"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                     placeholder="0.00"
                   />
                 </div>
@@ -270,7 +270,7 @@ export function ProductoFormPage() {
                 <div>
                   <label
                     htmlFor="stock"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Stock *
                   </label>
@@ -282,7 +282,7 @@ export function ProductoFormPage() {
                     onChange={handleChange}
                     required
                     min="0"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                     placeholder="0"
                   />
                 </div>
@@ -290,7 +290,7 @@ export function ProductoFormPage() {
                 <div>
                   <label
                     htmlFor="stockMinimo"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Mínimo *
                   </label>
@@ -302,7 +302,7 @@ export function ProductoFormPage() {
                     onChange={handleChange}
                     required
                     min="0"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                     placeholder="5"
                   />
                 </div>
@@ -312,7 +312,7 @@ export function ProductoFormPage() {
               <div>
                 <label
                   htmlFor="categoriaId"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                 >
                   Categoría
                 </label>
@@ -321,7 +321,7 @@ export function ProductoFormPage() {
                   name="categoriaId"
                   value={formData.categoriaId}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
                   <option value="">Sin categoría</option>
                   {categorias.map((cat) => (
@@ -336,7 +336,7 @@ export function ProductoFormPage() {
               <div>
                 <label
                   htmlFor="imagenUrl"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                 >
                   URL de Imagen
                 </label>
@@ -346,10 +346,10 @@ export function ProductoFormPage() {
                   name="imagenUrl"
                   value={formData.imagenUrl}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="https://ejemplo.com/imagen.jpg"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                   Pega la URL completa de la imagen del producto
                 </p>
               </div>
@@ -359,7 +359,7 @@ export function ProductoFormPage() {
                 <div>
                   <label
                     htmlFor="estado"
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
                     Estado
                   </label>
@@ -368,7 +368,7 @@ export function ProductoFormPage() {
                     name="estado"
                     value={formData.estado}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   >
                     <option value="activo">Activo</option>
                     <option value="inactivo">Inactivo</option>
@@ -380,10 +380,10 @@ export function ProductoFormPage() {
             {/* Columna derecha: Preview de Imagen */}
             <div className="lg:col-span-1">
               <div className="sticky top-8">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Vista Previa
                 </label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg overflow-hidden bg-gray-50 aspect-square flex items-center justify-center">
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-900 aspect-square flex items-center justify-center">
                   {formData.imagenUrl && !imageError ? (
                     <img
                       src={formData.imagenUrl}
@@ -393,8 +393,8 @@ export function ProductoFormPage() {
                     />
                   ) : (
                     <div className="text-center p-6">
-                      <ImageIcon className="w-16 h-16 text-gray-400 mx-auto mb-2" />
-                      <p className="text-sm text-gray-500">
+                      <ImageIcon className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-2" />
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         {imageError
                           ? 'Error al cargar imagen'
                           : 'Sin imagen'}
@@ -411,7 +411,7 @@ export function ProductoFormPage() {
             <button
               type="button"
               onClick={() => navigate('/productos')}
-              className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition"
+              className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium transition"
               disabled={loading}
             >
               Cancelar

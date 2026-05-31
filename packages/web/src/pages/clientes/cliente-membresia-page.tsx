@@ -65,8 +65,8 @@ export function ClienteMembresiaPage() {
   if (loading) {
     return (
       <PublicLayout>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="animate-pulse text-gray-600">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+          <div className="animate-pulse text-gray-600 dark:text-gray-400">
             Cargando membresía...
           </div>
         </div>
@@ -76,12 +76,12 @@ export function ClienteMembresiaPage() {
 
   return (
     <PublicLayout>
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-6">
             <Link
               to="/cliente/dashboard"
-              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-600 transition"
+              className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600 transition"
             >
               <ArrowLeft className="w-4 h-4" />
               Volver al panel
@@ -97,8 +97,8 @@ export function ClienteMembresiaPage() {
             <CardContent>
               {!membresia ? (
                 <div className="text-center py-12">
-                  <AlertCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-600 text-lg mb-6">
+                  <AlertCircle className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+                  <p className="text-gray-600 dark:text-gray-400 text-lg mb-6">
                     No tienes una membresía activa
                   </p>
                   <Link to="/planes-publicos">
@@ -111,7 +111,7 @@ export function ClienteMembresiaPage() {
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-900">
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                         {membresia.plan.nombre}
                       </h3>
                       <p className="text-3xl font-bold text-purple-600 mt-2">
@@ -125,12 +125,12 @@ export function ClienteMembresiaPage() {
 
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Progreso</span>
-                      <span className="font-semibold text-gray-900">
+                      <span className="text-gray-600 dark:text-gray-400">Progreso</span>
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
                         {getProgressPercent()}%
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                       <div
                         className="bg-purple-600 h-3 rounded-full transition-all duration-500"
                         style={{ width: `${getProgressPercent()}%` }}
@@ -139,29 +139,29 @@ export function ClienteMembresiaPage() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-4">
+                    <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
                       <Calendar className="w-6 h-6 text-purple-600" />
                       <div>
-                        <p className="text-sm text-gray-600">Inicio</p>
-                        <p className="font-semibold text-gray-900">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Inicio</p>
+                        <p className="font-semibold text-gray-900 dark:text-gray-100">
                           {formatDate(membresia.fechaInicio)}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-4">
+                    <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
                       <Calendar className="w-6 h-6 text-purple-600" />
                       <div>
-                        <p className="text-sm text-gray-600">Fin</p>
-                        <p className="font-semibold text-gray-900">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Fin</p>
+                        <p className="font-semibold text-gray-900 dark:text-gray-100">
                           {formatDate(membresia.fechaFin)}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-4">
+                    <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
                       <Clock className="w-6 h-6 text-purple-600" />
                       <div>
-                        <p className="text-sm text-gray-600">Días restantes</p>
-                        <p className="font-semibold text-gray-900">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Días restantes</p>
+                        <p className="font-semibold text-gray-900 dark:text-gray-100">
                           {membresia.diasRestantes ?? '-'}
                         </p>
                       </div>

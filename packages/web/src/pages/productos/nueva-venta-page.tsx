@@ -160,20 +160,20 @@ export function NuevaVentaPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/ventas-productos')}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-2xl font-bold text-gray-900">Nueva Venta</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Nueva Venta</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}
             </span>
           </div>
@@ -183,9 +183,9 @@ export function NuevaVentaPage() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg: px-8 py-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Items de venta */}
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-900">Productos</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Productos</h2>
               <button
                 type="button"
                 onClick={handleAddItem}
@@ -205,14 +205,14 @@ export function NuevaVentaPage() {
                   <div key={index} className="flex gap-4 items-start p-4 border rounded-lg">
                     <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                           Producto
                         </label>
                         <select
                           value={item.productoId}
                           onChange={(e) => handleItemChange(index, 'productoId', e.target.value)}
                           required
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         >
                           <option value="">Seleccionar producto</option>
                           {productos.map((p) => (
@@ -224,7 +224,7 @@ export function NuevaVentaPage() {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                           Cantidad
                         </label>
                         <input
@@ -234,7 +234,7 @@ export function NuevaVentaPage() {
                           required
                           min="1"
                           max={producto?. stock || 999}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         />
                       </div>
                     </div>
@@ -250,7 +250,7 @@ export function NuevaVentaPage() {
                       </button>
                       {producto && (
                         <div className="text-right">
-                          <p className="text-xs text-gray-500">Subtotal</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Subtotal</p>
                           <p className="text-lg font-bold text-purple-600">{formatCurrency(subtotal)}</p>
                         </div>
                       )}
@@ -262,18 +262,18 @@ export function NuevaVentaPage() {
           </div>
 
           {/* Detalles de venta */}
-          <div className="bg-white rounded-lg shadow p-6 space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Detalles de la Venta</h2>
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 space-y-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Detalles de la Venta</h2>
 
             <div>
-              <label htmlFor="clienteId" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="clienteId" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Cliente (Opcional)
               </label>
               <select
                 id="clienteId"
                 value={clienteId}
                 onChange={(e) => setClienteId(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 <option value="">Venta directa (sin cliente)</option>
                 {clientes.map((c) => (
@@ -285,7 +285,7 @@ export function NuevaVentaPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 Tipo de Entrega
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -300,10 +300,10 @@ export function NuevaVentaPage() {
                     className={`p-4 border-2 rounded-lg transition text-center ${
                       tipoEntrega === tipo.value
                         ? 'border-purple-500 bg-purple-50'
-                        : 'border-gray-300 hover:border-gray-400'
+                        : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                     }`}
                   >
-                    <span className="text-sm font-semibold text-gray-700">{tipo.label}</span>
+                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{tipo.label}</span>
                   </button>
                 ))}
               </div>
@@ -312,7 +312,7 @@ export function NuevaVentaPage() {
             {tipoEntrega === 'domicilio' && (
               <>
                 <div>
-                  <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Teléfono de Contacto
                   </label>
                   <input
@@ -321,12 +321,12 @@ export function NuevaVentaPage() {
                     value={telefono}
                     onChange={(e) => setTelefono(e.target.value)}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                     placeholder="999 999 999"
                   />
                 </div>
                 <div>
-                  <label htmlFor="direccion" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="direccion" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Dirección
                   </label>
                   <input
@@ -334,13 +334,13 @@ export function NuevaVentaPage() {
                     value={direccion}
                     onChange={(e) => setDireccion(e.target.value)}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                     placeholder="Calle y número"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="ciudad" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="ciudad" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Ciudad
                     </label>
                     <input
@@ -348,19 +348,19 @@ export function NuevaVentaPage() {
                       value={ciudad}
                       onChange={(e) => setCiudad(e.target.value)}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       placeholder="Ciudad"
                     />
                   </div>
                   <div>
-                    <label htmlFor="codigoPostal" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="codigoPostal" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Código Postal
                     </label>
                     <input
                       id="codigoPostal"
                       value={codigoPostal}
                       onChange={(e) => setCodigoPostal(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       placeholder="12345"
                     />
                   </div>
@@ -369,7 +369,7 @@ export function NuevaVentaPage() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 Método de Pago
               </label>
               <div className="grid grid-cols-3 gap-3">
@@ -385,17 +385,17 @@ export function NuevaVentaPage() {
                     className={`p-4 border-2 rounded-lg transition text-center ${
                       metodoPago === metodo.value
                         ?  'border-purple-500 bg-purple-50'
-                        : 'border-gray-300 hover:border-gray-400'
+                        : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
                     }`}
                   >
-                    <span className="text-sm font-semibold text-gray-700">{metodo.label}</span>
+                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{metodo.label}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             <div>
-              <label htmlFor="nota" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="nota" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Nota (Opcional)
               </label>
               <textarea
@@ -403,16 +403,16 @@ export function NuevaVentaPage() {
                 value={nota}
                 onChange={(e) => setNota(e.target.value)}
                 rows={2}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
                 placeholder="Información adicional..."
               />
             </div>
           </div>
 
           {/* Total y botones */}
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
             <div className="flex justify-between items-center mb-6 pb-6 border-b">
-              <span className="text-lg font-semibold text-gray-900">Total a pagar:</span>
+              <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">Total a pagar:</span>
               <span className="text-3xl font-bold text-purple-600">{formatCurrency(calculateTotal())}</span>
             </div>
 
@@ -420,7 +420,7 @@ export function NuevaVentaPage() {
               <button
                 type="button"
                 onClick={() => navigate('/ventas-productos')}
-                className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition"
+                className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium transition"
                 disabled={loading}
               >
                 Cancelar

@@ -112,11 +112,11 @@ export function DashboardPage() {
     : [];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white shadow">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Gym SaaS</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Gym SaaS</h1>
           <div className="flex items-center gap-4">
             <Link
               to="/home"
@@ -125,7 +125,7 @@ export function DashboardPage() {
               <Globe className="w-4 h-4" />
               Ir a Página Web
             </Link>
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}{' '}
               <span className="font-medium">({user?.rol})</span>
             </span>
@@ -141,7 +141,7 @@ export function DashboardPage() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8">Dashboard</h2>
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-8">Dashboard</h2>
 
         {loading ? (
           <div className="space-y-8">
@@ -155,10 +155,10 @@ export function DashboardPage() {
 
             {/* Acceso Rápido Skeleton */}
             <div>
-              <div className="h-6 w-32 bg-gray-200 rounded mb-4 animate-pulse" />
+              <div className="h-6 w-32 bg-gray-200 dark:bg-gray-700 rounded mb-4 animate-pulse" />
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {Array.from({ length: 14 }).map((_, i) => (
-                  <div key={i} className="h-20 bg-gray-200 rounded-lg animate-pulse" />
+                  <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
                 ))}
               </div>
             </div>
@@ -199,7 +199,7 @@ export function DashboardPage() {
                     onClick={() => setFiltroIngresos('total')}
                     className={`px-2 py-1 text-xs rounded transition ${
                       filtroIngresos === 'total'
-                        ? 'bg-white text-green-600 font-semibold'
+                        ? 'bg-white dark:bg-gray-950 text-green-600 font-semibold'
                         : 'bg-green-600 text-white hover:bg-green-700'
                     }`}
                   >
@@ -209,7 +209,7 @@ export function DashboardPage() {
                     onClick={() => setFiltroIngresos('membresias')}
                     className={`px-2 py-1 text-xs rounded transition ${
                       filtroIngresos === 'membresias'
-                        ? 'bg-white text-green-600 font-semibold'
+                        ? 'bg-white dark:bg-gray-950 text-green-600 font-semibold'
                         : 'bg-green-600 text-white hover:bg-green-700'
                     }`}
                   >
@@ -219,7 +219,7 @@ export function DashboardPage() {
                     onClick={() => setFiltroIngresos('ventas')}
                     className={`px-2 py-1 text-xs rounded transition ${
                       filtroIngresos === 'ventas'
-                        ? 'bg-white text-green-600 font-semibold'
+                        ? 'bg-white dark:bg-gray-950 text-green-600 font-semibold'
                         : 'bg-green-600 text-white hover:bg-green-700'
                     }`}
                   >
@@ -269,86 +269,86 @@ export function DashboardPage() {
               {/* Clientes - Clickeable */}
               <button
                 onClick={() => navigate('/clientes')}
-                className="bg-white rounded-lg shadow p-6 text-left hover:shadow-xl transition-all hover:scale-105"
+                className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 text-left hover:shadow-xl transition-all hover:scale-105"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-medium text-gray-600">
+                  <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
                     Clientes
                   </h3>
                   <div className="flex items-center gap-2">
                     <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                       <Users className="w-5 h-5 text-blue-600" />
                     </div>
-                    <ArrowRight className="w-4 h-4 text-gray-400" />
+                    <ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                   {stats?.totalClientes || 0}
                 </p>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                   {stats?.clientesActivos || 0} activos
                 </p>
-                <p className="text-xs text-gray-400 mt-3 text-right">Click para gestionar →</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-3 text-right">Click para gestionar →</p>
               </button>
 
               {/* Membresías Activas - Clickeable */}
               <button
                 onClick={() => navigate('/membresias')}
-                className="bg-white rounded-lg shadow p-6 text-left hover:shadow-xl transition-all hover:scale-105"
+                className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 text-left hover:shadow-xl transition-all hover:scale-105"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-medium text-gray-600">
+                  <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
                     Membresías Activas
                   </h3>
                   <div className="flex items-center gap-2">
                     <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
                       <CreditCard className="w-5 h-5 text-orange-600" />
                     </div>
-                    <ArrowRight className="w-4 h-4 text-gray-400" />
+                    <ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                   {stats?.membresiasActivas || 0}
                 </p>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                   De {stats?.totalMembresias || 0} totales
                 </p>
-                <p className="text-xs text-gray-400 mt-3 text-right">Click para ver todas →</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-3 text-right">Click para ver todas →</p>
               </button>
 
               {/* Asistencias del Mes - Clickeable */}
               <button
                 onClick={() => navigate('/asistencias')}
-                className="bg-white rounded-lg shadow p-6 text-left hover:shadow-xl transition-all hover:scale-105"
+                className="bg-white dark:bg-gray-950 rounded-lg shadow p-6 text-left hover:shadow-xl transition-all hover:scale-105"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-medium text-gray-600">
+                  <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">
                     Asistencias del Mes
                   </h3>
                   <div className="flex items-center gap-2">
                     <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
                       <ClipboardCheck className="w-5 h-5 text-teal-600" />
                     </div>
-                    <ArrowRight className="w-4 h-4 text-gray-400" />
+                    <ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                   {stats?.asistenciasMesActual || 0}
                 </p>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                   <Calendar className="w-3 h-3 inline mr-1" />
                   {new Date().toLocaleDateString('es-ES', {
                     month: 'long',
                     year: 'numeric',
                   })}
                 </p>
-                <p className="text-xs text-gray-400 mt-3 text-right">Click para registrar →</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-3 text-right">Click para registrar →</p>
               </button>
             </div>
 
             {/* Acceso Rápido */}
             <div className="mb-10">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
                 Acceso Rápido
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4">
@@ -478,8 +478,8 @@ export function DashboardPage() {
             {/* Charts Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
               {/* Ingresos Mensuales */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                   Ingresos Mensuales (Últimos 6 meses)
                 </h3>
                 <ResponsiveContainer width="100%" height={300}>
@@ -507,8 +507,8 @@ export function DashboardPage() {
               </div>
 
               {/* Planes Más Vendidos */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                   Top 5 Planes Más Vendidos
                 </h3>
                 <ResponsiveContainer width="100%" height={300}>
@@ -528,8 +528,8 @@ export function DashboardPage() {
               </div>
 
               {/* Distribución de Membresías */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                   Distribución de Membresías
                 </h3>
                 <ResponsiveContainer width="100%" height={300}>
@@ -553,8 +553,8 @@ export function DashboardPage() {
               </div>
 
               {/* Asistencias por Mes */}
-              <div className="bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                   Asistencias por Mes (Últimos 6 meses)
                 </h3>
                 <ResponsiveContainer width="100%" height={300}>

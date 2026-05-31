@@ -84,24 +84,24 @@ export function ReembolsarPagoPanel({
 
       {/* Panel Lateral */}
       <div
-        className={`fixed inset-y-0 right-0 w-full sm:w-[500px] bg-white shadow-2xl z-50 overflow-y-auto transition-transform duration-200 ease-out ${
+        className={`fixed inset-y-0 right-0 w-full sm:w-[500px] bg-white dark:bg-gray-950 shadow-2xl z-50 overflow-y-auto transition-transform duration-200 ease-out ${
           isVisible ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center z-10">
+        <div className="sticky top-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex justify-between items-center z-10">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
               <AlertTriangle className="w-6 h-6 text-red-600" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-gray-900">Reembolsar Pago</h2>
-              <p className="text-sm text-gray-600">Esta acción no se puede deshacer</p>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Reembolsar Pago</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Esta acción no se puede deshacer</p>
             </div>
           </div>
           <button
             onClick={handleClose}
-            className="text-gray-400 hover:text-gray-600 transition p-2 hover:bg-gray-100 rounded-lg"
+            className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
             disabled={loading}
           >
             <X className="w-6 h-6" />
@@ -114,11 +114,11 @@ export function ReembolsarPagoPanel({
           <div className="bg-red-50 border-2 border-red-200 rounded-lg p-6">
             <div className="flex items-center gap-2 mb-3">
               <DollarSign className="w-6 h-6 text-red-600" />
-              <span className="font-semibold text-gray-900 text-lg">Monto a reembolsar</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Monto a reembolsar</span>
             </div>
             <p className="text-4xl font-bold text-red-600 mb-3">{formatCurrency(monto)}</p>
             <div className="pt-3 border-t border-red-200">
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
                 <span className="font-medium">Cliente:</span> {clienteNombre}
               </p>
             </div>
@@ -126,13 +126,13 @@ export function ReembolsarPagoPanel({
 
           {/* Motivo del reembolso */}
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
+            <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
               Motivo del Reembolso <span className="text-red-600">*</span>
             </label>
             <select
               value={formData.motivo}
               onChange={(e) => setFormData({ ...formData, motivo: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition"
               required
             >
               <option value="">Seleccionar motivo</option>
@@ -147,14 +147,14 @@ export function ReembolsarPagoPanel({
 
           {/* Notas adicionales */}
           <div>
-            <label className="block text-sm font-semibold text-gray-900 mb-2">
-              Notas Adicionales <span className="text-gray-500 font-normal">(opcional)</span>
+            <label className="block text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              Notas Adicionales <span className="text-gray-500 dark:text-gray-400 font-normal">(opcional)</span>
             </label>
             <textarea
               value={formData.notas}
               onChange={(e) => setFormData({ ...formData, notas: e.target.value })}
               rows={5}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none transition"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none transition"
               placeholder="Detalles adicionales sobre el reembolso..."
             />
           </div>
@@ -175,11 +175,11 @@ export function ReembolsarPagoPanel({
           </div>
 
           {/* Botones */}
-          <div className="flex gap-3 pt-4 border-t sticky bottom-0 bg-white">
+          <div className="flex gap-3 pt-4 border-t sticky bottom-0 bg-white dark:bg-gray-950">
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition"
+              className="flex-1 px-6 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition"
               disabled={loading}
             >
               Cancelar

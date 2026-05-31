@@ -56,7 +56,7 @@ export function PublicFooter() {
             <h3 className="text-2xl font-bold mb-4" style={{ color: colorPrimario }}>
               {config?.nombreNegocio || 'GymSaaS'}
             </h3>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            <p className="text-gray-400 dark:text-gray-500 text-sm leading-relaxed mb-6">
               {config?.descripcionCorta || 'El mejor gimnasio de la ciudad con entrenadores certificados'}
             </p>
             
@@ -98,7 +98,7 @@ export function PublicFooter() {
               <li>
                 <Link 
                   to="/home" 
-                  className="text-gray-400 hover:text-white transition text-sm flex items-center gap-2"
+                  className="text-gray-400 dark:text-gray-500 hover:text-white transition text-sm flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: colorPrimario }} />
                   Inicio
@@ -107,7 +107,7 @@ export function PublicFooter() {
               <li>
                 <Link 
                   to="/nosotros" 
-                  className="text-gray-400 hover:text-white transition text-sm flex items-center gap-2"
+                  className="text-gray-400 dark:text-gray-500 hover:text-white transition text-sm flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: colorPrimario }} />
                   Nosotros
@@ -116,7 +116,7 @@ export function PublicFooter() {
               <li>
                 <Link 
                   to="/planes-publicos" 
-                  className="text-gray-400 hover:text-white transition text-sm flex items-center gap-2"
+                  className="text-gray-400 dark:text-gray-500 hover:text-white transition text-sm flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: colorPrimario }} />
                   Planes
@@ -125,7 +125,7 @@ export function PublicFooter() {
               <li>
                 <Link 
                   to="/tienda" 
-                  className="text-gray-400 hover:text-white transition text-sm flex items-center gap-2"
+                  className="text-gray-400 dark:text-gray-500 hover:text-white transition text-sm flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: colorPrimario }} />
                   Tienda
@@ -134,7 +134,7 @@ export function PublicFooter() {
               <li>
                 <Link 
                   to="/galeria-publica" 
-                  className="text-gray-400 hover:text-white transition text-sm flex items-center gap-2"
+                  className="text-gray-400 dark:text-gray-500 hover:text-white transition text-sm flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: colorPrimario }} />
                   Galería
@@ -143,7 +143,7 @@ export function PublicFooter() {
               <li>
                 <Link 
                   to="/contacto" 
-                  className="text-gray-400 hover:text-white transition text-sm flex items-center gap-2"
+                  className="text-gray-400 dark:text-gray-500 hover:text-white transition text-sm flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: colorPrimario }} />
                   Contacto
@@ -161,7 +161,7 @@ export function PublicFooter() {
                   <Clock className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: colorPrimario }} />
                   <div>
                     <p className="font-semibold text-white text-sm mb-1">Lunes a Sábado</p>
-                    <p className="text-gray-400 text-sm">{config.horarioApertura} - {config.horarioCierre}</p>
+                    <p className="text-gray-400 dark:text-gray-500 text-sm">{config.horarioApertura} - {config.horarioCierre}</p>
                   </div>
                 </div>
                 {!config.diasLaborales.includes('domingo') && (
@@ -175,7 +175,7 @@ export function PublicFooter() {
                 )}
               </div>
             ) : (
-              <p className="text-gray-400 text-sm">Consulta nuestros horarios</p>
+              <p className="text-gray-400 dark:text-gray-500 text-sm">Consulta nuestros horarios</p>
             )}
           </div>
 
@@ -186,7 +186,7 @@ export function PublicFooter() {
               {config?.direccion && (
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: colorPrimario }} />
-                  <p className="text-gray-400 text-sm">{config.direccion}</p>
+                  <p className="text-gray-400 dark:text-gray-500 text-sm">{config.direccion}</p>
                 </div>
               )}
               {config?.telefono && (
@@ -194,7 +194,7 @@ export function PublicFooter() {
                   <Phone className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: colorPrimario }} />
                   <a 
                     href={`tel:${config.telefono}`}
-                    className="text-gray-400 hover:text-white transition text-sm"
+                    className="text-gray-400 dark:text-gray-500 hover:text-white transition text-sm"
                   >
                     {config.telefono}
                   </a>
@@ -205,7 +205,7 @@ export function PublicFooter() {
                   <Mail className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: colorPrimario }} />
                   <a 
                     href={`mailto:${config.email}`}
-                    className="text-gray-400 hover:text-white transition text-sm"
+                    className="text-gray-400 dark:text-gray-500 hover:text-white transition text-sm"
                   >
                     {config.email}
                   </a>
@@ -218,14 +218,14 @@ export function PublicFooter() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 dark:text-gray-500 text-sm">
               &copy; {new Date().getFullYear()} {config?.nombreNegocio || 'GymSaaS'}. Todos los derechos reservados.
             </p>
             <div className="flex gap-6">
-              <Link to="/terminos" className="text-gray-400 hover:text-white text-sm transition">
+              <Link to="/terminos" className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition">
                 Términos y Condiciones
               </Link>
-              <Link to="/privacidad" className="text-gray-400 hover:text-white text-sm transition">
+              <Link to="/privacidad" className="text-gray-400 dark:text-gray-500 hover:text-white text-sm transition">
                 Política de Privacidad
               </Link>
             </div>

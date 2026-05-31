@@ -52,13 +52,13 @@ export function EntrenadorDashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <header className="bg-white shadow">
+      <header className="bg-white dark:bg-gray-950 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">Gym SaaS - Entrenador</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Gym SaaS - Entrenador</h1>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}{' '}
               <span className="font-medium">({user?.rol})</span>
             </span>
@@ -82,8 +82,8 @@ export function EntrenadorDashboardPage() {
           <div className="space-y-8">
             {/* Header */}
             <div>
-              <h2 className="text-3xl font-bold text-gray-900">Dashboard de Entrenador</h2>
-              <p className="text-gray-600 mt-2 flex items-center gap-2">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dashboard de Entrenador</h2>
+              <p className="text-gray-600 dark:text-gray-400 mt-2 flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 Bienvenido, {user?.nombre}
               </p>
@@ -95,9 +95,9 @@ export function EntrenadorDashboardPage() {
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Total Clientes</p>
-                      <p className="text-3xl font-bold text-gray-900 mt-2">{totalClientes}</p>
-                      <p className="text-xs text-gray-500 mt-1">Click para ver lista</p>
+                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Clientes</p>
+                      <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{totalClientes}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Click para ver lista</p>
                     </div>
                     <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
                       <Users className="w-6 h-6 text-blue-600" />
@@ -110,9 +110,9 @@ export function EntrenadorDashboardPage() {
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Asistencias Hoy</p>
-                      <p className="text-3xl font-bold text-gray-900 mt-2">{asistenciasHoy}</p>
-                      <p className="text-xs text-gray-500 mt-1">Consultar historial</p>
+                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Asistencias Hoy</p>
+                      <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{asistenciasHoy}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Consultar historial</p>
                     </div>
                     <div className="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
                       <Activity className="w-6 h-6 text-green-600" />
@@ -125,9 +125,9 @@ export function EntrenadorDashboardPage() {
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Asistencias del Mes</p>
-                      <p className="text-3xl font-bold text-gray-900 mt-2">{asistenciasMes}</p>
-                      <p className="text-xs text-gray-500 mt-1">Total acumulado</p>
+                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Asistencias del Mes</p>
+                      <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{asistenciasMes}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Total acumulado</p>
                     </div>
                     <div className="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
                       <TrendingUp className="w-6 h-6 text-purple-600" />
@@ -139,7 +139,7 @@ export function EntrenadorDashboardPage() {
 
             {/* Quick Actions */}
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Acciones Rápidas</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Acciones Rápidas</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card 
                   className="hover:shadow-lg transition-shadow cursor-pointer"
@@ -151,8 +151,8 @@ export function EntrenadorDashboardPage() {
                         <Users className="w-8 h-8 text-white" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900">Mis Clientes</h4>
-                        <p className="text-sm text-gray-600 mt-1">Ver lista completa de clientes</p>
+                        <h4 className="font-bold text-gray-900 dark:text-gray-100">Mis Clientes</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Ver lista completa de clientes</p>
                       </div>
                     </div>
                   </CardContent>
@@ -168,8 +168,8 @@ export function EntrenadorDashboardPage() {
                         <Activity className="w-8 h-8 text-white" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900">Ver Asistencias</h4>
-                        <p className="text-sm text-gray-600 mt-1">Historial de asistencias</p>
+                        <h4 className="font-bold text-gray-900 dark:text-gray-100">Ver Asistencias</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Historial de asistencias</p>
                       </div>
                     </div>
                   </CardContent>
@@ -187,7 +187,7 @@ export function EntrenadorDashboardPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 text-sm mb-4">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
                     Consulta el progreso y asistencias de tus clientes para brindar mejor seguimiento y optimizar sus entrenamientos.
                   </p>
                   <button
@@ -211,15 +211,15 @@ export function EntrenadorDashboardPage() {
                     <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
                       <Activity className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-semibold text-gray-900 text-sm">Asistencias</p>
-                        <p className="text-sm text-gray-600">Consulta las asistencias para dar mejor seguimiento.</p>
+                        <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm">Asistencias</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Consulta las asistencias para dar mejor seguimiento.</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
                       <TrendingUp className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-semibold text-gray-900 text-sm">Progreso</p>
-                        <p className="text-sm text-gray-600">Mantén registro del progreso de tus clientes.</p>
+                        <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm">Progreso</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Mantén registro del progreso de tus clientes.</p>
                       </div>
                     </div>
                   </div>

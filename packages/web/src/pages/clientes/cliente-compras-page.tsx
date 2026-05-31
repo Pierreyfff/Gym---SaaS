@@ -65,29 +65,29 @@ export function ClienteComprasPage() {
   if (loading) {
     return (
       <PublicLayout>
-        <div className="min-h-screen bg-gray-50 py-12">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <Card>
               <CardHeader>
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gray-200 rounded animate-pulse" />
-                  <div className="h-8 w-48 bg-gray-200 rounded animate-pulse" />
+                  <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+                  <div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {[...Array(3)].map((_, i) => (
-                    <div key={i} className="flex items-center justify-between bg-gray-50 rounded-xl p-4">
+                    <div key={i} className="flex items-center justify-between bg-gray-50 dark:bg-gray-900 rounded-xl p-4">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-gray-200 rounded-lg animate-pulse" />
+                        <div className="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
                         <div className="space-y-2">
-                          <div className="h-5 w-48 bg-gray-200 rounded animate-pulse" />
-                          <div className="h-4 w-32 bg-gray-200 rounded animate-pulse" />
+                          <div className="h-5 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+                          <div className="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
                         </div>
                       </div>
                       <div className="text-right space-y-2">
-                        <div className="h-6 w-20 bg-gray-200 rounded animate-pulse ml-auto" />
-                        <div className="h-4 w-16 bg-gray-200 rounded animate-pulse ml-auto" />
+                        <div className="h-6 w-20 bg-gray-200 dark:bg-gray-700 rounded animate-pulse ml-auto" />
+                        <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse ml-auto" />
                       </div>
                     </div>
                   ))}
@@ -108,12 +108,12 @@ export function ClienteComprasPage() {
 
   return (
     <PublicLayout>
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-6">
               <Link
                 to="/cliente/dashboard"
-                className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-purple-600 transition"
+                className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600 transition"
               >
               <ArrowLeft className="w-4 h-4" />
               Volver al panel
@@ -130,11 +130,11 @@ export function ClienteComprasPage() {
             <CardContent>
               {compras.length === 0 ? (
                 <div className="text-center py-12">
-                  <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-600 text-lg mb-2">
+                  <Package className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+                  <p className="text-gray-600 dark:text-gray-400 text-lg mb-2">
                     Aún no tienes compras
                   </p>
-                  <p className="text-gray-400 text-sm mb-6">
+                  <p className="text-gray-400 dark:text-gray-500 text-sm mb-6">
                     Todavía no has realizado ninguna compra en la tienda del gimnasio
                   </p>
                   <Link to="/tienda">
@@ -149,17 +149,17 @@ export function ClienteComprasPage() {
                   {compras.map((compra) => (
                     <div
                       key={compra.id}
-                      className="flex items-center justify-between bg-gray-50 rounded-xl p-4 hover:shadow-md transition"
+                      className="flex items-center justify-between bg-gray-50 dark:bg-gray-900 rounded-xl p-4 hover:shadow-md transition"
                     >
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
                           <Package className="w-6 h-6 text-purple-600" />
                         </div>
                         <div className="flex-1">
-                          <p className="font-semibold text-gray-900">
+                          <p className="font-semibold text-gray-900 dark:text-gray-100">
                             {compra.producto.nombre}
                           </p>
-                          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 mt-1">
+                          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mt-1">
                             <span className="flex items-center gap-1">
                               <Calendar className="w-3 h-3" />
                               {formatDate(compra.fechaVenta)}
@@ -184,7 +184,7 @@ export function ClienteComprasPage() {
                             )}
                           </div>
                           {compra.tipoEntrega === 'domicilio' && compra.direccion && (
-                            <p className="text-xs text-gray-400 mt-1">
+                            <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                               {compra.direccion}{compra.ciudad ? `, ${compra.ciudad}` : ''}
                             </p>
                           )}
@@ -194,7 +194,7 @@ export function ClienteComprasPage() {
                         <p className="text-lg font-bold text-purple-600">
                           {formatCurrency(compra.total)}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
                           {compra.cantidad} x {formatCurrency(compra.precioUnitario)}
                         </p>
                       </div>
