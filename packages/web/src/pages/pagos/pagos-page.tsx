@@ -207,7 +207,7 @@ export function PagosPage() {
             onClick={() => setFilterEstado('todos')}
             className={`p-4 rounded-lg border-2 transition ${
               filterEstado === 'todos'
-                ? 'border-blue-500 bg-blue-50'
+                ? 'border-blue-500 dark:border-blue-400 bg-blue-50 dark:bg-blue-950'
                 : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 hover:border-gray-300'
             }`}
           >

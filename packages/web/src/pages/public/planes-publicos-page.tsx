@@ -85,7 +85,7 @@ export function PlanesPublicosPage() {
                 return (
                   <div
                     key={plan.id}
-                    className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden animate-fade-in-up ${
+                    className={`bg-white dark:bg-gray-950 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden animate-fade-in-up ${
                       isDestacado ? 'lg:scale-110 z-10' : ''
                     }`}
                     style={{ 

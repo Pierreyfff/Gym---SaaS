@@ -947,7 +947,7 @@ export function ConfiguracionPage() {
               </div>
 
               <div className="space-y-4">
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                   <p className="text-sm text-blue-900 font-medium mb-2">
                     ¿Cómo obtener las coordenadas?
                   </p>

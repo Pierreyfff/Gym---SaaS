@@ -185,7 +185,7 @@ export function ClientePerfilPage() {
           <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">Información Personal</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
                 <Mail className="w-5 h-5 text-blue-600" />
               </div>
               <div>
@@ -194,7 +194,7 @@ export function ClientePerfilPage() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
                 <Phone className="w-5 h-5 text-green-600" />
               </div>
               <div>
@@ -203,7 +203,7 @@ export function ClientePerfilPage() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
                 <Calendar className="w-5 h-5 text-purple-600" />
               </div>
               <div>
@@ -417,7 +417,7 @@ export function ClientePerfilPage() {
                       className="flex items-center justify-between border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
                           <CheckCircle className="w-5 h-5 text-green-600" />
                         </div>
                         <div>

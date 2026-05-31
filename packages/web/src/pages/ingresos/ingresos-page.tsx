@@ -492,8 +492,8 @@ export function IngresosPage() {
                             <span
                               className={`px-2 py-1 text-xs font-medium rounded-full ${
                                 ingreso.tipo === 'membresia'
-                                  ? 'bg-orange-100 text-orange-700'
-                                  : 'bg-blue-100 text-blue-700'
+                                  ? 'bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300'
+                                  : 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
                               }`}
                             >
                               {ingreso.tipo === 'membresia'

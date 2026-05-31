@@ -19,7 +19,10 @@ import {
   Image as ImageIcon,
   UsersRound,
   Globe,
+  Moon,
+  Sun,
 } from 'lucide-react';
+import { useThemeStore } from '@/lib/stores/theme-store';
 import {
   LineChart,
   Line,
@@ -96,6 +99,8 @@ export function DashboardPage() {
     }
   };
 
+  const { theme, toggleTheme } = useThemeStore();
+
   const handleLogout = () => {
     clearAuth();
     navigate('/login');
@@ -125,6 +130,16 @@ export function DashboardPage() {
               <Globe className="w-4 h-4" />
               Ir a Página Web
             </Link>
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              ) : (
+                <Moon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              )}
+            </button>
             <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}{' '}
               <span className="font-medium">({user?.rol})</span>
@@ -276,7 +291,7 @@ export function DashboardPage() {
                     Clientes
                   </h3>
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
                       <Users className="w-5 h-5 text-blue-600" />
                     </div>
                     <ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
@@ -301,7 +316,7 @@ export function DashboardPage() {
                     Membresías Activas
                   </h3>
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
                       <CreditCard className="w-5 h-5 text-orange-600" />
                     </div>
                     <ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
@@ -326,7 +341,7 @@ export function DashboardPage() {
                     Asistencias del Mes
                   </h3>
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center">
                       <ClipboardCheck className="w-5 h-5 text-teal-600" />
                     </div>
                     <ArrowRight className="w-4 h-4 text-gray-400 dark:text-gray-500" />
@@ -434,7 +449,7 @@ export function DashboardPage() {
 
                 <button
                   onClick={() => navigate('/configuracion')}
-                  className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-4 px-6 rounded-lg transition-all flex items-center justify-center gap-3 shadow-md hover:shadow-lg hover:scale-105"
+                  className="bg-gray-600 dark:bg-gray-500 hover:bg-gray-700 dark:hover:bg-gray-600 text-white font-semibold py-4 px-6 rounded-lg transition-all flex items-center justify-center gap-3 shadow-md hover:shadow-lg hover:scale-105"
                 >
                   <Settings className="w-5 h-5" />
                   <span>Configuración</span>

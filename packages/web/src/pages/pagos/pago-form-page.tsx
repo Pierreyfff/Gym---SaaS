@@ -34,7 +34,7 @@ export function PagoFormPage() {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg: px-8 py-8">
-        <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-8 text-center">
+        <div className="bg-blue-50 dark:bg-blue-950 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-8 text-center">
           <Info className="w-16 h-16 text-blue-600 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-blue-900 mb-2">
             Los pagos ahora se registran automáticamente

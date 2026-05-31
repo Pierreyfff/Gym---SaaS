@@ -29,21 +29,21 @@ export function ConfirmationModal({
     switch (type) {
       case 'danger':
         return {
-          icon: 'text-red-600',
-          iconBg:  'bg-red-100',
-          button: 'bg-red-600 hover:bg-red-700',
+          icon: 'text-red-600 dark:text-red-400',
+          iconBg:  'bg-red-100 dark:bg-red-900',
+          button: 'bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-600',
         };
       case 'warning': 
         return {
-          icon:  'text-yellow-600',
-          iconBg: 'bg-yellow-100',
-          button: 'bg-yellow-600 hover:bg-yellow-700',
+          icon:  'text-yellow-600 dark:text-yellow-400',
+          iconBg: 'bg-yellow-100 dark:bg-yellow-900',
+          button: 'bg-yellow-600 dark:bg-yellow-700 hover:bg-yellow-700 dark:hover:bg-yellow-600',
         };
       case 'info':
         return {
-          icon: 'text-blue-600',
-          iconBg: 'bg-blue-100',
-          button: 'bg-blue-600 hover: bg-blue-700',
+          icon: 'text-blue-600 dark:text-blue-400',
+          iconBg: 'bg-blue-100 dark:bg-blue-900',
+          button: 'bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600',
         };
     }
   };

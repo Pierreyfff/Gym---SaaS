@@ -198,7 +198,7 @@ export function CheckoutPage() {
                     onClick={() => setDatosEnvio({ ...datosEnvio, tipoEntrega: 'retiro' })}
                     className={`p-4 border-2 rounded-lg font-semibold transition text-left ${
                       datosEnvio.tipoEntrega === 'retiro'
-                        ? 'border-purple-600 bg-purple-50 text-purple-600'
+                        ? 'border-purple-600 dark:border-purple-400 bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300'
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                   >
@@ -212,7 +212,7 @@ export function CheckoutPage() {
                     onClick={() => setDatosEnvio({ ...datosEnvio, tipoEntrega: 'domicilio' })}
                     className={`p-4 border-2 rounded-lg font-semibold transition text-left ${
                       datosEnvio.tipoEntrega === 'domicilio'
-                        ? 'border-purple-600 bg-purple-50 text-purple-600'
+                        ? 'border-purple-600 dark:border-purple-400 bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300'
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                   >
@@ -303,7 +303,7 @@ export function CheckoutPage() {
                     onClick={() => setDatosPago({ metodoPago: 'efectivo' })}
                     className={`w-full p-4 border-2 rounded-lg font-semibold text-left transition ${
                       datosPago.metodoPago === 'efectivo'
-                        ? 'border-purple-600 bg-purple-50'
+                        ? 'border-purple-600 dark:border-purple-400 bg-purple-50 dark:bg-purple-950'
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                   >
@@ -326,7 +326,7 @@ export function CheckoutPage() {
                     onClick={() => setDatosPago({ metodoPago: 'tarjeta' })}
                     className={`w-full p-4 border-2 rounded-lg font-semibold text-left transition ${
                       datosPago.metodoPago === 'tarjeta'
-                        ? 'border-purple-600 bg-purple-50'
+                        ? 'border-purple-600 dark:border-purple-400 bg-purple-50 dark:bg-purple-950'
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                   >
@@ -349,7 +349,7 @@ export function CheckoutPage() {
                     onClick={() => setDatosPago({ metodoPago: 'transferencia' })}
                     className={`w-full p-4 border-2 rounded-lg font-semibold text-left transition ${
                       datosPago.metodoPago === 'transferencia'
-                        ? 'border-purple-600 bg-purple-50'
+                        ? 'border-purple-600 dark:border-purple-400 bg-purple-50 dark:bg-purple-950'
                         : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
                     }`}
                   >
@@ -371,8 +371,8 @@ export function CheckoutPage() {
               </div>
 
               {datosPago.metodoPago !== 'efectivo' && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <p className="text-sm text-blue-800">
+                <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                  <p className="text-sm text-blue-800 dark:text-blue-200">
                     Esta integracion estara disponible proximamente. Por ahora, selecciona pago en efectivo.
                   </p>
                 </div>
@@ -385,8 +385,8 @@ export function CheckoutPage() {
         return (
           <Card className="text-center">
             <CardContent className="pt-12 pb-12">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-12 h-12 text-green-600" />
+              <div className="w-20 h-20 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-12 h-12 text-green-600 dark:text-green-400" />
               </div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Compra Exitosa</h2>
               <p className="text-gray-600 dark:text-gray-400 mb-8">

@@ -234,7 +234,7 @@ export function RenovarMembresiaPage() {
         {/* Content */}
         <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
           {/* Info del Cliente */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
             <h3 className="text-sm font-semibold text-blue-900 mb-2 flex items-center gap-2">
               <RefreshCw className="w-4 h-4" />
               Renovación para: 
@@ -290,7 +290,7 @@ export function RenovarMembresiaPage() {
                       <div className="flex items-start justify-between mb-3">
                         <h3 className="font-bold text-lg text-gray-900 dark:text-gray-100">{plan.nombre}</h3>
                         {plan.id === membresia.plan.id && (
-                          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full font-semibold">
+                          <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-full font-semibold">
                             Mismo plan
                           </span>
                         )}

@@ -5,10 +5,10 @@ export function NotFoundPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full text-center">
         <div className="mb-8">
-          <h1 className="text-9xl font-bold text-blue-600 mb-4">404</h1>
+          <h1 className="text-9xl font-bold text-blue-600 dark:text-blue-400 mb-4">404</h1>
           <div className="flex items-center justify-center gap-3 mb-4">
             <Search className="w-8 h-8 text-gray-400 dark:text-gray-500" />
             <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
@@ -45,25 +45,25 @@ export function NotFoundPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <button
             onClick={() => navigate('/clientes')}
-            className="p-4 bg-white dark:bg-gray-950 rounded-lg shadow hover:shadow-lg transition text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600"
+            className="p-4 bg-white dark:bg-gray-950 rounded-lg shadow hover:shadow-lg transition text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
           >
             Clientes
           </button>
           <button
             onClick={() => navigate('/membresias')}
-            className="p-4 bg-white dark:bg-gray-950 rounded-lg shadow hover:shadow-lg transition text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600"
+            className="p-4 bg-white dark:bg-gray-950 rounded-lg shadow hover:shadow-lg transition text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
           >
             Membresías
           </button>
           <button
             onClick={() => navigate('/pagos')}
-            className="p-4 bg-white dark:bg-gray-950 rounded-lg shadow hover:shadow-lg transition text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600"
+            className="p-4 bg-white dark:bg-gray-950 rounded-lg shadow hover:shadow-lg transition text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
           >
             Pagos
           </button>
           <button
             onClick={() => navigate('/productos')}
-            className="p-4 bg-white dark:bg-gray-950 rounded-lg shadow hover:shadow-lg transition text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600"
+            className="p-4 bg-white dark:bg-gray-950 rounded-lg shadow hover:shadow-lg transition text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
           >
             Productos
           </button>

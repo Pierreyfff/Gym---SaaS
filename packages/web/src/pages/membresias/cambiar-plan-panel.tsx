@@ -195,20 +195,20 @@ export function CambiarPlanPanel({
             <div
               className={`p-5 rounded-lg border-2 ${
                 diferenciaPrecio > 0
-                  ? 'bg-orange-50 border-orange-200'
+                  ? 'bg-orange-50 dark:bg-orange-950 border-orange-200 dark:border-orange-800'
                   : diferenciaPrecio < 0
-                    ? 'bg-blue-50 border-blue-200'
+                    ? 'bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800'
                     : 'bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700'
               }`}
             >
               <div className="flex items-start gap-4">
                 {diferenciaPrecio > 0 ? (
-                  <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <AlertCircle className="w-6 h-6 text-orange-600" />
+                  <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <AlertCircle className="w-6 h-6 text-orange-600 dark:text-orange-400" />
                   </div>
                 ) : diferenciaPrecio < 0 ? (
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                   </div>
                 ) : (
                   <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -242,12 +242,12 @@ export function CambiarPlanPanel({
                     </span>
                   </p>
                   {diferenciaPrecio > 0 && (
-                    <p className="text-xs text-orange-700 mt-2 bg-orange-100 px-3 py-2 rounded">
+                    <p className="text-xs text-orange-700 dark:text-orange-300 mt-2 bg-orange-100 dark:bg-orange-900 px-3 py-2 rounded">
                       El cliente deberá pagar la diferencia
                     </p>
                   )}
                   {diferenciaPrecio < 0 && (
-                    <p className="text-xs text-blue-700 mt-2 bg-blue-100 px-3 py-2 rounded">
+                    <p className="text-xs text-blue-700 dark:text-blue-300 mt-2 bg-blue-100 dark:bg-blue-900 px-3 py-2 rounded">
                       El cliente tendrá crédito a favor
                     </p>
                   )}
@@ -287,7 +287,7 @@ export function CambiarPlanPanel({
           {/* Generar Pago */}
           {diferenciaPrecio > 0 && (
             <>
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+              <div className="bg-orange-50 dark:bg-orange-950 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
                 <div className="flex items-start gap-3">
                   <input
                     type="checkbox"

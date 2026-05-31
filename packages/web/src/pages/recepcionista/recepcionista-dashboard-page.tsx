@@ -12,8 +12,11 @@ import {
   Clock,
   DollarSign,
   Calendar,
-  AlertCircle
+  AlertCircle,
+  Moon,
+  Sun,
 } from 'lucide-react';
+import { useThemeStore } from '@/lib/stores/theme-store';
 
 export function RecepcionistaDashboardPage() {
   const navigate = useNavigate();
@@ -46,6 +49,8 @@ export function RecepcionistaDashboardPage() {
       setLoading(false);
     }
   };
+
+  const { theme, toggleTheme } = useThemeStore();
 
   const handleLogout = () => {
     clearAuth();
@@ -89,7 +94,7 @@ export function RecepcionistaDashboardPage() {
       value: stats?.clientesActivos || 0,
       icon: Users,
       color: 'text-blue-600',
-      bgColor: 'bg-blue-100',
+      bgColor: 'bg-blue-100 dark:bg-blue-900',
       onClick: () => navigate('/clientes'),
     },
     {
@@ -97,7 +102,7 @@ export function RecepcionistaDashboardPage() {
       value: stats?.membresiasActivas || 0,
       icon: CreditCard,
       color: 'text-green-600',
-      bgColor: 'bg-green-100',
+      bgColor: 'bg-green-100 dark:bg-green-900',
       onClick: () => navigate('/membresias'),
     },
     {
@@ -105,7 +110,7 @@ export function RecepcionistaDashboardPage() {
       value: asistenciasHoy,
       icon: UserCheck,
       color: 'text-purple-600',
-      bgColor: 'bg-purple-100',
+      bgColor: 'bg-purple-100 dark:bg-purple-900',
       onClick: () => navigate('/asistencias'),
     },
     {
@@ -113,7 +118,7 @@ export function RecepcionistaDashboardPage() {
       value: `$${stats?.ingresosMesActual?.toLocaleString() || 0}`,
       icon: DollarSign,
       color: 'text-orange-600',
-      bgColor: 'bg-orange-100',
+      bgColor: 'bg-orange-100 dark:bg-orange-900',
       onClick: () => {},
     },
   ];
@@ -125,6 +130,16 @@ export function RecepcionistaDashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Gym SaaS - Recepción</h1>
           <div className="flex items-center gap-4">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              ) : (
+                <Moon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              )}
+            </button>
             <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}{' '}
               <span className="font-medium">({user?.rol})</span>
@@ -143,7 +158,7 @@ export function RecepcionistaDashboardPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {loading ? (
           <div className="flex items-center justify-center h-96">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 dark:border-purple-400"></div>
           </div>
         ) : (
           <div className="space-y-8">
@@ -285,18 +300,18 @@ export function RecepcionistaDashboardPage() {
 
             {/* Alert de tareas pendientes */}
             {stats?.membresiasExpiradas > 0 && (
-              <Card className="border-orange-200 bg-orange-50">
+              <Card className="border-orange-200 dark:border-orange-800 bg-orange-50 dark:bg-orange-950">
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-3">
                     <AlertCircle className="w-5 h-5 text-orange-600 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-orange-900">Atención Requerida</p>
-                      <p className="text-sm text-orange-700 mt-1">
+                      <p className="font-semibold text-orange-900 dark:text-orange-100">Atención Requerida</p>
+                      <p className="text-sm text-orange-700 dark:text-orange-300 mt-1">
                         Hay {stats.membresiasExpiradas} membresías expiradas que requieren renovación.
                       </p>
                       <button
                         onClick={() => navigate('/membresias')}
-                        className="mt-2 text-sm font-semibold text-orange-600 hover:text-orange-800 transition"
+                        className="mt-2 text-sm font-semibold text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 transition"
                       >
                         Ver Membresías →
                       </button>

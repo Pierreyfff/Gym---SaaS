@@ -222,7 +222,7 @@ export function AsistenciasPage() {
             <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total</h3>
-                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
                   <UserCheck className="w-5 h-5 text-blue-600" />
                 </div>
               </div>
@@ -232,7 +232,7 @@ export function AsistenciasPage() {
             <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Hoy</h3>
-                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
                   <Calendar className="w-5 h-5 text-green-600" />
                 </div>
               </div>
@@ -242,7 +242,7 @@ export function AsistenciasPage() {
             <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Esta Semana</h3>
-                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
                   <Calendar className="w-5 h-5 text-purple-600" />
                 </div>
               </div>
@@ -252,7 +252,7 @@ export function AsistenciasPage() {
             <div className="bg-white dark:bg-gray-950 rounded-lg shadow p-6">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Este Mes</h3>
-                <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
                   <Calendar className="w-5 h-5 text-orange-600" />
                 </div>
               </div>

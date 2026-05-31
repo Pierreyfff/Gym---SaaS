@@ -9,8 +9,11 @@ import {
   TrendingUp,
   Clock,
   Calendar,
-  Target
+  Target,
+  Moon,
+  Sun,
 } from 'lucide-react';
+import { useThemeStore } from '@/lib/stores/theme-store';
 
 export function EntrenadorDashboardPage() {
   const navigate = useNavigate();
@@ -46,6 +49,8 @@ export function EntrenadorDashboardPage() {
     }
   };
 
+  const { theme, toggleTheme } = useThemeStore();
+
   const handleLogout = () => {
     clearAuth();
     navigate('/login');
@@ -58,6 +63,16 @@ export function EntrenadorDashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Gym SaaS - Entrenador</h1>
           <div className="flex items-center gap-4">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              ) : (
+                <Moon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              )}
+            </button>
             <span className="text-sm text-gray-600 dark:text-gray-400">
               {user?.nombre} {user?.apellido}{' '}
               <span className="font-medium">({user?.rol})</span>
@@ -76,7 +91,7 @@ export function EntrenadorDashboardPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {loading ? (
           <div className="flex items-center justify-center h-96">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 dark:border-purple-400"></div>
           </div>
         ) : (
           <div className="space-y-8">
@@ -99,8 +114,8 @@ export function EntrenadorDashboardPage() {
                       <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{totalClientes}</p>
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Click para ver lista</p>
                     </div>
-                    <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                      <Users className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+                      <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                   </div>
                 </CardContent>
@@ -114,8 +129,8 @@ export function EntrenadorDashboardPage() {
                       <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{asistenciasHoy}</p>
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Consultar historial</p>
                     </div>
-                    <div className="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
-                      <Activity className="w-6 h-6 text-green-600" />
+                    <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900 flex items-center justify-center">
+                      <Activity className="w-6 h-6 text-green-600 dark:text-green-400" />
                     </div>
                   </div>
                 </CardContent>
@@ -129,8 +144,8 @@ export function EntrenadorDashboardPage() {
                       <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-2">{asistenciasMes}</p>
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Total acumulado</p>
                     </div>
-                    <div className="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
-                      <TrendingUp className="w-6 h-6 text-purple-600" />
+                    <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
+                      <TrendingUp className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                     </div>
                   </div>
                 </CardContent>
@@ -182,7 +197,7 @@ export function EntrenadorDashboardPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Target className="w-5 h-5 text-blue-600" />
+                    <Target className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     Seguimiento de Clientes
                   </CardTitle>
                 </CardHeader>
@@ -202,21 +217,21 @@ export function EntrenadorDashboardPage() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-purple-600" />
+                    <Clock className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                     Información Importante
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
-                      <Activity className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <div className="flex items-start gap-3 p-3 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                      <Activity className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
                       <div>
                         <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm">Asistencias</p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">Consulta las asistencias para dar mejor seguimiento.</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-3 bg-green-50 rounded-lg">
-                      <TrendingUp className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <div className="flex items-start gap-3 p-3 bg-green-50 dark:bg-green-950 rounded-lg">
+                      <TrendingUp className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
                       <div>
                         <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm">Progreso</p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">Mantén registro del progreso de tus clientes.</p>

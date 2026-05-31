@@ -247,7 +247,7 @@ export function TestimoniosPage() {
                       <span
                         className={`px-2 py-1 text-xs font-semibold rounded-full ${
                           testimonio.activo
-                            ? 'bg-green-100 text-green-800'
+                            ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
                             : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200'
                         }`}
                       >

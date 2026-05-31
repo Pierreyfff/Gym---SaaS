@@ -294,7 +294,7 @@ export function WizardInscripcionPage() {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+          <Loader2 className="w-12 h-12 text-blue-600 dark:text-blue-400 animate-spin mx-auto mb-4" />
           <p className="text-gray-600 dark:text-gray-400">Cargando datos...</p>
         </div>
       </div>
@@ -332,7 +332,7 @@ export function WizardInscripcionPage() {
                 <div
                   className={`flex items-center justify-center w-12 h-12 rounded-full font-bold transition-all ${
                     currentStep >= step
-                      ? 'bg-blue-600 text-white shadow-lg scale-110'
+                      ? 'bg-blue-600 dark:bg-blue-500 text-white shadow-lg scale-110'
                       : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                   } ${currentStep === step ? 'ring-4 ring-blue-200' : ''}`}
                 >
@@ -365,8 +365,8 @@ export function WizardInscripcionPage() {
               {currentStep === 1 && (
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                      <UserCheck className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                      <UserCheck className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Seleccionar Cliente</h2>
@@ -374,8 +374,8 @@ export function WizardInscripcionPage() {
                     </div>
                   </div>
 
-                  <div className="bg-blue-50 border-l-4 border-blue-500 rounded-r-lg p-4 mb-6 flex items-start gap-3">
-                    <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <div className="bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 dark:border-blue-400 rounded-r-lg p-4 mb-6 flex items-start gap-3">
+                    <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-semibold text-blue-900">
                         Solo clientes sin membresía activa
@@ -420,7 +420,7 @@ export function WizardInscripcionPage() {
                             onClick={() => setSelectedClienteId(cliente.id)}
                             className={`p-4 border-2 rounded-lg text-left transition-all ${
                               selectedClienteId === cliente.id
-                                ? 'border-blue-500 bg-blue-50 shadow-md'
+                                ? 'border-blue-500 dark:border-blue-400 bg-blue-50 dark:bg-blue-950 shadow-md'
                                 : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                             }`}
                           >
@@ -450,8 +450,8 @@ export function WizardInscripcionPage() {
               {currentStep === 2 && (
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                      <CreditCard className="w-6 h-6 text-purple-600" />
+                    <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+                      <CreditCard className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Seleccionar Plan</h2>
@@ -511,8 +511,8 @@ export function WizardInscripcionPage() {
               {currentStep === 3 && (
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                      <DollarSign className="w-6 h-6 text-green-600" />
+                    <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                      <DollarSign className="w-6 h-6 text-green-600 dark:text-green-400" />
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Método de Pago</h2>
@@ -601,8 +601,8 @@ export function WizardInscripcionPage() {
               {currentStep === 4 && (
                 <div>
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                      <Lock className="w-6 h-6 text-orange-600" />
+                    <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
+                      <Lock className="w-6 h-6 text-orange-600 dark:text-orange-400" />
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Detalles de Pago</h2>
@@ -664,8 +664,8 @@ export function WizardInscripcionPage() {
                   {/* Tarjeta */}
                   {metodoPago === 'tarjeta' && (
                     <div className="space-y-4">
-                      <div className="bg-blue-50 border-l-4 border-blue-500 rounded-r-lg p-4 mb-4 flex items-start gap-3">
-                        <Shield className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <div className="bg-blue-50 dark:bg-blue-950 border-l-4 border-blue-500 dark:border-blue-400 rounded-r-lg p-4 mb-4 flex items-start gap-3">
+                        <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
                         <div className="text-sm text-blue-900">
                           <p className="font-semibold mb-1">Transacción segura</p>
                           <p>

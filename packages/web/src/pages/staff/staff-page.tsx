@@ -211,7 +211,7 @@ export function StaffPage() {
                           }}
                         />
                       ) : (
-                        <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
                           <span className="text-indigo-600 font-semibold text-lg">
                             {member.nombre.charAt(0)}
                             {member.apellido.charAt(0)}
@@ -232,7 +232,7 @@ export function StaffPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-indigo-100 text-indigo-800">
+                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200">
                         {member.cargo}
                       </span>
                     </td>
@@ -264,7 +264,7 @@ export function StaffPage() {
                       <span
                         className={`px-2 py-1 text-xs font-semibold rounded-full ${
                           member.activo
-                            ? 'bg-green-100 text-green-800'
+                            ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
                             : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200'
                         }`}
                       >
