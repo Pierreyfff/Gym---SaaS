@@ -1,6 +1,7 @@
 # 🏋️ GymSaaS — Plataforma de Gestión Deportiva
 
-<img width="800" height="599" alt="image" src="https://github.com/user-attachments/assets/8106885c-e5d3-470a-b026-71106f7ebdcf" />
+<img width="900" height="400" alt="image" src="https://github.com/user-attachments/assets/3211fad7-f1cc-4a0f-bcd0-0fdb89a5f393" />
+
 
 SaaS completo para gestión de un gym, con múltiples roles, funciones por cargo y marketplace.
 
@@ -57,18 +58,21 @@ docker compose up -d
 ## Roles y permisos
 
 - **Administrador**: Gestión total de la plataforma.
-
-  <img width="800" height="599" alt="image" src="https://github.com/user-attachments/assets/c8a114f5-a16b-4bb8-8898-cce87dab7b7e" />
-
 - **Recepcionista**: Registro de clientes, asistencias, pagos y ventas.
 - **Entrenador**: Gestión de clientes y seguimiento de asistencias.
 - **Cliente**: Acceso a su perfil, membresía y compras en el marketplace.
+
+<img width="900" height="400" alt="image" src="https://github.com/user-attachments/assets/b7473dc5-f277-4f08-a67c-ad16709dd099" />
+
+<img width="900" height="400" alt="image" src="https://github.com/user-attachments/assets/c07ecc3c-bc03-4064-a446-708794151782" />
+
 
 ## Marketplace
 
 Plataforma para la compra y venta de productos relacionados con el deporte y el fitness.
 
-<img width="800" height="599" alt="marketplace" src="https://github.com/user-attachments/assets/936c2c87-a460-4d0f-9e23-343db5c92ec6" />
+<img width="900" height="400" alt="image" src="https://github.com/user-attachments/assets/dc5b7362-e56d-4100-97f5-b105874a9b78" />
+
 
 ## Tecnologías
 
